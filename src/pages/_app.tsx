@@ -1,58 +1,78 @@
-import { useCallback, useEffect, useState } from "react";
-import Head from "next/head";
+import { useEffect, useMemo, useState } from "react";
 import type { AppProps } from "next/app";
-import styled, { ThemeProvider } from "styled-components";
+import { useRouter } from "next/router";
+import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import wrapper from "@lib/client/store/store";
+import AppHead from "@components/common/AppHead";
+import Layout from "@components/common/Layout";
+import { ManagedUIContext } from "@components/ui/context";
+
+import { SYMBOL_TEXT } from "constants/constants";
 import { GlobalStyle } from "src/styles/GlobalStyle";
-import { lightTheme, darkTheme } from "src/styles/theme";
+import "../styles/tailwind.css";
 
-function App({ Component, pageProps }: AppProps) {
-  const [mounted, setMounted] = useState(false);
-  // const [mode, setMode] = useState("light");
-  const [mode, setMode] = useState("");
+/**
+ * Redux wrapper Issue
+ */
+// function App({ Component, pageProps }: AppProps) {
+//   const router = useRouter();
 
-  useEffect(() => {
-    setMounted(true);
-    const theme = localStorage.getItem("theme");
-    if (theme) {
-      setMode(theme);
-    } else {
-      setMode(
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light",
-      );
-    }
-  }, []);
+//   const [title, setTitle] = useState<string>(SYMBOL_TEXT);
 
-  // useEffect(() => {
-  //   window.localStorage.setItem(
-  //     "theme",
-  //     `${mode === "dark" ? "dark" : "light"}`,
-  //   );
-  //   if (window.localStorage.getItem("theme") === "dark") {
-  //     setMode("dark");
-  //   } else if (window.localStorage.getItem("welcoming-theme") === "light") {
-  //     setMode("light");
-  //   }
-  // }, [mode]);
+//   useEffect(() => {
+//     const path = router.pathname.split("/")[1];
+//     if (path) setTitle(path + " | " + SYMBOL_TEXT);
+//     return;
+//   }, [router]);
 
-  const toggleTheme = useCallback(() => {
-    setMode(m => (m === "light" ? "dark" : "light"));
-  }, [mode]);
+//   return (
+//     <>
+//       <AppHead title={title} />
+//       <ManagedUIContext>
+//         <GlobalStyle />
+//         <Layout pageProps={pageProps} path={router.pathname}>
+//           <Component {...pageProps} />
+//         </Layout>
+//       </ManagedUIContext>
+//     </>
+//   );
+// }
+// export default wrapper.withRedux(App);
 
-  console.log(mode);
+const queryClient = new QueryClient();
+
+function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
+
+  const router = useRouter();
+
+  const title = useMemo(() => {
+    const path = router.pathname.split("/")[1];
+    if (path) return path + " | " + SYMBOL_TEXT;
+  }, [router]);
 
   return (
     <>
-      <Head>
-        <title>NEXTJS BOILERPLATE</title>
-        <meta name="description" content="NEXTJS BOILERPLATE" />
-      </Head>
-      <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <AppHead title={title} />
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <ManagedUIContext>
+            <GlobalStyle />
+            <Layout
+              id="root-layout"
+              pageProps={pageProps}
+              path={router.pathname}
+            >
+              <Component {...pageProps} />
+            </Layout>
+          </ManagedUIContext>
+        </Provider>
+        {/* Dev */}
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      </QueryClientProvider>
     </>
   );
 }

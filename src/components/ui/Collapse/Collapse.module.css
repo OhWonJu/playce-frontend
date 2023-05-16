@@ -1,0 +1,8 @@
+.icon {
+  margin-left: -6px;
+  transition: transform 0.2s ease;
+}
+
+.icon.open {
+  transform: rotate(90deg);
+}

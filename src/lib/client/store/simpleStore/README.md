@@ -1,0 +1,3 @@
+# Simple Store with zustand
+
+control states with zustand like temporary product info state...
