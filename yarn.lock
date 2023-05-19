@@ -4182,6 +4182,11 @@ v8-compile-cache-lib@^3.0.1:
   resolved "https://registry.yarnpkg.com/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz#6336e8d71965cb3d35a1bbb7868445a7c05264bf"
   integrity sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==
 
+wavesurfer.js@^6.6.3:
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/wavesurfer.js/-/wavesurfer.js-6.6.3.tgz#eadebf0542be702f1eef2f52c3e312b839030166"
+  integrity sha512-XqUOXe8+SOTe8uKCHaqW0vJ5etCCQvq/NgaPycn9HAX/nUi+2zoWD+w9i7H5vBT9UCDNawOia+vS5Ct3kZGQzA==
+
 webidl-conversions@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"

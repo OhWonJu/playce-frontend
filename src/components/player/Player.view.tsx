@@ -1,8 +1,14 @@
 import React, { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+
 import { animate, useMotionValue, useTransform, motion } from "framer-motion";
 
 import { useUI } from "@components/ui";
-import { NAV_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
+import {
+  NAV_HEIGHT,
+  PLAYER_HEADER_HEIGHT,
+  WAVE_FORM_HEIGHT,
+} from "constants/constants";
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
@@ -18,6 +24,10 @@ import {
 import Image from "next/image";
 import { artist } from "mock/adoy";
 import { Forward, Play, Repeat, Shuffle } from "@components/icons";
+
+const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
+  ssr: false,
+});
 
 interface PlayerViewProps {
   isOpen?: boolean;
@@ -57,7 +67,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
     [0, 100],
     [PLAYER_HEADER_HEIGHT, 100],
   );
-  const albumPadding = useTransform(motionProg, [0, 100], ["0.25rem", "0rem"]);
+  const albumPadding = useTransform(motionProg, [0, 100], ["0.4rem", "0rem"]);
 
   const microCtrlOpacity = useTransform(motionProg, [0, 30], [1, 0]);
   const microCtrlWidth = useTransform(motionProg, [0, 99], ["100%", "0%"]);
@@ -118,12 +128,12 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
                     >
                       <Image
                         priority
-                        src={"/adoy_wonder.webp"}
+                        src={artist.ADOY.ablums[0].art}
                         alt="product image"
                         layout="fill"
                         // fill={true}
                         sizes="100%"
-                        style={{ objectFit: "cover" }}
+                        // style={{ objectFit: "cover" }}
                         draggable={false}
                       />
                       <motion.div
@@ -150,15 +160,23 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
                     paddingBottom: gap,
                   }}
                 >
-                  <div className="flex flex-col items-center mb-5">
+                  <div className="flex flex-col items-center mb-3">
                     <div className="font-extrabold text-3xl">
-                      {artist.ADOY.ablums[0].tracks[0].title}
+                      {artist.ADOY.ablums[0].tracks[1].title}
                     </div>
                     <div className="font-bold text-base">
                       {artist.ADOY.nameEn}
                     </div>
                   </div>
-                  <div className="mb-8">play bar</div>
+                  {/* wave form  */}
+                  <div
+                    className="relative mb-8 w-full overflow-hidden"
+                    style={{ height: WAVE_FORM_HEIGHT }}
+                  >
+                    <div className="absolute w-full h-full bottom-[15.5px]">
+                      <DynamicWaveform />
+                    </div>
+                  </div>
                   <div className="flex w-full justify-between items-center ">
                     <div>
                       <Shuffle />
@@ -168,7 +186,6 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
                     </div>
                     <div className="border-black border-opacity-5 shadow-md border-[0.2px] w-16 h-16 rounded-full flex justify-center items-center">
                       <Play width="30" height="30" />
-                      {/* <Pause /> */}
                     </div>
                     <div className="border-black border-opacity-5 shadow-md border-[0.2px] w-12 h-12 rounded-full flex justify-center items-center">
                       <Forward />

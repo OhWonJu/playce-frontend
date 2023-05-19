@@ -17,3 +17,4 @@ export const TABLET_LIMIT = 1025;
 export const NAV_HEIGHT: number = 60;
 
 export const PLAYER_HEADER_HEIGHT: number = 70;
+export const WAVE_FORM_HEIGHT: number = 50;
