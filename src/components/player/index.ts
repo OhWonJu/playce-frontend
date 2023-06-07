@@ -1,1 +1,1 @@
-export { default as Player } from "./player.controller";
+export { default as Player } from "./Player.controller";

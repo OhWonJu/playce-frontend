@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 // 일부 data를  request 할 때 필요한 ID state 관리
 interface MainSheetProgressStore {

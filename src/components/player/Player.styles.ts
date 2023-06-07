@@ -27,7 +27,7 @@ export const PlayerMicroCtlr = styled(motion.div)`
 
 export const PlayerCtlrArea = styled(motion.div)`
   max-height: 100%;
-  ${tw`flex flex-col w-full items-center px-8`}
+  ${tw`relative flex flex-col w-full items-center px-8`}
 `;
 
 export const PlayerFooter = styled(motion.div)`

@@ -6,7 +6,6 @@ const Shuffle = ({ ...props }) => {
       height="24"
       viewBox="0 0 24 24"
       fill="currentColors"
-      stroke="currentColor"
       strokeWidth="0.2"
       strokeLinecap="round"
       strokeLinejoin="round"

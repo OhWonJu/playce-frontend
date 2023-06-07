@@ -10,6 +10,10 @@ import windowReducer, { WindowStateType } from "./windowReducer";
 import userAvatarReducer, { UserAvatarStateType } from "./userAvatarReducer";
 import viewModeReducer, { ViewModeStateType } from "./viewModeReducer";
 import playerReducer, { PlayerStateType } from "./playerReducer";
+import playerControlReducer, {
+  PlayerControlStateType,
+} from "./playerControlReducer";
+import playTimeReducer, { PlayTimeStateType } from "./playTimeReducer";
 
 // actions //
 export { sidebarActions } from "./sidebarReducer";
@@ -19,6 +23,8 @@ export { windowActions } from "./windowReducer";
 export { userAvatarActions } from "./userAvatarReducer";
 export { viewModeActions } from "./viewModeReducer";
 export { playerActions } from "./playerReducer";
+export { playerControlActions } from "./playerControlReducer";
+export { playTimeActions } from "./playTimeReducer";
 
 type ReducerState = {
   sidebar: SidebarStateType;
@@ -28,6 +34,8 @@ type ReducerState = {
   userAvatar: UserAvatarStateType;
   viewMode: ViewModeStateType;
   player: PlayerStateType;
+  playerControl: PlayerControlStateType;
+  playTimeControl: PlayTimeStateType;
 };
 
 // 원래 "rootReducer"로 합쳐줄 필요 없이 "configureStore()"에서 합칠 수 있지만 "HYDRATE"를 위해서 사용
@@ -52,6 +60,8 @@ const rootReducer = (
         userAvatar: userAvatarReducer,
         viewMode: viewModeReducer,
         player: playerReducer,
+        playerControl: playerControlReducer,
+        playTimeControl: playTimeReducer,
       })(state, action);
   }
 };
