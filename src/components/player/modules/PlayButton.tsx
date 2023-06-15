@@ -1,14 +1,21 @@
 import React from "react";
+import cn from "clsx";
 
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { Pause, Play } from "@components/icons";
 
-const PlayButton = () => {
+const PlayButton: React.FC<{ className?: string }> = ({ className }) => {
   const { setPlay, play } = usePlayerControl();
+
+  const rootClassName = cn(
+    "w-16 h-16 rounded-full flex justify-center items-center",
+    {},
+    className,
+  );
 
   return (
     <div
-      className="w-16 h-16 rounded-full flex justify-center items-center"
+      className={rootClassName}
       onClick={() => {
         setPlay(!play);
       }}

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { animate, useMotionValue, useTransform } from "framer-motion";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
-import { Forward } from "@components/icons";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
@@ -17,6 +15,8 @@ import {
 
 import {
   AlbumArt,
+  BottomSheet,
+  ForwardButton,
   PlayButton,
   PlayTimer,
   RepeatButton,
@@ -31,19 +31,19 @@ import {
   PlayerHeader,
   PlayerMicroCtlr,
 } from "./Player.styles";
-
-import { artist } from "mock/adoy";
+import { DotMenu } from "@components/icons";
+import { useUI } from "@components/ui";
+import { useWindowSize } from "react-use";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
 });
 
-interface PlayerViewProps {
-  isOpen?: boolean;
-  setOpen?: any;
-}
+interface PlayerViewProps {}
 
-const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
+const PlayerView: React.FC<PlayerViewProps> = ({}) => {
+  const { viewMode } = useUI();
+  const { height } = useWindowSize();
   const { play, currentTrack } = usePlayerControl();
   // console.log("Wats going on: ", play);
 
@@ -88,23 +88,36 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
     <>
       <Sheet
         ref={ref}
+        id="player"
         rootId="root-layout"
         isMain={true}
         isOpen={true}
         modalMode={false}
         // onClose={() => setOpen(false)}
         onClose={() => console.log("CLOSE")}
-        fixedHeight={NAV_HEIGHT + PLAYER_HEADER_HEIGHT}
+        fixedHeight={
+          viewMode !== "DESKTOP"
+            ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
+            : PLAYER_HEADER_HEIGHT + 34
+        }
         useSnapPoint={false}
-        snapPoints={[1, NAV_HEIGHT + PLAYER_HEADER_HEIGHT]}
+        snapPoints={[
+          viewMode !== "DESKTOP" ? 1 : height - NAV_HEIGHT,
+          viewMode !== "DESKTOP"
+            ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
+            : PLAYER_HEADER_HEIGHT,
+        ]}
         // onSnap={snapIndex =>
         //   console.log("> Current snap point index:", snapIndex)
         // }
         style={{ zIndex: 40 }}
       >
         <Sheet.Container isMain={true}>
-          <Sheet.Content isMain={true}>
-            <div className="flex flex-col w-full h-full max-h-screen">
+          <Sheet.Content isMain={true} style={{ minHeight: "80%" }}>
+            <div
+              id="player-container"
+              className="flex flex-col w-full h-[100%] max-h-screen"
+            >
               {/* HEADER */}
               <PlayerHeader
                 style={{
@@ -113,11 +126,13 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
                   marginBottom: gap,
                 }}
               >
-                Header
+                <div className="flex justify-center items-center h-full aspect-square rounded-full">
+                  <DotMenu className="w-5 h-5" />
+                </div>
               </PlayerHeader>
 
               {/* BODY */}
-              <PlayerBody>
+              <PlayerBody id="player-body">
                 <AlbumArea>
                   <Album
                     className="aspect-square"
@@ -139,54 +154,72 @@ const PlayerView: React.FC<PlayerViewProps> = ({ isOpen, setOpen }) => {
                       width: microCtrlWidth,
                     }}
                   >
-                    <div>micro controller</div>
+                    <div className="__MICRO_TRACK__ flex flex-col max-w-[80%]">
+                      <a className="__MICRO_TRACK_TITLE__ font-extrabold text-sm">
+                        {currentTrack?.trackTitle}
+                      </a>
+                      <a className="__MICRO_ARTIST__ font-semibold text-xs">
+                        {currentTrack?.artistEn}
+                      </a>
+                    </div>
+                    <div className="flex items-center">
+                      <PlayButton className={"w-5 h-5"} />
+                      <ForwardButton isForward={true} />
+                    </div>
                   </PlayerMicroCtlr>
                 </AlbumArea>
                 <PlayerCtlrArea
+                  id="player-controll"
                   style={{
                     opacity: headerOpacity,
                     paddingTop: gap,
                     paddingBottom: gap,
                   }}
                 >
-                  <div className="flex flex-col items-center mb-2">
+                  {/* TRACK INFO */}
+                  <section className="__TRACK_INFO__ flex flex-col items-center mb-2">
                     <div className="__TRACK_TITLE__ font-extrabold text-3xl">
                       {currentTrack?.trackTitle}
                     </div>
                     <div className="__ARTIST__ font-bold text-base">
                       {currentTrack?.artistEn}
                     </div>
-                  </div>
-                  {/* wave form  */}
-                  <div
-                    className="relative mb-1 w-full overflow-hidden"
+                  </section>
+                  {/* WAVE FORM  */}
+                  <section
+                    className="__WAVE_FORM_CONTAINER__ relative mb-1 w-full overflow-hidden"
                     style={{ height: WAVE_FORM_HEIGHT }}
                   >
                     <div className="absolute w-full h-full bottom-[15.5px]">
                       <DynamicWaveform />
                     </div>
-                  </div>
-                  {/* 러닝 타임 훅 떄메 딴애들이 계속 돔...컴포넌트 분리하는게 나을듯.. */}
-                  <div className="flex w-full justify-between font-semibold text-xs mb-7">
+                  </section>
+                  {/* PLAY TIME INDICATOER */}
+                  <section className="flex w-full justify-between font-semibold text-xs mb-7">
                     <PlayTimer />
-                  </div>
-                  <div className="flex w-full justify-between items-center ">
+                  </section>
+                  {/* CONTROLLER */}
+                  <section className="__CONTROLLER__ flex w-full justify-between items-center ">
                     <ShuffleButton />
-                    <div className="w-12 h-12 rounded-full flex justify-center items-center">
-                      <Forward className="rotate-180" />
-                    </div>
+                    <ForwardButton isForward={false} />
                     <PlayButton />
-                    <div className="w-12 h-12 rounded-full flex justify-center items-center">
-                      <Forward />
-                    </div>
+                    <ForwardButton isForward={true} />
                     <RepeatButton />
-                  </div>
+                  </section>
                 </PlayerCtlrArea>
               </PlayerBody>
-
-              {/* Footer */}
-              <PlayerFooter></PlayerFooter>
             </div>
+          </Sheet.Content>
+
+          {/* Footer */}
+          <Sheet.Content
+            isMain={true}
+            disableDrag={true}
+            style={{ minHeight: "20%" }}
+          >
+            <PlayerFooter id="player-footer" className="h-full">
+              <BottomSheet />
+            </PlayerFooter>
           </Sheet.Content>
         </Sheet.Container>
       </Sheet>

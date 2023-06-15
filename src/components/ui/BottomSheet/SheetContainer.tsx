@@ -17,6 +17,7 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
       callbacks,
       snapPoints,
       fixedHeight,
+      rootHeight,
       initialSnap = 0,
       sheetRef,
       windowHeight,
@@ -32,14 +33,24 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
     const initialY = fixedHeight
       ? fixedHeight
       : snapPoints
-      ? snapPoints[0] - snapPoints[initialSnap]
+      ? rootHeight
+        ? rootHeight - snapPoints[initialSnap]
+        : windowHeight - snapPoints[initialSnap]
       : 0;
+
     const maxSnapHeight = snapPoints ? snapPoints[0] : null;
 
-    const height =
-      maxSnapHeight !== null
-        ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
-        : MAX_HEIGHT;
+    const height = rootHeight
+      ? rootHeight
+      : maxSnapHeight !== null
+      ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
+      : MAX_HEIGHT;
+
+    // maxSnapHeight !== null
+    //   ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
+    //   : rootHeight
+    //   ? rootHeight
+    //   : MAX_HEIGHT;
 
     return (
       <motion.div
@@ -56,9 +67,8 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
         initial={reduceMotion ? false : { y: windowHeight }}
         animate={{
           y: initialY,
-          transition: fixedHeight
-            ? { type: "tween", duration: 0 }
-            : animationOptions,
+          transition:
+            initialY > 0 ? { type: "tween", duration: 0 } : animationOptions,
         }}
         exit={{ y: windowHeight, transition: animationOptions }}
         onAnimationComplete={handleAnimationComplete}

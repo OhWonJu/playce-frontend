@@ -30,6 +30,7 @@ export type SheetProps = {
   onClose: () => void;
   rootId?: string;
   mountPoint?: Element;
+  rootHeight?: number;
   useSnapPoint?: boolean;
   snapPoints?: number[];
   detent?: SheetDetent;
@@ -86,6 +87,7 @@ export type SheetContextType = {
   snapPoints: SheetProps["snapPoints"];
   detent: SheetDetent;
   fixedHeight: SheetProps["fixedHeight"];
+  rootHeight?: SheetProps["rootHeight"];
   initialSnap: SheetProps["initialSnap"];
   indicatorRotation: MotionValue<number>;
   callbacks: React.MutableRefObject<SheetEvents>;

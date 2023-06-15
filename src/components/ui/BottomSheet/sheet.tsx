@@ -24,12 +24,13 @@ import {
   IS_SSR,
 } from "./constants";
 
+import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
+
 import { SheetContextType, SheetProps } from "./types";
 import { SheetContext, SubSheetContext } from "./context";
 import { getClosest, inDescendingOrder, validateSnapTo } from "./utils";
 import { usePreventScroll } from "./use-prevent-scroll";
 import styles from "./styles";
-import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 
 const Sheet = React.forwardRef<any, SheetProps>(
   (
@@ -48,6 +49,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
       snapPoints,
       rootId,
       mountPoint,
+      rootHeight,
       style,
       detent = "full-height",
       fixedHeight,
@@ -103,8 +105,14 @@ const Sheet = React.forwardRef<any, SheetProps>(
       // Convert negative / percentage snap points to absolute values
       snapPoints = snapPoints.map(point => {
         // Percentage values e.g. between 0.0 and 1.0
-        if (point > 0 && point <= 1) return Math.round(point * windowHeight);
-        return point < 0 ? windowHeight + point : point; // negative values
+
+        if (rootHeight) {
+          if (point > 0 && point <= 1) return Math.round(point * rootHeight);
+          return point < 0 ? rootHeight + point : point; // negative values
+        } else {
+          if (point > 0 && point <= 1) return Math.round(point * windowHeight);
+          return point < 0 ? windowHeight + point : point; // negative values
+        }
       });
 
       console.assert(
@@ -127,16 +135,24 @@ const Sheet = React.forwardRef<any, SheetProps>(
       // up
       if (delta.y < 0) {
         y.set(Math.max(y.get() + delta.y, 0));
-        // console.log(100 - Math.round((y.get() / sheetHeight) * 100));
         progress.set(
           Math.min(100 - Math.round((y.get() / sheetHeight) * 100), 100),
         );
       }
       // down
       if (delta.y > 0) {
+        // 고정 높이 이하로 내려가지 않도록 지정
         if (fixedHeight) y.set(Math.min(y.get() + delta.y, fixedHeight));
+        else if (initialSnap)
+          y.set(
+            Math.min(y.get() + delta.y, sheetHeight - snapPoints[initialSnap]),
+          );
+        else y.set(y.get() + delta.y);
 
-        if (fixedHeight && y.get() >= fixedHeight) {
+        if (
+          (fixedHeight && y.get() >= fixedHeight) ||
+          (initialSnap && y.get() >= sheetHeight - snapPoints[initialSnap])
+        ) {
           progress.set(0);
         } else {
           progress.set(
@@ -213,7 +229,10 @@ const Sheet = React.forwardRef<any, SheetProps>(
 
     React.useEffect(() => {
       progress.on("change", (lastest: number) => {
-        setProgress(lastest);
+        // main sheet
+        if (isMain) setProgress(lastest);
+        // sub sheet
+        else setProgress(100 - lastest);
       });
     }, []);
 
@@ -282,6 +301,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
       isOpen,
       progress,
       fixedHeight,
+      rootHeight,
       initialSnap,
       snapPoints,
       detent,

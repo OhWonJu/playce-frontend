@@ -1,11 +1,12 @@
 import { NAV_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
 import { motion } from "framer-motion";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
 export const PlayerHeader = styled(motion.div)`
-  max-height: ${PLAYER_HEADER_HEIGHT}px;
-  ${tw`w-full flex justify-center items-center`}
+  /* max-height: ${PLAYER_HEADER_HEIGHT}px; */
+  /* ${tw`relative w-full flex justify-end items-center px-2`} */
+  ${tw`relative w-full h-full flex justify-end items-center px-2`}
 `;
 
 export const PlayerBody = styled(motion.div)`
@@ -23,6 +24,7 @@ export const Album = styled(motion.div)<any>`
 
 export const PlayerMicroCtlr = styled(motion.div)`
   height: ${PLAYER_HEADER_HEIGHT}px;
+  ${tw`flex items-center justify-between p-2`}
 `;
 
 export const PlayerCtlrArea = styled(motion.div)`
@@ -33,6 +35,4 @@ export const PlayerCtlrArea = styled(motion.div)`
 export const PlayerFooter = styled(motion.div)`
   height: 20%;
   max-height: ${NAV_HEIGHT + PLAYER_HEADER_HEIGHT}px;
-
-  ${tw`bg-yellow-50`}
 `;

@@ -9,6 +9,9 @@ module.exports = {
         "7/2": "7 / 2",
         "10/16": "10 / 16",
       },
+      boxShadow: {
+        top: "0 4px 6px 1px rgba(0, 0, 0, 0.5)",
+      },
     },
     screens: {
       sm: "640px",

@@ -5,7 +5,11 @@ import { LoadingDots, useUI } from "@components/ui";
 import { useAcceptCookies } from "@lib/client/hooks/useAcceptCookies";
 import useTheme from "@lib/client/hooks/useTheme";
 import useWindowSize from "@lib/client/hooks/useWindowSize";
-import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
+import {
+  DESKTOP_PLAYER_WIDTH,
+  MOBILE_LIMIT,
+  TABLET_LIMIT,
+} from "constants/constants";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
 // import { TestDropDown, TestDropDown2 } from "../NavDroupDown";
@@ -166,6 +170,7 @@ const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
 
   const [display, setDisplay] = useState(false);
+  const { viewMode } = useUI();
 
   // 더 최적화 할 방법은..?
   const navAble = !NAV_INABLE_PATH.includes(path);

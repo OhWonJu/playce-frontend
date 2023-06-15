@@ -4,13 +4,12 @@ import WaveSurfer from "wavesurfer.js";
 import useTheme from "@lib/client/hooks/useTheme";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
-import { umask } from "process";
 
 const Waveform = () => {
   const theme = useTheme();
 
   const {
-    setcurrentTrack,
+    setCurrentTrack,
     play,
     repeatMode,
     currentTrack,
@@ -33,17 +32,20 @@ const Waveform = () => {
         progressColor: theme.theme_comparsion_color,
         barHeight: 0.7,
         barWidth: 2.5,
-        barRadius: 4,
+        barRadius: 2,
         cursorWidth: 0,
         // 기타 wavesurfer.js 설정 옵션 추가
       });
 
-      wavesurfer.current.on("audioprocess", () => {
-        setPlayTime(wavesurfer.current.getCurrentTime());
-      });
+      wavesurfer.current.on("timeupdate", (currentTime: number) =>
+        setPlayTime(currentTime),
+      );
 
-      // wavesurfer.js 인스턴스를 cleanup 하기 위해 컴포넌트 언마운트 시 호출
-      return () => wavesurfer.current.destroy();
+      return () => {
+        // WaveSurfer 인스턴스 파기
+        wavesurfer.current.unAll();
+        wavesurfer.current.destroy();
+      };
     }
   }, []);
   // ============================== CREATE WAVE FORM //
@@ -73,9 +75,9 @@ const Waveform = () => {
     setPlayTime(0);
 
     if (!stopLast) {
-      setcurrentTrack(playList[nextIdx]);
+      setCurrentTrack(playList[nextIdx]);
     } else setPlay(false);
-  }, [currentTrack, repeatMode, playList]);
+  }, [currentTrack, playList, repeatMode, playList]);
 
   useEffect(() => {
     if (wavesurfer.current) {
@@ -89,31 +91,33 @@ const Waveform = () => {
     };
   }, [handleFinish]);
 
+  const handleTrackChange = useCallback(() => {
+    setTotalTime(wavesurfer.current.getDuration());
+
+    if (playTime > 0) {
+      wavesurfer.current.setTime(playTime);
+    } else {
+      wavesurfer.current.setTime(0);
+    }
+
+    if (play) {
+      wavesurfer.current.play();
+    }
+  }, [currentTrack]);
+
   useEffect(() => {
     if (wavesurfer.current) {
+      wavesurfer.current.pause();
       wavesurfer.current.load(currentTrack.audioURL);
-
-      wavesurfer.current.on("ready", () => {
-        setTotalTime(wavesurfer.current.getDuration());
-
-        if (playTime > 0) {
-          wavesurfer.current.setCurrentTime(playTime);
-        } else {
-          wavesurfer.current.setCurrentTime(0);
-        }
-
-        if (play) {
-          wavesurfer.current.play();
-        }
-      });
+      wavesurfer.current.on("ready", handleTrackChange);
     }
 
     return () => {
       if (wavesurfer.current) {
-        wavesurfer.current.un("ready");
+        wavesurfer.current.un("ready", handleTrackChange);
       }
     };
-  }, [currentTrack]);
+  }, [handleTrackChange]);
 
   useEffect(() => {
     if (wavesurfer.current) {

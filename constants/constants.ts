@@ -11,7 +11,10 @@ export const SCREEN_SIZE_LG = 1024;
 export const SCREEN_SIZE_XL = 1280;
 
 export const MOBILE_LIMIT = 768;
-export const TABLET_LIMIT = 1025;
+export const TABLET_LIMIT = 1025; // 655 + 370
+
+export const DESKTOP_VIEW_WIDTH = 655;
+export const DESKTOP_PLAYER_WIDTH = 300;
 // ------------------------------------------ SCREEN //
 
 export const NAV_HEIGHT: number = 60;

@@ -1,5 +1,9 @@
 import { useUI } from "@components/ui";
-import { NAV_HEIGHT } from "constants/constants";
+import {
+  DESKTOP_PLAYER_WIDTH,
+  NAV_HEIGHT,
+  PLAYER_HEADER_HEIGHT,
+} from "constants/constants";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -20,7 +24,7 @@ const Home: NextPage = () => {
   // console.log(displayPlayer);
 
   return (
-    <Container>
+    <Container isDesktop={viewMode === "DESKTOP" ? true : false}>
       <Wrapper>
         <div className="title">
           NEXTJS TYPESCRIPT STYLEDCOMPONENT BOILERPLATE. <br />
@@ -37,8 +41,10 @@ const Home: NextPage = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<any>`
   width: 100%;
+  ${props =>
+    props.isDesktop && `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH}px);`}
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -46,6 +52,7 @@ const Container = styled.div`
   align-items: center;
   padding-top: ${NAV_HEIGHT}px;
   padding-bottom: ${NAV_HEIGHT}px;
+  ${props => props.isDesktop && `padding-left: ${DESKTOP_PLAYER_WIDTH}px;`}
   background-color: ${({ theme }) => theme.background__color};
 `;
 

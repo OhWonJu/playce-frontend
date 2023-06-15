@@ -32,7 +32,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
 
   return (
     <>
-      {viewMode === "MOBILE" ? (
+      {viewMode !== "DESKTOP" ? (
         <motion.div
           className="fixed bottom-0 bg-yellow-300 w-full z-50"
           style={{ height: NAV_HEIGHT, y }}

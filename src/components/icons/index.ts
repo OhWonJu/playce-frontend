@@ -8,6 +8,7 @@ export { default as ChevronRight } from "./ChevronRight";
 export { default as ChevronUp } from "./ChevronUp";
 export { default as CreditCard } from "./CreditCard";
 export { default as Cross } from "./Cross";
+export { default as DotMenu } from "./DotMenu";
 export { default as DoubleChevron } from "./DoubleChevron";
 export { default as Forward } from "./Forward";
 export { default as Github } from "./Github";

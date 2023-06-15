@@ -44,7 +44,7 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
-  const setcurrentTrack = useCallback(
+  const setCurrentTrack = useCallback(
     (currentTrack: TRACK) =>
       dispatch(
         playerControlActions.playerControlReducer({
@@ -88,7 +88,7 @@ export const usePlayerControl = () => {
     setShuffle: (shuffle: boolean) => setShuffle(shuffle),
     setRepeatMode: (repeatMode: PLAYER_REPEAT_MODE) =>
       setRepeatMode(repeatMode),
-    setcurrentTrack: (currentTrack: TRACK) => setcurrentTrack(currentTrack),
+    setCurrentTrack: (currentTrack: TRACK) => setCurrentTrack(currentTrack),
     setPlayList: (playList: Array<TRACK>) => setPlayList(playList),
     setTotalTime: (totalTime: number) => setTotalTime(totalTime),
   };

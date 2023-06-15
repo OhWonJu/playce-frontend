@@ -14,10 +14,16 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
   const prevIsPlayRef = useRef(isPlay);
 
   useEffect(() => {
+    if (isPlay) {
+      prevIsPlayRef.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
     if (isPlay && !prevIsPlayRef.current) {
       // Play가 false에서 true로 변경되었을 때
       const interval = setInterval(() => {
-        setRotation(prevRotation => prevRotation + speed);
+        setRotation(prevRotation => (prevRotation + speed) % 360);
       }, 16); // 60fps로 애니메이션 실행 (16ms 간격)
       return () => clearInterval(interval); // 컴포넌트가 언마운트되면 setInterval 해제
     } else if (!isPlay && prevIsPlayRef.current) {
@@ -42,26 +48,17 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
         style={{
           transform: `rotate(${rotation}deg)`,
         }}
-        // animate={controls}
-        // animate={{ rotate: "1turn" }}
-        // transition={{
-        //   duration: 7,
-        //   repeat: isPlay ? Infinity : 0,
-        //   ease: "linear",
-        // }}
       >
         <Image
           priority
           src={artURL}
           alt="product image"
           layout="fill"
-          // fill={true}
           sizes="100%"
-          // style={{ objectFit: "cover" }}
           draggable={false}
         />
         <motion.div
-          className="_PIN_WRAPPER_ relative w-[14%] flex items-center justify-center"
+          className="_PIN_WRAPPER_ relative w-[16%] flex items-center justify-center"
           style={{ opacity: pinOpacity }}
         >
           <Pin />
