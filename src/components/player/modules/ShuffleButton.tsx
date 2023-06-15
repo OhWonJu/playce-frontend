@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { Shuffle } from "@components/icons";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
