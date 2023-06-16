@@ -11,8 +11,9 @@ export type PlayerControlStateType = {
   play: boolean;
   shuffle: boolean;
   repeatMode: PLAYER_REPEAT_MODE;
-  currentTrack: TRACK;
+  originTrackList: Array<TRACK>;
   playList: Array<TRACK>;
+  currentTrack: TRACK;
   totalTime: number;
 };
 
@@ -20,6 +21,7 @@ const initialState: PlayerControlStateType = {
   play: false,
   shuffle: false,
   repeatMode: "NONE",
+  originTrackList: [],
   currentTrack: null,
   playList: [],
   totalTime: 0,
@@ -47,6 +49,12 @@ const playerControlSlice = createSlice({
           return {
             ...state,
             repeatMode: aciton.payload.repeatMode,
+          };
+        }
+        case "SET_ORIGIN_TRACK_LIST": {
+          return {
+            ...state,
+            originTrackList: aciton.payload.originTrackList,
           };
         }
         case "SET_CURRENT_TRACK": {

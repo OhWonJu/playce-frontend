@@ -50,8 +50,12 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
   const ref = useRef<SheetRef>();
   // const snapTo = (i: number) => ref.current?.snapTo(i);
 
-  const { progress } = MainSheetProgressStore();
+  const { progress, setProgress } = MainSheetProgressStore();
   const motionProg = useMotionValue(0);
+
+  useEffect(() => {
+    setProgress(0);
+  }, []);
 
   useEffect(() => {
     if (progress <= 0) {
@@ -77,10 +81,15 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
     [0, 100],
     [PLAYER_HEADER_HEIGHT, 100],
   );
-  const albumPadding = useTransform(motionProg, [0, 100], ["0.4rem", "0rem"]);
+  const albumPadding = useTransform(motionProg, [0, 100], ["0.2rem", "0rem"]);
 
   const microCtrlOpacity = useTransform(motionProg, [0, 30], [1, 0]);
   const microCtrlWidth = useTransform(motionProg, [0, 99], ["100%", "0%"]);
+  const microCtrlPadding = useTransform(
+    motionProg,
+    [0, 99],
+    ["0.25rem", "0rem"],
+  );
 
   const pinOpacity = useTransform(motionProg, [99, 100], [0, 1]);
 
@@ -90,6 +99,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
         ref={ref}
         id="player"
         rootId="root-layout"
+        mountPoint={document.getElementById("root-layoout")}
         isMain={true}
         isOpen={true}
         modalMode={false}
@@ -113,7 +123,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
         style={{ zIndex: 40 }}
       >
         <Sheet.Container isMain={true}>
-          <Sheet.Content isMain={true} style={{ minHeight: "80%" }}>
+          <Sheet.Content isMain={true} style={{ minHeight: "85%" }}>
             <div
               id="player-container"
               className="flex flex-col w-full h-[100%] max-h-screen"
@@ -152,6 +162,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
                     style={{
                       opacity: microCtrlOpacity,
                       width: microCtrlWidth,
+                      padding: microCtrlPadding,
                     }}
                   >
                     <div className="__MICRO_TRACK__ flex flex-col max-w-[80%]">
@@ -177,8 +188,8 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
                   }}
                 >
                   {/* TRACK INFO */}
-                  <section className="__TRACK_INFO__ flex flex-col items-center mb-2">
-                    <div className="__TRACK_TITLE__ font-extrabold text-3xl">
+                  <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
+                    <div className="__TRACK_TITLE__ font-extrabold text-3xl overflow-hidden">
                       {currentTrack?.trackTitle}
                     </div>
                     <div className="__ARTIST__ font-bold text-base">
@@ -215,7 +226,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
           <Sheet.Content
             isMain={true}
             disableDrag={true}
-            style={{ minHeight: "20%" }}
+            style={{ minHeight: "10%" }}
           >
             <PlayerFooter id="player-footer" className="h-full">
               <BottomSheet />

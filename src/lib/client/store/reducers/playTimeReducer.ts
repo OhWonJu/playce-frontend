@@ -19,12 +19,6 @@ const playTimeSlice = createSlice({
   reducers: {
     playTimeReducer(state, aciton: PayloadAction<PLAY_TIME_ACTION>) {
       switch (aciton.payload.type) {
-        case "SET_TOTAL_TIME": {
-          return {
-            ...state,
-            totalTime: aciton.payload.totalTime,
-          };
-        }
         case "SET_PLAY_TIME": {
           return {
             ...state,

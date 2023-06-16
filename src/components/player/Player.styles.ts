@@ -14,7 +14,7 @@ export const PlayerBody = styled(motion.div)`
 `;
 
 export const AlbumArea = styled.div`
-  ${tw`flex w-full h-1/2 overflow-hidden`}
+  ${tw`flex w-full h-[52%] overflow-hidden`}
 `;
 
 export const Album = styled(motion.div)<any>`
@@ -24,7 +24,7 @@ export const Album = styled(motion.div)<any>`
 
 export const PlayerMicroCtlr = styled(motion.div)`
   height: ${PLAYER_HEADER_HEIGHT}px;
-  ${tw`flex items-center justify-between p-2`}
+  ${tw`flex items-center justify-between`}
 `;
 
 export const PlayerCtlrArea = styled(motion.div)`

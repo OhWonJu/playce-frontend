@@ -8,8 +8,15 @@ import { PLAYER_REPEAT_MODE, TRACK } from "../store/types/playerControlType";
 export const usePlayerControl = () => {
   const dispatch = useDispatch();
 
-  const { play, shuffle, repeatMode, currentTrack, playList, totalTime } =
-    useSelector(({ playerControl }: RootState) => playerControl);
+  const {
+    play,
+    shuffle,
+    repeatMode,
+    originTrackList,
+    playList,
+    currentTrack,
+    totalTime,
+  } = useSelector(({ playerControl }: RootState) => playerControl);
 
   const setPlay = useCallback(
     (play: boolean) =>
@@ -44,12 +51,12 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
-  const setCurrentTrack = useCallback(
-    (currentTrack: TRACK) =>
+  const setOriginTrackList = useCallback(
+    (originTrackList: Array<TRACK>) =>
       dispatch(
         playerControlActions.playerControlReducer({
-          type: "SET_CURRENT_TRACK",
-          currentTrack,
+          type: "SET_ORIGIN_TRACK_LIST",
+          originTrackList,
         }),
       ),
     [dispatch],
@@ -66,6 +73,17 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
+  const setCurrentTrack = useCallback(
+    (currentTrack: TRACK) =>
+      dispatch(
+        playerControlActions.playerControlReducer({
+          type: "SET_CURRENT_TRACK",
+          currentTrack,
+        }),
+      ),
+    [dispatch],
+  );
+
   const setTotalTime = useCallback(
     (totalTime: number) =>
       dispatch(
@@ -77,20 +95,56 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
+  const doShuffle = useCallback(
+    (list: Array<TRACK>) => {
+      if (shuffle) {
+        const currentIndex = list.findIndex(
+          track => track.trackTitle === currentTrack.trackTitle,
+        );
+
+        const prevList = [...list];
+
+        if (currentIndex !== -1) prevList.splice(currentIndex, 1);
+
+        // Fisher-Yates Shuffle
+        for (let i = prevList.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [prevList[i], prevList[j]] = [prevList[j], prevList[i]];
+        }
+
+        const shuffledList =
+          currentIndex !== -1 ? [currentTrack, ...prevList] : [...prevList];
+
+        setPlayList(shuffledList);
+        setCurrentTrack(currentIndex === -1 ? shuffledList[0] : currentTrack);
+      } else {
+        setPlayList(originTrackList);
+        setCurrentTrack(
+          currentTrack === null ? originTrackList[0] : currentTrack,
+        );
+      }
+    },
+    [shuffle, currentTrack],
+  );
+
   const context = {
     play,
     shuffle,
     repeatMode,
-    currentTrack,
+    originTrackList,
     playList,
+    currentTrack,
     totalTime,
     setPlay: (play: boolean) => setPlay(play),
     setShuffle: (shuffle: boolean) => setShuffle(shuffle),
     setRepeatMode: (repeatMode: PLAYER_REPEAT_MODE) =>
       setRepeatMode(repeatMode),
-    setCurrentTrack: (currentTrack: TRACK) => setCurrentTrack(currentTrack),
+    setOriginTrackList: (originTrackList: Array<TRACK>) =>
+      setOriginTrackList(originTrackList),
     setPlayList: (playList: Array<TRACK>) => setPlayList(playList),
+    setCurrentTrack: (currentTrack: TRACK) => setCurrentTrack(currentTrack),
     setTotalTime: (totalTime: number) => setTotalTime(totalTime),
+    doShuffle: (list: Array<TRACK>) => doShuffle(list),
   };
 
   return context;

@@ -6,18 +6,25 @@ import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
 
 const ForwardButton: React.FC<{ isForward: boolean }> = ({ isForward }) => {
   const { currentTrack, playList, setCurrentTrack } = usePlayerControl();
-  const { setPlayTime } = usePlayTimeControl();
+  const { playTime, setPlayTime } = usePlayTimeControl();
 
   const handleForwardButton = (isForword: boolean) => {
     const currentIdx = playList.findIndex(
       el => el.trackTitle === currentTrack.trackTitle,
     );
-    let nextIdx;
+
+    let nextIdx = currentIdx;
+
     if (isForword) {
       nextIdx = (currentIdx + 1) % playList.length;
     } else {
-      if (currentIdx === 0) nextIdx = playList.length - 1;
-      else nextIdx = (currentIdx - 1) % playList.length;
+      // 재생시간이 10초 미만이면 이전 트랙
+      // 그렇지 않다면 현재트랙
+
+      if (playTime < 10) {
+        if (currentIdx === 0) nextIdx = playList.length - 1;
+        else nextIdx = (currentIdx - 1) % playList.length;
+      }
     }
 
     setPlayTime(0);

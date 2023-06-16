@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, MotionValue } from "framer-motion";
 import Image from "next/image";
+import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
 interface AlbumArtProps {
   artURL?: string;
@@ -9,6 +10,8 @@ interface AlbumArtProps {
 }
 
 const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
+  const { originTrackList } = usePlayerControl();
+
   const [rotation, setRotation] = useState(0);
   const [speed, setSpeed] = useState(0.8);
   const prevIsPlayRef = useRef(isPlay);
@@ -18,6 +21,10 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
       prevIsPlayRef.current = false;
     }
   }, []);
+
+  useEffect(() => {
+    setRotation(0);
+  }, [originTrackList]);
 
   useEffect(() => {
     if (isPlay && !prevIsPlayRef.current) {
@@ -43,26 +50,30 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
 
   if (artURL) {
     return (
-      <div
-        className="relative w-full aspect-square rounded-full overflow-hidden flex items-center justify-center"
-        style={{
-          transform: `rotate(${rotation}deg)`,
-        }}
-      >
-        <Image
-          priority
-          src={artURL}
-          alt="product image"
-          layout="fill"
-          sizes="100%"
-          draggable={false}
-        />
-        <motion.div
-          className="_PIN_WRAPPER_ relative w-[16%] flex items-center justify-center"
-          style={{ opacity: pinOpacity }}
-        >
-          <Pin />
-        </motion.div>
+      <div className="relative w-full h-full p-[0.2rem]">
+        <div className="relative w-full h-full rounded-full overflow-hidden flex items-center justify-center shadow-album">
+          <div
+            className="relative w-full aspect-square rounded-full overflow-hidden"
+            style={{
+              transform: `rotate(${rotation}deg)`,
+            }}
+          >
+            <Image
+              priority
+              src={artURL}
+              alt="product image"
+              layout="fill"
+              sizes="100%"
+              draggable={false}
+            />
+          </div>
+          <motion.div
+            className="_PIN_WRAPPER_ absolute w-[16%] flex items-center justify-center"
+            style={{ opacity: pinOpacity }}
+          >
+            <Pin />
+          </motion.div>
+        </div>
       </div>
     );
   } else null;
@@ -80,7 +91,8 @@ const Pin = () => {
             backgroundColor: "#FBFBF9",
           }}
         >
-          <div className="relative w-[85%] aspect-square bg-zinc-700 rounded-full">
+          <div className="relative w-[85%] aspect-square rounded-full shadow-inner"></div>
+          {/* <div className="relative w-[85%] aspect-square bg-zinc-700 rounded-full shadow-inner">
             <div className="absolute grid place-items-center inset-x-0 w-full h-full">
               <div className="absolute w-[10%] h-[35%] bg-zinc-400 bottom-0" />
             </div>
@@ -90,7 +102,7 @@ const Pin = () => {
             <div className="absolute grid place-items-center inset-x-0 w-full h-full rotate-[240deg]">
               <div className="absolute w-[10%] h-[35%] bg-zinc-400 bottom-0" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

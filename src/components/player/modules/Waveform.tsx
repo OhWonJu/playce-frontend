@@ -17,8 +17,11 @@ const Waveform = () => {
     playList,
     setPlay,
     setPlayList,
+    originTrackList,
   } = usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
+
+  const prevOriginTrackListRef = useRef(originTrackList);
 
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef(null);
@@ -94,8 +97,15 @@ const Waveform = () => {
   const handleTrackChange = useCallback(() => {
     setTotalTime(wavesurfer.current.getDuration());
 
-    if (playTime > 0) {
-      wavesurfer.current.setTime(playTime);
+    if (
+      JSON.stringify(prevOriginTrackListRef.current) ===
+      JSON.stringify(originTrackList)
+    ) {
+      if (playTime > 0) {
+        wavesurfer.current.setTime(playTime);
+      } else {
+        wavesurfer.current.setTime(0);
+      }
     } else {
       wavesurfer.current.setTime(0);
     }
@@ -103,7 +113,9 @@ const Waveform = () => {
     if (play) {
       wavesurfer.current.play();
     }
-  }, [currentTrack]);
+
+    prevOriginTrackListRef.current = originTrackList;
+  }, [currentTrack, originTrackList]);
 
   useEffect(() => {
     if (wavesurfer.current) {

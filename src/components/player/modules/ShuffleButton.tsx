@@ -6,7 +6,12 @@ import useTheme from "@lib/client/hooks/useTheme";
 
 const ShuffleButton = () => {
   const theme = useTheme();
-  const { shuffle, setShuffle } = usePlayerControl();
+  const { shuffle, setShuffle, doShuffle, originTrackList } =
+    usePlayerControl();
+
+  useEffect(() => {
+    doShuffle(originTrackList);
+  }, [shuffle]);
 
   return (
     <div onClick={() => setShuffle(!shuffle)}>

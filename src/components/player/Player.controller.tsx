@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
 import PlayerView from "./Player.view";
-import { artist } from "mock/adoy";
+import { artist } from "mock/mock";
 import { useUI } from "@components/ui";
 import PlayerDesktopView from "./Player.Desktop.view";
 import { TRACK } from "@lib/client/store/types/playerControlType";
@@ -13,54 +13,50 @@ const PlayerController = () => {
   const { currentTrack, setCurrentTrack, setPlayList, shuffle, playList } =
     usePlayerControl();
 
-  const adoy = artist.ADOY;
-  const album = artist.ADOY.ablums[0];
+  // const adoy = artist.ADOY;
+  // const album = artist.ADOY.ablums[0];
 
-  const originPlayList = album.tracks.map((track, index) => {
-    return {
-      artistEn: adoy.nameEn,
-      artistKo: adoy.nameKr,
-      ablumTitle: album.title,
-      ablumArtURL: album.art,
-      audioURL: track.url,
-      trackNo: index + 1,
-      trackTitle: track.title,
-    };
-  });
+  // const originPlayList = album.tracks.map((track, index) => {
+  //   return {
+  //     artistEn: adoy.nameEn,
+  //     artistKo: adoy.nameKr,
+  //     ablumTitle: album.title,
+  //     ablumArtURL: album.art,
+  //     audioURL: track.url,
+  //     trackNo: index + 1,
+  //     trackTitle: track.title,
+  //   };
+  // });
 
-  useEffect(() => {
-    setCurrentTrack(currentTrack === null ? originPlayList[0] : currentTrack);
-    setPlayList(originPlayList);
-  }, []);
+  // // Fisher-Yates Shuffle
+  // const doShuffle = (array: Array<TRACK>) => {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //     let j = Math.floor(Math.random() * (i + 1));
+  //     [array[i], array[j]] = [array[j], array[i]];
+  //   }
 
-  const doShuffle = (array: Array<TRACK>) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
+  //   return array;
+  // };
 
-    return array;
-  };
+  // useEffect(() => {
+  //   if (shuffle) {
+  //     const currentIndex = playList.findIndex(
+  //       el => el.trackTitle == currentTrack.trackTitle,
+  //     );
 
-  useEffect(() => {
-    if (shuffle) {
-      const currentIndex = playList.findIndex(
-        el => el.trackTitle == currentTrack.trackTitle,
-      );
+  //     const prevList = [...playList];
+  //     prevList.splice(currentIndex, 1);
 
-      const prevList = [...playList];
-      prevList.splice(currentIndex, 1);
+  //     let shuffledList = doShuffle(prevList);
+  //     shuffledList = [currentTrack, ...shuffledList];
 
-      let shuffledList = doShuffle(prevList);
-      shuffledList = [currentTrack, ...shuffledList];
-
-      setPlayList(shuffledList);
-      setCurrentTrack(currentTrack === null ? shuffledList[0] : currentTrack);
-    } else {
-      setPlayList(originPlayList);
-      setCurrentTrack(currentTrack === null ? originPlayList[0] : currentTrack);
-    }
-  }, [shuffle]);
+  //     setPlayList(shuffledList);
+  //     setCurrentTrack(currentTrack === null ? shuffledList[0] : currentTrack);
+  //   } else {
+  //     setPlayList(originPlayList);
+  //     setCurrentTrack(currentTrack === null ? originPlayList[0] : currentTrack);
+  //   }
+  // }, [shuffle]);
 
   if (viewMode !== "DESKTOP") return <PlayerView />;
   else return <PlayerDesktopView />;
