@@ -10,8 +10,8 @@ module.exports = {
         "10/16": "10 / 16",
       },
       boxShadow: {
-        top: "0 4px 6px 1px rgba(0, 0, 0, 0.5)",
-        album: "0px 0px 0.15rem 0.15rem rgba(0, 0, 0, 0.2)",
+        top: "0 4px 8px 1px rgba(0, 0, 0, 0.2)",
+        album: "0px 0px 0.3rem 0.3rem rgba(0, 0, 0, 0.025)",
       },
     },
     screens: {

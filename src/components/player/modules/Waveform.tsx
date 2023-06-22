@@ -12,12 +12,13 @@ const Waveform = () => {
     setCurrentTrack,
     play,
     repeatMode,
+    forwardMode,
     currentTrack,
     setTotalTime,
     playList,
     setPlay,
-    setPlayList,
     originTrackList,
+    setForwardMode,
   } = usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
 
@@ -48,6 +49,7 @@ const Waveform = () => {
         // WaveSurfer 인스턴스 파기
         wavesurfer.current.unAll();
         wavesurfer.current.destroy();
+        wavesurfer.current = null;
       };
     }
   }, []);
@@ -73,7 +75,7 @@ const Waveform = () => {
       }
     }
 
-    console.log(currentIdx, nextIdx);
+    // console.log(currentIdx, nextIdx);
 
     setPlayTime(0);
 
@@ -94,28 +96,30 @@ const Waveform = () => {
     };
   }, [handleFinish]);
 
-  const handleTrackChange = useCallback(() => {
+  const handleTrackChange = useCallback(async () => {
     setTotalTime(wavesurfer.current.getDuration());
 
     if (
       JSON.stringify(prevOriginTrackListRef.current) ===
       JSON.stringify(originTrackList)
     ) {
-      if (playTime > 0) {
-        wavesurfer.current.setTime(playTime);
-      } else {
-        wavesurfer.current.setTime(0);
-      }
+      playTime > 0
+        ? wavesurfer.current.setTime(playTime)
+        : wavesurfer.current.setTime(0);
     } else {
       wavesurfer.current.setTime(0);
     }
 
+    prevOriginTrackListRef.current = originTrackList;
+
     if (play) {
-      wavesurfer.current.play();
+      await wavesurfer.current.play();
     }
 
-    prevOriginTrackListRef.current = originTrackList;
-  }, [currentTrack, originTrackList]);
+    return async () => {
+      await wavesurfer.current.empty();
+    };
+  }, [currentTrack, originTrackList, forwardMode]);
 
   useEffect(() => {
     if (wavesurfer.current) {
@@ -131,13 +135,15 @@ const Waveform = () => {
     };
   }, [handleTrackChange]);
 
+  const handlePlay = async () => {
+    if (play) {
+      await wavesurfer.current.play();
+    } else await wavesurfer.current.pause();
+  };
+
   useEffect(() => {
     if (wavesurfer.current) {
-      if (play) {
-        wavesurfer.current.play();
-      } else {
-        wavesurfer.current.pause();
-      }
+      handlePlay();
     }
   }, [play]);
 

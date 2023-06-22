@@ -91,7 +91,8 @@ const Pin = () => {
             backgroundColor: "#FBFBF9",
           }}
         >
-          <div className="relative w-[85%] aspect-square rounded-full shadow-inner"></div>
+          <div className="relative grid place-items-center w-[85%] aspect-square rounded-full shadow-inner border-[1px] border-[#F7F7F5]">
+          </div>
           {/* <div className="relative w-[85%] aspect-square bg-zinc-700 rounded-full shadow-inner">
             <div className="absolute grid place-items-center inset-x-0 w-full h-full">
               <div className="absolute w-[10%] h-[35%] bg-zinc-400 bottom-0" />

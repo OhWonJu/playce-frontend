@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type {
   PLAYER_CONTROL_ACTION,
+  PLAYER_FORWARD_MODE,
   PLAYER_REPEAT_MODE,
   TRACK,
 } from "../types/playerControlType";
@@ -11,6 +12,7 @@ export type PlayerControlStateType = {
   play: boolean;
   shuffle: boolean;
   repeatMode: PLAYER_REPEAT_MODE;
+  forwardMode: PLAYER_FORWARD_MODE;
   originTrackList: Array<TRACK>;
   playList: Array<TRACK>;
   currentTrack: TRACK;
@@ -21,6 +23,7 @@ const initialState: PlayerControlStateType = {
   play: false,
   shuffle: false,
   repeatMode: "NONE",
+  forwardMode: "INIT",
   originTrackList: [],
   currentTrack: null,
   playList: [],
@@ -49,6 +52,12 @@ const playerControlSlice = createSlice({
           return {
             ...state,
             repeatMode: aciton.payload.repeatMode,
+          };
+        }
+        case "SET_FORWARD_MODE": {
+          return {
+            ...state,
+            forwardMode: aciton.payload.forwardMode,
           };
         }
         case "SET_ORIGIN_TRACK_LIST": {

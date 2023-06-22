@@ -74,7 +74,11 @@ const Home: NextPage = () => {
     }
   };
 
-  const myAlbums = [artist.ADOY.ablums[0], artist.BaekYeRin.ablums[0]];
+  const myAlbums = [
+    artist.ADOY.ablums[0],
+    artist.BaekYeRin.ablums[0],
+    artist.The1975.ablums[0],
+  ];
 
   return (
     <Container

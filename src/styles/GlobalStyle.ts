@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle<any>`
         font-family: sans-serif;
     }
     body {
-        /* min-width: 420px; */
+        min-width: 420px;
         background-color: ${props => props.theme.background_color};
         background-repeat: repeat;
     }

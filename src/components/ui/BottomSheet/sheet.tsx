@@ -49,7 +49,6 @@ const Sheet = React.forwardRef<any, SheetProps>(
       snapPoints,
       rootId,
       mountPoint,
-      rootHeight,
       style,
       detent = "full-height",
       fixedHeight,
@@ -105,14 +104,8 @@ const Sheet = React.forwardRef<any, SheetProps>(
       // Convert negative / percentage snap points to absolute values
       snapPoints = snapPoints.map(point => {
         // Percentage values e.g. between 0.0 and 1.0
-
-        if (rootHeight) {
-          if (point > 0 && point <= 1) return Math.round(point * rootHeight);
-          return point < 0 ? rootHeight + point : point; // negative values
-        } else {
-          if (point > 0 && point <= 1) return Math.round(point * windowHeight);
-          return point < 0 ? windowHeight + point : point; // negative values
-        }
+        if (point > 0 && point <= 1) return Math.round(point * windowHeight);
+        return point < 0 ? windowHeight + point : point; // negative values
       });
 
       console.assert(
@@ -301,7 +294,6 @@ const Sheet = React.forwardRef<any, SheetProps>(
       isOpen,
       progress,
       fixedHeight,
-      rootHeight,
       initialSnap,
       snapPoints,
       detent,

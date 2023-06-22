@@ -93,4 +93,95 @@ export const artist = {
       },
     ],
   },
+  The1975: {
+    nameEn: "The 1975",
+    nameKr: "The 1975",
+    ablums: [
+      {
+        title: "A Brief Inquiry into Online Relationships",
+        nameEn: "The 1975",
+        nameKr: "The 1975",
+        art: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships.webp",
+        tracks: [
+          {
+            title: "The 1975 (ABIIOR)",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_01_The_1975_(ABIIOR).mp3",
+          },
+          {
+            title: "Give Yourself a Try",
+            time: 1000,
+
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_02_Give_Yourself_A_Try.mp3",
+          },
+          {
+            title: "TOOTIMETOOTIMETOOTIME",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_03_TOOTIMETOOTIMETOOTIME.mp3",
+          },
+          {
+            title: "How to Draw / Petrichor",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_04_How_To_Draw__Petrichor.mp3",
+          },
+          {
+            title: "Love It If We Made It",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_05_Love_It_If_We_Made_It.mp3",
+          },
+          {
+            title: "Be My Mistake",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_06_Be_My_Mistake.mp3",
+          },
+          {
+            title: "Sincerity Is Scary",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_07_Sincerity_Is_Scary.mp3",
+          },
+          {
+            title: "I Like America & America Likes Me",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_08_I_Like_America_&_AmericaLikesMe.mp3",
+          },
+          {
+            title: "The Man Who Married a Robot / Love Theme",
+            time: 1000,
+
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_09_The_Man_Who_Married_A_Robot__LoveTheme.mp3",
+          },
+          {
+            title: "Inside Your Mind",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_10_Inside_Your_Mind.mp3",
+          },
+          {
+            title: "It's Not Living (If It's Not With You)",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_11_Its_Not_Living_(If_Its_Not_With_You).mp3",
+          },
+          {
+            title: "Surrounded by Heads and Bodies",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_12_Surrounded_By_Heads_And_Bodies.mp3",
+          },
+          {
+            title: "Mine",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_13_Mine.mp3",
+          },
+          {
+            title: "I Couldn't Be More in Love",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_14_I_Couldnt_Be_More_In_Love.mp3",
+          },
+          {
+            title: "I Always Wanna Die (Sometimes)",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_15_I_Always_Wanna_Die_(Sometimes).mp3",
+          },
+        ],
+      },
+    ],
+  },
 };

@@ -7,19 +7,24 @@ import styles from "./styles";
 
 const SheetContent = React.forwardRef<any, SheetDraggableProps>(
   ({ children, isMain, style, disableDrag, className = "", ...rest }, ref) => {
+    const positionRef = React.useRef<HTMLDivElement>(null);
     const { dragProps } = useSheetContext(isMain);
     const _dragProps = disableDrag ? undefined : dragProps;
 
     return (
-      <motion.div
-        {...rest}
-        ref={ref}
-        className={`react-modal-sheet-content ${className}`}
-        style={{ ...styles.content, ...style }}
-        {..._dragProps}
-      >
-        {children}
-      </motion.div>
+      <>
+        <div ref={positionRef} />
+        <motion.div
+          {...rest}
+          ref={ref}
+          className={`react-modal-sheet-content ${className}`}
+          style={{ ...styles.content, ...style }}
+          {..._dragProps}
+          // dragConstraints={positionRef}
+        >
+          {children}
+        </motion.div>
+      </>
     );
   },
 );

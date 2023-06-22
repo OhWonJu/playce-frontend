@@ -12,6 +12,7 @@ import {
 } from "constants/constants";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
+import { PlayerBottomSheet } from "@components/playerBottomeSheet";
 // import { TestDropDown, TestDropDown2 } from "../NavDroupDown";
 // import { Cross } from "@components/icons";
 
@@ -124,6 +125,12 @@ const PlayerUI: React.FC = () => {
   return displayPlayer ? <Player /> : null;
 };
 
+const PlayerBottomSheetUI: React.FC = () => {
+  const { displayPlayer } = useUI();
+
+  return displayPlayer ? <PlayerBottomSheet /> : null;
+};
+
 const ViewModeUI: React.FC = () => {
   const { width } = useWindowSize();
   const { viewMode, setViewMode } = useUI();
@@ -193,6 +200,7 @@ const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
       <SidebarUI />
       <DropDownUI />
       <PlayerUI />
+      <PlayerBottomSheetUI />
     </div>
   );
 };

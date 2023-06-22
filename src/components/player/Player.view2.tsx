@@ -45,16 +45,17 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
   const { viewMode } = useUI();
   const { height } = useWindowSize();
   const { play, currentTrack } = usePlayerControl();
+  // console.log("Wats going on: ", play);
 
   const ref = useRef<SheetRef>();
   // const snapTo = (i: number) => ref.current?.snapTo(i);
 
-  const { progress } = MainSheetProgressStore();
+  const { progress, setProgress } = MainSheetProgressStore();
   const motionProg = useMotionValue(0);
 
-  // useEffect(() => {
-  //   setProgress(0);
-  // }, []);
+  useEffect(() => {
+    setProgress(0);
+  }, []);
 
   useEffect(() => {
     if (progress <= 0) {
@@ -73,14 +74,14 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
   const gap = useTransform(motionProg, [0, 100], ["0rem", "1rem"]);
 
   const headerOpacity = useTransform(motionProg, [85, 100], [0, 1]);
-  const headerHeight = useTransform(motionProg, [10, 70], ["0%", "8%"]);
+  const headerHeight = useTransform(motionProg, [10, 70], ["0%", "10%"]);
 
   const albumHeight = useTransform(
     motionProg,
     [0, 100],
     [PLAYER_HEADER_HEIGHT, 100],
   );
-  const albumPadding = useTransform(motionProg, [0, 100], ["0.25rem", "0rem"]);
+  const albumPadding = useTransform(motionProg, [0, 100], ["0.2rem", "0rem"]);
 
   const microCtrlOpacity = useTransform(motionProg, [0, 30], [1, 0]);
   const microCtrlWidth = useTransform(motionProg, [0, 99], ["100%", "0%"]);
@@ -122,7 +123,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
         style={{ zIndex: 40 }}
       >
         <Sheet.Container isMain={true}>
-          <Sheet.Content isMain={true} style={{ maxHeight: "85%" }}>
+          <Sheet.Content isMain={true} style={{ minHeight: "85%" }}>
             <div
               id="player-container"
               className="flex flex-col w-full h-[100%] max-h-screen"
@@ -219,6 +220,17 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
                 </PlayerCtlrArea>
               </PlayerBody>
             </div>
+          </Sheet.Content>
+
+          {/* Footer */}
+          <Sheet.Content
+            isMain={true}
+            disableDrag={true}
+            style={{ minHeight: "10%" }}
+          >
+            <PlayerFooter id="player-footer" className="h-full">
+              <BottomSheet />
+            </PlayerFooter>
           </Sheet.Content>
         </Sheet.Container>
       </Sheet>

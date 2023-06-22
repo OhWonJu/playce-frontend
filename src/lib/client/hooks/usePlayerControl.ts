@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@lib/client/store/store";
 import { playerControlActions } from "@lib/client/store/reducers";
 import { useCallback } from "react";
-import { PLAYER_REPEAT_MODE, TRACK } from "../store/types/playerControlType";
+import {
+  PLAYER_FORWARD_MODE,
+  PLAYER_REPEAT_MODE,
+  TRACK,
+} from "../store/types/playerControlType";
 
 export const usePlayerControl = () => {
   const dispatch = useDispatch();
@@ -12,6 +16,7 @@ export const usePlayerControl = () => {
     play,
     shuffle,
     repeatMode,
+    forwardMode,
     originTrackList,
     playList,
     currentTrack,
@@ -46,6 +51,17 @@ export const usePlayerControl = () => {
         playerControlActions.playerControlReducer({
           type: "SET_REPEAT_MODE",
           repeatMode,
+        }),
+      ),
+    [dispatch],
+  );
+
+  const setForwardMode = useCallback(
+    (forwardMode: PLAYER_FORWARD_MODE) =>
+      dispatch(
+        playerControlActions.playerControlReducer({
+          type: "SET_FORWARD_MODE",
+          forwardMode,
         }),
       ),
     [dispatch],
@@ -131,6 +147,7 @@ export const usePlayerControl = () => {
     play,
     shuffle,
     repeatMode,
+    forwardMode,
     originTrackList,
     playList,
     currentTrack,
@@ -139,6 +156,8 @@ export const usePlayerControl = () => {
     setShuffle: (shuffle: boolean) => setShuffle(shuffle),
     setRepeatMode: (repeatMode: PLAYER_REPEAT_MODE) =>
       setRepeatMode(repeatMode),
+    setForwardMode: (forwardMode: PLAYER_FORWARD_MODE) =>
+      setForwardMode(forwardMode),
     setOriginTrackList: (originTrackList: Array<TRACK>) =>
       setOriginTrackList(originTrackList),
     setPlayList: (playList: Array<TRACK>) => setPlayList(playList),

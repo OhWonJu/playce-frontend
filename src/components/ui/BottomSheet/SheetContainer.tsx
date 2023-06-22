@@ -17,7 +17,6 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
       callbacks,
       snapPoints,
       fixedHeight,
-      rootHeight,
       initialSnap = 0,
       sheetRef,
       windowHeight,
@@ -33,18 +32,15 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
     const initialY = fixedHeight
       ? fixedHeight
       : snapPoints
-      ? rootHeight
-        ? rootHeight - snapPoints[initialSnap]
-        : windowHeight - snapPoints[initialSnap]
+      ? windowHeight - snapPoints[initialSnap]
       : 0;
 
     const maxSnapHeight = snapPoints ? snapPoints[0] : null;
 
-    const height = rootHeight
-      ? rootHeight
-      : maxSnapHeight !== null
-      ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
-      : MAX_HEIGHT;
+    const height =
+      maxSnapHeight !== null
+        ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
+        : MAX_HEIGHT;
 
     // maxSnapHeight !== null
     //   ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
