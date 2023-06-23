@@ -118,6 +118,7 @@ const Waveform = () => {
 
     return async () => {
       await wavesurfer.current.empty();
+      await wavesurfer.current.pause();
     };
   }, [currentTrack, originTrackList, forwardMode]);
 

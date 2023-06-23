@@ -47,7 +47,7 @@
     "styled-normalize": "^8.0.7",
     "tabbable": "^6.0.0",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "wavesurfer.js": "^7.0.0-beta.8",
+    "wavesurfer.js": "^7.0.0-beta.11",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

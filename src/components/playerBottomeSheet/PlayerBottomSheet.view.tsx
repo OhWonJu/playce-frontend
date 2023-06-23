@@ -48,10 +48,11 @@ const PlayerBottomSheetView = () => {
         isMain={false}
         isOpen={true}
         modalMode={false}
-        onClose={() => snapTo(1)}
-        initialSnap={1}
-        useSnapPoint={true}
-        snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
+        // onClose={() => snapTo(1)}
+        fixedHeight={NAV_HEIGHT + 20}  
+        // initialSnap={1}
+        // useSnapPoint={true}
+        // snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
         onSnap={snapIndex =>
           console.log("> Current snap point index:", snapIndex)
         }
@@ -106,7 +107,7 @@ const PlayerBottomSheetView = () => {
             </Sheet.Header>
             <Sheet.Content isMain={false} disableDrag={true}>
               <div
-                className="flex flex-col w-full h-[90%] py-2 px-4 space-y-2 overflow-y-scroll scrollbar-hide z-[100]"
+                className="flex flex-col w-full h-[87%] pt-2 pb-4 px-4 space-y-3 overflow-y-scroll scrollbar-hide z-[100]"
                 style={{
                   backgroundColor: theme.background_color,
                   // marginTop: NAV_HEIGHT,

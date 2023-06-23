@@ -51,7 +51,7 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
   if (artURL) {
     return (
       <div className="relative w-full h-full p-[0.2rem]">
-        <div className="relative w-full h-full rounded-full overflow-hidden flex items-center justify-center shadow-album">
+        <div className="relative w-full aspect-square rounded-full overflow-hidden flex items-center justify-center shadow-album">
           <div
             className="relative w-full aspect-square rounded-full overflow-hidden"
             style={{

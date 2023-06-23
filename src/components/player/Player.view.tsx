@@ -70,7 +70,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
     }
   }, [progress]);
 
-  const gap = useTransform(motionProg, [0, 100], ["0rem", "1rem"]);
+  const gap = useTransform(motionProg, [0, 100], ["0rem", "0.5rem"]);
 
   const headerOpacity = useTransform(motionProg, [85, 100], [0, 1]);
   const headerHeight = useTransform(motionProg, [10, 70], ["0%", "8%"]);
@@ -122,7 +122,7 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
         style={{ zIndex: 40 }}
       >
         <Sheet.Container isMain={true}>
-          <Sheet.Content isMain={true} style={{ maxHeight: "85%" }}>
+          <Sheet.Content isMain={true} style={{ maxHeight: "90%" }}>
             <div
               id="player-container"
               className="flex flex-col w-full h-[100%] max-h-screen"
