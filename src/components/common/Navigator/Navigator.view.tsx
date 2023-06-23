@@ -71,10 +71,14 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
             backgroundColor: theme.background_color,
           }}
         >
-          <div className="flex justify-around px-4 py-2 w-full h-full">
-            <Home className="w-7 h-7" />
-            <Explor className="w-7 h-7" />
-            <Search className="w-7 h-7" />
+          <div className="relative flex justify-center w-full h-full">
+            <div className="w-[40%] h-full flex justify-around items-center px-4 py-2">
+              <Home className="w-7 h-7" />
+              <Explor className="w-7 h-7" />
+              <Search className="w-7 h-7" />
+            </div>
+          </div>
+          <div className="absolute top-0 right-0 h-full grid place-items-center px-[1.5rem]">
             <div className="relative w-7 h-7 rounded-full overflow-hidden">
               <Image
                 priority
