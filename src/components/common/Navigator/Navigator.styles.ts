@@ -11,5 +11,6 @@ export const PlayIndicatorBackGround = styled.div`
 export const PlayIndicatorBar = styled.span<any>`
   width: ${props => props.percent}%;
   background-color: ${props => props.theme.black_primary};
+
   ${tw`absolute top-0 left-0 bottom-0 rounded-full`}
 `;

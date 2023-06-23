@@ -29,3 +29,24 @@ export const usePlayTimeControl = () => {
 
   return context;
 };
+
+export const useSetPlayTime = () => {
+  const dispatch = useDispatch();
+
+  const setPlayTime = useCallback(
+    (playTime: number) =>
+      dispatch(
+        playTimeActions.playTimeReducer({
+          type: "SET_PLAY_TIME",
+          playTime,
+        }),
+      ),
+    [dispatch],
+  );
+
+  const context = {
+    setPlayTime: (playTime: number) => setPlayTime(playTime),
+  };
+
+  return context;
+};

@@ -180,6 +180,11 @@ export const artist = {
             time: 1000,
             url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_15_I_Always_Wanna_Die_(Sometimes).mp3",
           },
+          {
+            title: "She's American (Bouns Track)",
+            time: 1000,
+            url: "/the1975_A_Brief_Inquiry_into_Online_Relationships/the1975_A_Brief_Inquiry_into_Online_Relationships_16_She's_American_(Bouns_Track).mp3",
+          },
         ],
       },
     ],

@@ -20,9 +20,14 @@ import {
   PBSHeaderTabs,
   PBSHeaderWrapper,
 } from "./PlayerBottomSheet.styles";
+import {
+  usePlayTimeControl,
+  useSetPlayTime,
+} from "@lib/client/hooks/usePlayTimeControl";
 
 const PlayerBottomSheetView = () => {
-  const { playList } = usePlayerControl();
+  const { playList, setCurrentTrack, setPlay } = usePlayerControl();
+  const { setPlayTime } = useSetPlayTime();
 
   const ref = useRef<SheetRef>();
 
@@ -89,8 +94,8 @@ const PlayerBottomSheetView = () => {
               </PBSHandleWrapper>
               <PBSHeaderWrapper>
                 <PBSHeader>
-                  {["Tracks", "Lyrics", "Content"].map(a => (
-                    <PBSHeaderTabs>
+                  {["Tracks", "Lyrics", "Content"].map((a, index) => (
+                    <PBSHeaderTabs key={index}>
                       <PBSHeaderA>{a}</PBSHeaderA>
                     </PBSHeaderTabs>
                   ))}
@@ -99,15 +104,19 @@ const PlayerBottomSheetView = () => {
             </Sheet.Header>
             <Sheet.Content isMain={false} disableDrag={true}>
               <PBSContentWrapper>
-                {playList.map((list: TRACK, index: number) => (
+                {playList.map((track: TRACK, index: number) => (
                   <div
                     key={index}
                     className="flex w-full min-h-[60px] items-center"
+                    onClick={() => {
+                      setPlayTime(0);
+                      setCurrentTrack(track);
+                    }}
                   >
                     <div className="relative h-full aspect-square rounded-full overflow-hidden mr-2">
                       <Image
                         priority
-                        src={list.ablumArtURL}
+                        src={track.ablumArtURL}
                         alt="product image"
                         layout="fill"
                         sizes="100%"
@@ -116,9 +125,9 @@ const PlayerBottomSheetView = () => {
                     </div>
                     <div className="flex flex-col">
                       <a className="font-semibold text-base">
-                        {list.trackTitle}
+                        {track.trackTitle}
                       </a>
-                      <a className="font-medium text-xs">{list.artistKo}</a>
+                      <a className="font-medium text-xs">{track.artistKo}</a>
                     </div>
                   </div>
                 ))}
