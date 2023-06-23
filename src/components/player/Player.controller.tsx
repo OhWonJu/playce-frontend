@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
-import PlayerView from "./Player.view";
-import { artist } from "mock/mock";
 import { useUI } from "@components/ui";
 import PlayerDesktopView from "./Player.Desktop.view";
-import { TRACK } from "@lib/client/store/types/playerControlType";
+import PlayerMobileView from "./Player.Mobile.view";
 
 const PlayerController = () => {
   const { viewMode } = useUI();
@@ -58,7 +56,7 @@ const PlayerController = () => {
   //   }
   // }, [shuffle]);
 
-  if (viewMode !== "DESKTOP") return <PlayerView />;
+  if (viewMode !== "DESKTOP") return <PlayerMobileView />;
   else return <PlayerDesktopView />;
 };
 

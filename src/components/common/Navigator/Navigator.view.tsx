@@ -46,7 +46,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
             backgroundColor: theme.background_color,
           }}
         >
-          {displayPlayer && progress < 1? <PlayIndicator /> : null}
+          {displayPlayer && progress < 1 ? <PlayIndicator /> : null}
           <div className="flex justify-around px-4 py-2 w-full h-full">
             <Home className="w-7 h-7" />
             <Explor className="w-7 h-7" />
@@ -65,10 +65,27 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
         </motion.div>
       ) : (
         <div
-          className="fixed top-0 bg-yellow-300 w-full z-50"
-          style={{ height: NAV_HEIGHT }}
+          className="fixed top-0 w-full z-[100]"
+          style={{
+            height: NAV_HEIGHT,
+            backgroundColor: theme.background_color,
+          }}
         >
-          COMMON NAV
+          <div className="flex justify-around px-4 py-2 w-full h-full">
+            <Home className="w-7 h-7" />
+            <Explor className="w-7 h-7" />
+            <Search className="w-7 h-7" />
+            <div className="relative w-7 h-7 rounded-full overflow-hidden">
+              <Image
+                priority
+                src={"/onneul.jpeg"}
+                alt="product image"
+                layout="fill"
+                sizes="100%"
+                draggable={false}
+              />
+            </div>
+          </div>
         </div>
       )}
     </>

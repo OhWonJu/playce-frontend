@@ -194,13 +194,13 @@ const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
       }}
     >
       <ViewModeUI />
-      <Navigator logoVisible={logoVisible} />
       <main className="fit">{children}</main>
       <ModalUI />
       <SidebarUI />
       <DropDownUI />
       <PlayerUI />
-      <PlayerBottomSheetUI />
+      {viewMode !== "DESKTOP" ? <PlayerBottomSheetUI /> : null}
+      <Navigator logoVisible={logoVisible} />
     </div>
   );
 };

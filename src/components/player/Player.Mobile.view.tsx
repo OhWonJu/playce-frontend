@@ -39,9 +39,9 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
 });
 
-interface PlayerViewProps {}
+interface PlayerMobileViewProps {}
 
-const PlayerView: React.FC<PlayerViewProps> = ({}) => {
+const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
   const { viewMode } = useUI();
   const { height } = useWindowSize();
   const { play, currentTrack } = usePlayerControl();
@@ -226,4 +226,4 @@ const PlayerView: React.FC<PlayerViewProps> = ({}) => {
   );
 };
 
-export default PlayerView;
+export default PlayerMobileView;

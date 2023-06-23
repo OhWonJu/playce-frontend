@@ -199,7 +199,8 @@ const Container = styled.div<any>`
   position: relative;
   width: 100%;
   ${props =>
-    props.isDesktop && `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH}px);`}
+    props.isDesktop &&
+    `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH * 2}px);`}
   max-height: 100vh;
   width: 100vw;
   display: flex;
@@ -208,7 +209,7 @@ const Container = styled.div<any>`
   /* align-items: center; */
   padding-top: ${NAV_HEIGHT}px;
   padding-bottom: ${NAV_HEIGHT}px;
-  ${props => props.isDesktop && `padding-left: ${DESKTOP_PLAYER_WIDTH}px;`}
+  ${props => props.isDesktop && `margin-left: ${DESKTOP_PLAYER_WIDTH}px;`}
   background-color: ${({ theme }) => theme.background__color};
 `;
 
