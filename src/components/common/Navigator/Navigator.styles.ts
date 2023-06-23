@@ -1,4 +1,15 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import tw from "twin.macro";
 
-import { NAV_HEIGHT } from "constants/constants";
+export const PlayIndicatorBackGround = styled.div`
+  position: relative;
+  height: 1.5px;
+  width: 100%;
+  /* background-color: ${props => props.theme.gray_light}; */
+`;
+
+export const PlayIndicatorBar = styled.span<any>`
+  width: ${props => props.percent}%;
+  background-color: ${props => props.theme.black_primary};
+  ${tw`absolute top-0 left-0 bottom-0 rounded-full`}
+`;

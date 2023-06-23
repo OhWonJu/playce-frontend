@@ -75,16 +75,16 @@ const ForwardButton: React.FC<{ isForward: boolean }> = ({ isForward }) => {
     ],
   );
 
-  const throttledHandleForwardButton = React.useMemo(
+  const debouncedHandleForwardButton = React.useMemo(
     () =>
-      _.throttle((isForward: boolean) => handleForwardButton(isForward), 500),
+      _.debounce((isForward: boolean) => handleForwardButton(isForward), 300),
     [handleForwardButton],
   );
 
   return (
     <div
       className={`w-12 h-12 rounded-full flex justify-center items-center`}
-      onClick={() => throttledHandleForwardButton(isForward)}
+      onClick={() => debouncedHandleForwardButton(isForward)}
     >
       {isForward ? <Forward /> : <Forward className="rotate-180" />}
     </div>

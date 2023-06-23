@@ -9,6 +9,7 @@ import { Explor, Home, Search } from "@components/icons";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
 
 import { NAV_HEIGHT } from "constants/constants";
+import { PlayIndicator } from "./modules";
 
 interface NavigatorViewProps {
   logoVisible: boolean;
@@ -16,7 +17,7 @@ interface NavigatorViewProps {
 
 const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
   const theme = useTheme();
-  const { viewMode } = useUI();
+  const { viewMode, displayPlayer } = useUI();
   const { progress } = MainSheetProgressStore();
 
   const y = useMotionValue(0);
@@ -38,25 +39,28 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
     <>
       {viewMode !== "DESKTOP" ? (
         <motion.div
-          className="fixed flex justify-around bottom-0 px-4 py-2 w-full z-50"
+          className="fixed flex flex-col justify-around bottom-0 w-full z-50"
           style={{
             height: NAV_HEIGHT,
             y,
             backgroundColor: theme.background_color,
           }}
         >
-          <Home className="w-7 h-7" />
-          <Explor className="w-7 h-7" />
-          <Search className="w-7 h-7" />
-          <div className="relative w-7 h-7 rounded-full overflow-hidden">
-            <Image
-              priority
-              src={"/onneul.jpeg"}
-              alt="product image"
-              layout="fill"
-              sizes="100%"
-              draggable={false}
-            />
+          {displayPlayer && progress < 1? <PlayIndicator /> : null}
+          <div className="flex justify-around px-4 py-2 w-full h-full">
+            <Home className="w-7 h-7" />
+            <Explor className="w-7 h-7" />
+            <Search className="w-7 h-7" />
+            <div className="relative w-7 h-7 rounded-full overflow-hidden">
+              <Image
+                priority
+                src={"/onneul.jpeg"}
+                alt="product image"
+                layout="fill"
+                sizes="100%"
+                draggable={false}
+              />
+            </div>
           </div>
         </motion.div>
       ) : (

@@ -1,6 +1,6 @@
 import { NAV_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
 import { motion } from "framer-motion";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import tw from "twin.macro";
 
 export const PlayerHeader = styled(motion.div)`

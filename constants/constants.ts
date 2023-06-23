@@ -21,3 +21,5 @@ export const NAV_HEIGHT: number = 60;
 
 export const PLAYER_HEADER_HEIGHT: number = 70;
 export const WAVE_FORM_HEIGHT: number = 50;
+
+export const PLAYER_BOTTOM_SHEET_HEADER_HEIGHT: number = 20;
