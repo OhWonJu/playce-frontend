@@ -1,20 +1,18 @@
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 
-import { LoadingDots, useUI } from "@components/ui";
 import { useAcceptCookies } from "@lib/client/hooks/useAcceptCookies";
 import useTheme from "@lib/client/hooks/useTheme";
 import useWindowSize from "@lib/client/hooks/useWindowSize";
-import {
-  DESKTOP_PLAYER_WIDTH,
-  MOBILE_LIMIT,
-  TABLET_LIMIT,
-} from "constants/constants";
+
+import { LoadingDots, useUI } from "@components/ui";
+import { LoginView } from "@components/pages/auth";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
 import { PlayerBottomSheet } from "@components/playerBottomeSheet";
 // import { TestDropDown, TestDropDown2 } from "../NavDroupDown";
 // import { Cross } from "@components/icons";
+import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -52,9 +50,8 @@ const ModalView: React.FC<{ modalView: string; closeModal(): any }> = ({
 
   return (
     <Modal onClose={closeModal}>
-      {/* {modalView === "LOGIN_VIEW" && <LoginView />}
-      {modalView === "FORGOT_VIEW" && <ForgotPassword />}
-      {modalView === "PRODUCT_REVIEW" && <Review />} */}
+      {modalView === "LOGIN_VIEW" && <LoginView />}
+      {/* {modalView === "FORGOT_VIEW" && <ForgotPassword />} */}
     </Modal>
   );
 };
@@ -66,6 +63,7 @@ const ModalUI: React.FC = () => {
   ) : null;
 };
 // ---------------------------------------------------------------------- //
+
 // Side bar //
 const SidebarView: React.FC<{
   sidebarView: string;
@@ -92,6 +90,7 @@ const SidebarUI: React.FC = () => {
   ) : null;
 };
 // --------------------------------------------------------------------------------- //
+
 // Drop Down //
 const DropDownView: React.FC<{
   dropDownView: string;
@@ -118,7 +117,9 @@ const DropDownUI: React.FC = () => {
     <DropDownView dropDownView={dropDownView} closeDropDown={closeDropDown} />
   ) : null;
 };
+// --------------------------------------------------------------------------------- //
 
+// Player //
 const PlayerUI: React.FC = () => {
   const { displayPlayer } = useUI();
 
@@ -130,7 +131,9 @@ const PlayerBottomSheetUI: React.FC = () => {
 
   return displayPlayer ? <PlayerBottomSheet /> : null;
 };
+// --------------------------------------------------------------------------------- //
 
+// View Mode //
 const ViewModeUI: React.FC = () => {
   const { width } = useWindowSize();
   const { viewMode, setViewMode } = useUI();
@@ -169,7 +172,7 @@ interface Props {
 }
 
 // Nav bar Render되지 않는 예외 경로
-const NAV_INABLE_PATH = ["/join"];
+const NAV_INABLE_PATH = ["/", "/join"];
 const LOGO_VISIVLE = [];
 
 const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
@@ -200,7 +203,7 @@ const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
       <DropDownUI />
       <PlayerUI />
       {viewMode !== "DESKTOP" ? <PlayerBottomSheetUI /> : null}
-      <Navigator logoVisible={logoVisible} />
+      {navAble && <Navigator logoVisible={logoVisible} />}
     </div>
   );
 };

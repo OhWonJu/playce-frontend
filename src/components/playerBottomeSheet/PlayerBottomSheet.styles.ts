@@ -16,7 +16,9 @@ export const PBSHandle = styled.div`
   width: 32px;
   height: 4px;
   border-radius: 2px;
-  background-color: ${props => props.theme.gray_light};
+  background-color: ${props => props.theme.gray_light + 60};
+
+  ${tw`shadow-inner`}
 `;
 
 export const PBSHeaderWrapper = styled.section`
@@ -37,12 +39,15 @@ export const PBSHeaderTabs = styled.div`
   ${tw`grid place-items-center w-[25%] h-full`}
 `;
 
-export const PBSHeaderA = styled.a`
-  ${tw`text-sm font-bold`}
+export const PBSHeaderA = styled.a<any>`
+  color: ${props =>
+    props.focused ? props.theme.text_primary_color : props.theme.gray_primary};
+
+  ${tw`text-sm font-bold`};
 `;
 
 export const PBSContentWrapper = styled.section`
   background-color: ${props => props.theme.background_color};
 
-  ${tw`flex flex-col w-full h-[87%] pt-2 pb-4 px-4 space-y-3 overflow-y-scroll scrollbar-hide z-[100]`}
+  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 space-y-3 overflow-y-scroll scrollbar-hide z-[100]`}
 `;

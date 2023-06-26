@@ -96,7 +96,7 @@ const Waveform = () => {
     };
   }, [handleFinish]);
 
-  const handleTrackChange = useCallback(async () => {
+  const handleTrackChange = useCallback(() => {
     setTotalTime(wavesurfer.current.getDuration());
 
     if (
@@ -113,12 +113,14 @@ const Waveform = () => {
     prevOriginTrackListRef.current = originTrackList;
 
     if (play) {
-      await wavesurfer.current.play();
+      // await wavesurfer.current.play();
+      setTimeout(function () {
+        wavesurfer.current.play();
+      }, 5);
     }
 
     return async () => {
       await wavesurfer.current.empty();
-      await wavesurfer.current.pause();
     };
   }, [currentTrack, originTrackList, forwardMode]);
 

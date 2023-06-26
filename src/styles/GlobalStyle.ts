@@ -35,3 +35,21 @@ export const GlobalStyle = createGlobalStyle<any>`
       margin: 0;
     }
 `;
+
+export const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const SymbolText = styled.a`
+  ${tw`font-extrabold text-6xl`}
+`;
+
+export const SectionHeaderText = styled.a`
+  ${tw`text-4xl font-bold`}
+`;

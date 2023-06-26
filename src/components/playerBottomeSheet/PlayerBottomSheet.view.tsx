@@ -1,12 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 import { animate, useMotionValue, motion, useTransform } from "framer-motion";
 
 import { NAV_HEIGHT } from "constants/constants";
 
-import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
-import { TRACK } from "@lib/client/store/types/playerControlType";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
@@ -20,16 +17,14 @@ import {
   PBSHeaderTabs,
   PBSHeaderWrapper,
 } from "./PlayerBottomSheet.styles";
-import {
-  usePlayTimeControl,
-  useSetPlayTime,
-} from "@lib/client/hooks/usePlayTimeControl";
+import { Content, Lyrics, TrackList } from "./modules";
 
 const PlayerBottomSheetView = () => {
-  const { playList, setCurrentTrack, setPlay } = usePlayerControl();
-  const { setPlayTime } = useSetPlayTime();
+  const [focusedTab, setFocusedTab] = useState(-1);
+  const tabView = [<TrackList />, <Lyrics />, <Content />];
 
   const ref = useRef<SheetRef>();
+  const snapTo = (i: number) => ref.current?.snapTo(i);
 
   const { progress } = MainSheetProgressStore();
   const motionProg = useMotionValue(0);
@@ -40,15 +35,35 @@ const PlayerBottomSheetView = () => {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
+
+      if (focusedTab === -1) setFocusedTab(0);
     } else {
       animate(motionProg, progress, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
+
+      setFocusedTab(-1);
     }
   }, [progress]);
 
   const y = useTransform(motionProg, [85, 100], [NAV_HEIGHT + 20, 0]);
+  const trigger = useTransform(motionProg, [0, 100], [1, 0]); // 0: to OPEN | 1: to CLOSE
+
+  const triggerHandler = () => {
+    const nowTrigger = trigger.get();
+    if (nowTrigger === 0 || nowTrigger === 1) {
+      snapTo(nowTrigger);
+      trigger.set(Math.abs(nowTrigger - 1));
+    }
+  };
+
+  const tabClickHandler = (index: number) => {
+    if (trigger.get() === 0) {
+      triggerHandler();
+    }
+    setFocusedTab(index);
+  };
 
   return (
     <>
@@ -62,12 +77,12 @@ const PlayerBottomSheetView = () => {
         modalMode={false}
         onClose={() => null}
         fixedHeight={NAV_HEIGHT + 20}
-        // initialSnap={1}
+        initialSnap={1}
         // useSnapPoint={true}
-        // snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
-        onSnap={snapIndex =>
-          console.log("> Current snap point index:", snapIndex)
-        }
+        snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
+        // onSnap={snapIndex =>
+        //   console.log("> Current snap point index:", snapIndex)
+        // }
       >
         <motion.div
           id="player-bottom-sheet"
@@ -89,14 +104,20 @@ const PlayerBottomSheetView = () => {
               <PBSHandleWrapper
                 className="relative grid place-items-center"
                 style={{ width: "100%", height: 20 }}
+                onClick={() => triggerHandler()}
               >
                 <PBSHandle />
               </PBSHandleWrapper>
               <PBSHeaderWrapper>
                 <PBSHeader>
                   {["Tracks", "Lyrics", "Content"].map((a, index) => (
-                    <PBSHeaderTabs key={index}>
-                      <PBSHeaderA>{a}</PBSHeaderA>
+                    <PBSHeaderTabs
+                      key={index}
+                      onClick={() => tabClickHandler(index)}
+                    >
+                      <PBSHeaderA focused={focusedTab === index}>
+                        {a}
+                      </PBSHeaderA>
                     </PBSHeaderTabs>
                   ))}
                 </PBSHeader>
@@ -104,33 +125,7 @@ const PlayerBottomSheetView = () => {
             </Sheet.Header>
             <Sheet.Content isMain={false} disableDrag={true}>
               <PBSContentWrapper>
-                {playList.map((track: TRACK, index: number) => (
-                  <div
-                    key={index}
-                    className="flex w-full min-h-[60px] items-center"
-                    onClick={() => {
-                      setPlayTime(0);
-                      setCurrentTrack(track);
-                    }}
-                  >
-                    <div className="relative h-full aspect-square rounded-full overflow-hidden mr-2">
-                      <Image
-                        priority
-                        src={track.ablumArtURL}
-                        alt="product image"
-                        layout="fill"
-                        sizes="100%"
-                        draggable={false}
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <a className="font-semibold text-base">
-                        {track.trackTitle}
-                      </a>
-                      <a className="font-medium text-xs">{track.artistKo}</a>
-                    </div>
-                  </div>
-                ))}
+                {focusedTab !== -1 ? tabView[focusedTab] : null}
               </PBSContentWrapper>
             </Sheet.Content>
           </Sheet.Container>

@@ -56,9 +56,9 @@ function App({ Component, ...rest }: AppProps) {
 
   return (
     <>
-      <AppHead title={title} />
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
+          <AppHead title={title} />
           <ManagedUIContext>
             <GlobalStyle />
             <Layout

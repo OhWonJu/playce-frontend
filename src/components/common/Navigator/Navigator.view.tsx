@@ -3,9 +3,15 @@ import Image from "next/image";
 import { animate, motion, useMotionValue } from "framer-motion";
 
 import useTheme from "@lib/client/hooks/useTheme";
-import { useUI } from "@components/ui";
+import { Link, useUI } from "@components/ui";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
-import { Explor, Home, Search } from "@components/icons";
+import {
+  Explore,
+  ExploreFill,
+  Home,
+  HomeFill,
+  Search,
+} from "@components/icons";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
 
 import { NAV_HEIGHT } from "constants/constants";
@@ -13,9 +19,13 @@ import { PlayIndicator } from "./modules";
 
 interface NavigatorViewProps {
   logoVisible: boolean;
+  pathName?: string;
 }
 
-const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
+const NavigatorView: React.FC<NavigatorViewProps> = ({
+  logoVisible,
+  pathName,
+}) => {
   const theme = useTheme();
   const { viewMode, displayPlayer } = useUI();
   const { progress } = MainSheetProgressStore();
@@ -23,6 +33,8 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
   const y = useMotionValue(0);
 
   useEffect(() => {
+    if (viewMode === "DESKTOP") return;
+
     if (progress <= 0) {
       animate(y, 0, { type: "spring", ...DEFAULT_SPRING_CONFIG });
     } else {
@@ -48,12 +60,29 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
         >
           {displayPlayer && progress < 1 ? <PlayIndicator /> : null}
           <div className="flex justify-around px-4 py-2 w-full h-full">
-            <Home className="w-7 h-7" />
-            <Explor className="w-7 h-7" />
+            <Link href={"/home"}>
+              {pathName === "home" ? (
+                <HomeFill
+                  className="w-7 h-7"
+                  fill={theme.theme_comparsion_color}
+                />
+              ) : (
+                <Home className="w-7 h-7" />
+              )}
+            </Link>
+            <Link href={"/explore"}>
+              {pathName === "explore" ? (
+                <ExploreFill
+                  className="w-7 h-7"
+                  fill={theme.theme_comparsion_color}
+                />
+              ) : (
+                <Explore className="w-7 h-7" />
+              )}
+            </Link>
             <Search className="w-7 h-7" />
             <div className="relative w-7 h-7 rounded-full overflow-hidden">
               <Image
-                priority
                 src={"/onneul.jpeg"}
                 alt="product image"
                 layout="fill"
@@ -72,16 +101,33 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({ logoVisible }) => {
           }}
         >
           <div className="relative flex justify-center w-full h-full">
-            <div className="w-[40%] h-full flex justify-around items-center px-4 py-2">
-              <Home className="w-7 h-7" />
-              <Explor className="w-7 h-7" />
+            <div className="w-[35%] min-w-[550px] h-full flex justify-around items-center px-4 py-2">
+              <Link href={"home"}>
+                {pathName === "home" ? (
+                  <HomeFill
+                    className="w-7 h-7"
+                    fill={theme.theme_comparsion_color}
+                  />
+                ) : (
+                  <Home className="w-7 h-7" />
+                )}
+              </Link>
+              <Link href={"/explore"}>
+                {pathName === "explore" ? (
+                  <ExploreFill
+                    className="w-7 h-7"
+                    fill={theme.theme_comparsion_color}
+                  />
+                ) : (
+                  <Explore className="w-7 h-7" />
+                )}
+              </Link>
               <Search className="w-7 h-7" />
             </div>
           </div>
           <div className="absolute top-0 right-0 h-full grid place-items-center px-[1.5rem]">
             <div className="relative w-7 h-7 rounded-full overflow-hidden">
               <Image
-                priority
                 src={"/onneul.jpeg"}
                 alt="product image"
                 layout="fill"

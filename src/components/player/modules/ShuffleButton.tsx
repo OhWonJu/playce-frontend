@@ -16,8 +16,8 @@ const ShuffleButton = () => {
   return (
     <div onClick={() => setShuffle(!shuffle)}>
       <Shuffle
-        width="20"
-        height="20"
+        width="22"
+        height="22"
         fill={shuffle ? theme.theme_comparsion_color : theme.gray_dark}
       />
     </div>

@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import { animate, useMotionValue, useTransform } from "framer-motion";
+import { useMotionValue } from "framer-motion";
 
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
 import {
   DESKTOP_PLAYER_WIDTH,
   NAV_HEIGHT,
-  PLAYER_HEADER_HEIGHT,
   WAVE_FORM_HEIGHT,
 } from "constants/constants";
 
@@ -23,6 +22,7 @@ import { DotMenu } from "@components/icons";
 import { TRACK } from "@lib/client/store/types/playerControlType";
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
 import Image from "next/image";
+import useTheme from "@lib/client/hooks/useTheme";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
@@ -31,6 +31,7 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
 interface PlayerDesktopViewProps {}
 
 const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
+  const theme = useTheme();
   const { play, currentTrack, playList, setCurrentTrack } = usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
 
@@ -42,9 +43,8 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
       style={{
         width: DESKTOP_PLAYER_WIDTH,
         minHeight: 667,
-        maxHeight: `calc(100vh - ${NAV_HEIGHT}px)`,
+        maxHeight: `calc(100vh - ${NAV_HEIGHT}px)`, // NAV 이격
         top: NAV_HEIGHT,
-        // marginTop: NAV_HEIGHT,
         zIndex: 60,
       }}
     >
@@ -90,7 +90,7 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
             </div>
           </section>
           {/* PLAY TIME INDICATOER */}
-          <section className="flex w-full justify-between font-semibold text-xs mb-7">
+          <section className="flex w-full justify-between font-semibold text-xs">
             <PlayTimer />
           </section>
           {/* CONTROLLER */}
@@ -112,7 +112,13 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
         {playList.map((track: TRACK, index: number) => (
           <div
             key={index}
-            className="flex w-full min-h-[60px] items-center"
+            className="flex w-full min-h-[60px] items-center p-2 rounded-md"
+            style={{
+              backgroundColor:
+                currentTrack.trackTitle === track.trackTitle
+                  ? theme.gray_light + 70
+                  : "",
+            }}
             onClick={() => {
               setPlayTime(0);
               setCurrentTrack(track);

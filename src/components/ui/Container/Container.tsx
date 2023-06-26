@@ -1,76 +1,84 @@
 import React, { FC } from "react";
-import styled, { css } from "styled-components";
+import { useRouter } from "next/router";
+import styled from "styled-components";
 import tw from "twin.macro";
 
-import { VerticalSidebar } from "@components/ui";
-import {
-  BORDER_BASE_WIDTH,
-  MAX_CONTENT_WIDTH,
-  NAV_HEIGHT,
-  VERTICAL_SIDEBAR_WIDTH,
-} from "constants/constants";
-import { useRouter } from "next/router";
-
-// Vertical Side bar //
-const VerticalSidebarUI: React.FC<{
-  children?: any;
-}> = ({ children }) => {
-  return <VerticalSidebar>{children}</VerticalSidebar>;
-};
-// ---------------------------------------------------- //
+import { DESKTOP_PLAYER_WIDTH, NAV_HEIGHT } from "constants/constants";
+import { useUI } from "../context";
 
 interface ContainerProps {
-  className?: string;
   children?: any;
-  verticalSidebarVisible?: boolean;
-  verticalSidebarChildren?: any;
-  widthLimit?: boolean;
+  className?: string;
+  containPlayer?: boolean;
   [key: string]: any;
 }
 
 const Container: FC<ContainerProps> = ({
   children,
   className,
-  verticalSidebarVisible = true,
-  verticalSidebarChildren,
-  widthLimit = true,
+  containPlayer = true,
   ...rest
 }) => {
+  const { viewMode } = useUI();
+
   return (
-    <Wrapper className={className} widthLimit={widthLimit} {...rest}>
-      <div className="sm:w-full flex flex-row">
-        {/* 왼편 사이드 바 */}
-        {verticalSidebarVisible && (
-          <VerticalSidebarUI>{verticalSidebarChildren}</VerticalSidebarUI>
-        )}
-        <div
-          className={`w-full h-full px-[0.8rem] md:px-14 ${
-            verticalSidebarVisible ? `md:ml-[250px]` : "md:ml-0"
-          }`}
+    <>
+      {containPlayer ? (
+        <ContainPlayerWrapper
+          className={className}
+          isDesktop={viewMode === "DESKTOP" ? true : false}
+          {...rest}
         >
           {children}
-        </div>
-      </div>
-    </Wrapper>
+        </ContainPlayerWrapper>
+      ) : (
+        <Wrapper
+          className={className}
+          isDesktop={viewMode === "DESKTOP" ? true : false}
+          {...rest}
+        >
+          {children}
+        </Wrapper>
+      )}
+    </>
   );
 };
 
 export default Container;
 
+const ContainPlayerWrapper = styled.div<any>`
+  position: relative;
+  width: 100%;
+  ${props =>
+    props.isDesktop &&
+    `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH * 2}px);`}
+  max-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding-top: ${props => (props.isDesktop ? NAV_HEIGHT * 2 : NAV_HEIGHT)}px;
+  padding-bottom: ${NAV_HEIGHT}px;
+  ${props => props.isDesktop && `margin-left: ${DESKTOP_PLAYER_WIDTH}px;`}
+  background-color: ${({ theme }) => theme.background__color};
+
+  ${tw`pl-4 pr-4 md:pl-5 md:pr-5`}
+`;
+
 const Wrapper = styled.div<any>`
   position: relative;
+  width: 100%;
+  /* max-width: 800px; */
+  display: flex;
+  flex-direction: column;
+  padding-top: ${props => (props.isDesktop ? NAV_HEIGHT * 2 : NAV_HEIGHT)}px;
+  padding-bottom: ${NAV_HEIGHT}px;
+  /* padding-left: ${DESKTOP_PLAYER_WIDTH}px; */
+  /* padding-right: ${DESKTOP_PLAYER_WIDTH}px; */
+  margin: auto;
   background-color: ${props => props.theme.background_color};
-  /* border-top-width: ${BORDER_BASE_WIDTH}px;
-  border-color: ${props => props.theme.gray_light}; */
-  margin-top: ${NAV_HEIGHT}px;
 
-  ${props => {
-    if (props.widthLimit) {
-      return css`
-        width: ${MAX_CONTENT_WIDTH}px;
-        max-width: 100%;
-        ${tw`mx-auto`}
-      `;
-    }
-  }}
+  ${tw`lg:max-w-[800px] xl:max-w-[1000px]  2xl:max-w-[1200px]`}
+  ${tw`pl-4 pr-4 md:pl-5 md:pr-5`}
 `;

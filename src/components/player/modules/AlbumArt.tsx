@@ -59,12 +59,13 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
             }}
           >
             <Image
-              priority
               src={artURL}
               alt="product image"
               layout="fill"
               sizes="100%"
               draggable={false}
+              placeholder="blur"
+              blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
             />
           </div>
           <motion.div

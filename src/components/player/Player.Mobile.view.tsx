@@ -15,7 +15,6 @@ import {
 
 import {
   AlbumArt,
-  BottomSheet,
   ForwardButton,
   PlayButton,
   PlayTimer,
@@ -27,7 +26,6 @@ import {
   AlbumArea,
   PlayerBody,
   PlayerCtlrArea,
-  PlayerFooter,
   PlayerHeader,
   PlayerMicroCtlr,
 } from "./Player.styles";
@@ -125,7 +123,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
           <Sheet.Content isMain={true} style={{ maxHeight: "90%" }}>
             <div
               id="player-container"
-              className="flex flex-col w-full h-[100%] max-h-screen"
+              className="flex flex-col w-full h-[100%] max-h-screen px-2"
             >
               {/* HEADER */}
               <PlayerHeader

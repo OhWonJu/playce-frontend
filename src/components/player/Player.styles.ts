@@ -6,7 +6,7 @@ import tw from "twin.macro";
 export const PlayerHeader = styled(motion.div)`
   /* max-height: ${PLAYER_HEADER_HEIGHT}px; */
   /* ${tw`relative w-full flex justify-end items-center px-2`} */
-  ${tw`relative w-full h-full flex justify-end items-center px-2`}
+  ${tw`relative w-full h-full flex justify-end items-center`}
 `;
 
 export const PlayerBody = styled(motion.div)`
@@ -29,7 +29,7 @@ export const PlayerMicroCtlr = styled(motion.div)`
 
 export const PlayerCtlrArea = styled(motion.div)`
   max-height: 100%;
-  ${tw`relative flex flex-col w-full items-center px-8`}
+  ${tw`relative flex flex-col w-full items-center px-6`}
 `;
 
 export const PlayerFooter = styled(motion.div)`

@@ -3,7 +3,7 @@ import tw from "twin.macro";
 
 export const Flat = styled.button<any>`
   width: 100%;
-  background-color: ${props => props.theme.gray_primary};
+  background-color: ${props => props.theme.gray_dark};
   & > span {
     color: ${props => props.theme.text_secondary_color};
   }
