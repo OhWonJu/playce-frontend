@@ -1,33 +1,38 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
+import AlbumView from "./Album.view";
+import { artist } from "mock/mock";
+import { useRouter } from "next/router";
 import { useUI } from "@components/ui";
-
-import HomeView from "./Home.view";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { T_Album } from "@lib/client/types";
 
-const HomeController = () => {
-  const { viewMode, closePlayer, displayPlayer, openPlayer } = useUI();
+const myAlbums = [
+  artist.ADOY.ablums[0],
+  artist.BaekYeRin.ablums[0],
+  artist.The1975.ablums[0],
+];
+
+const AlbumController = () => {
+  const router = useRouter();
+
+  const [album, setAlbum] = useState(null);
+
+  useEffect(
+    () => setAlbum(myAlbums.find(al => al.title === router.query?.albumId)),
+    [router],
+  );
+
+  const { openPlayer, displayPlayer } = useUI();
   const {
-    currentTrack,
-    setOriginTrackList,
     setCurrentTrack,
-    setPlay,
-    doShuffle,
     setPlayList,
+    setPlay,
+    setOriginTrackList,
     shuffle,
+    doShuffle,
+    currentTrack,
   } = usePlayerControl();
-
-  const togglePlayerClickhandler = () => {
-    if (displayPlayer) {
-      closePlayer();
-    } else {
-      // openPlayer();
-    }
-  };
-
-  // current Play List , Origin Play List를 상태로 둬야할 것 같음
-  // origin 이 바뀌면 리셋하는 형태로 가야함...
 
   const albumClickHandler = (album: T_Album) => {
     if (!displayPlayer) {
@@ -63,14 +68,9 @@ const HomeController = () => {
     }
   };
 
-  return (
-    <HomeView
-      viewMode={viewMode}
-      displayPlayer={displayPlayer}
-      albumClickHandler={albumClickHandler}
-      togglePlayerClickhandler={togglePlayerClickhandler}
-    />
-  );
+  if (!album) return null;
+
+  return <AlbumView album={album} albumClickHandler={albumClickHandler} />;
 };
 
-export default HomeController;
+export default AlbumController;

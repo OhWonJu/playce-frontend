@@ -7,7 +7,7 @@ import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { useUI } from "@components/ui";
 
 interface Props {
-  title: string;
+  title?: string;
   children?: any;
 }
 

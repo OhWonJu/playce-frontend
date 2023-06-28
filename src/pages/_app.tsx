@@ -49,16 +49,16 @@ function App({ Component, ...rest }: AppProps) {
 
   const router = useRouter();
 
-  const title = useMemo(() => {
-    const path = router.pathname.split("/")[1];
-    if (path) return path + " | " + SYMBOL_TEXT;
-  }, [router]);
+  // const title = useMemo(() => {
+  //   const path = router.pathname.split("/")[1];
+  //   if (path && path !== "home") return SYMBOL_TEXT + " | " + path;
+  // }, [router]);
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <AppHead title={title} />
+          <AppHead />
           <ManagedUIContext>
             <GlobalStyle />
             <Layout

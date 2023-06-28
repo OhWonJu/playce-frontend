@@ -2,13 +2,21 @@ import React from "react";
 import Image from "next/image";
 
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
-import { Container } from "@components/ui";
+import { Container, Link } from "@components/ui";
 
 import { PLAYER_HEADER_HEIGHT } from "constants/constants";
 
 import { SectionHeaderText, SymbolText } from "src/styles/GlobalStyle";
 
 import { artist } from "mock/mock";
+import { Play } from "@components/icons";
+import useTheme from "@lib/client/hooks/useTheme";
+
+const myAlbums = [
+  artist.ADOY.ablums[0],
+  artist.BaekYeRin.ablums[0],
+  artist.The1975.ablums[0],
+];
 
 interface HomeViewProps {
   viewMode: VIEW_MODES;
@@ -23,11 +31,7 @@ const HomeView: React.FC<HomeViewProps> = ({
   albumClickHandler,
   togglePlayerClickhandler,
 }) => {
-  const myAlbums = [
-    artist.ADOY.ablums[0],
-    artist.BaekYeRin.ablums[0],
-    artist.The1975.ablums[0],
-  ];
+  const theme = useTheme();
 
   if (viewMode === "INIT") {
     return null;
@@ -63,23 +67,43 @@ const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
           {myAlbums.map((album, index) => (
             <div
-              key={index}
-              className="flex flex-col min-w-[120px] min-h-[170px] snap-center"
-              onClick={() => albumClickHandler(album)}
+              className="relative flex flex-col min-w-[120px] min-h-[170px] snap-center group"
+              // onClick={() => albumClickHandler(album)}
             >
-              <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden snap-center mb-1">
-                <Image
-                  priority={true}
-                  src={album.art}
-                  alt="product image"
-                  layout="fill"
-                  sizes="100%"
-                  draggable={false}
+              <Link
+                key={index}
+                href={{
+                  pathname: "album/[albumId]",
+                  // query: { album: JSON.stringify(album) },
+                  query: { albumId: album.title },
+                }}
+                // as={`/album/${album.title}`}
+              >
+                <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden snap-center mb-1 ">
+                  <Image
+                    // priority={true}
+                    src={album.art}
+                    alt="product image"
+                    layout="fill"
+                    sizes="100%"
+                    draggable={false}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <a className="font-bold">{album.title}</a>
+                  <a className="font-semibold text-sm">{album.nameKr}</a>
+                </div>
+              </Link>
+              <div
+                className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-[90px] left-[90px] p-1"
+                onClick={() => albumClickHandler(album)}
+              >
+                <Play
+                  width="20"
+                  height="20"
+                  fill={theme.background_color}
+                  strokeWidth={0}
                 />
-              </div>
-              <div className="flex flex-col">
-                <a className="font-bold">{album.title}</a>
-                <a className="font-semibold text-sm">{album.nameKr}</a>
               </div>
             </div>
           ))}

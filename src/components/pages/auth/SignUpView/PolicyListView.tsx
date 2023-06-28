@@ -54,7 +54,7 @@ const PolicyListView: React.FC<PolicyListViewProps> = ({
       required: true,
     },
     {
-      context: "[필수] 플레이스, 풀레이스 스토어 이용 악관",
+      context: "[필수] 플레이스, 플레이스 스토어 이용 악관",
       policy: "POLICY_TEST2",
       required: true,
     },

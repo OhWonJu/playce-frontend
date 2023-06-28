@@ -4,7 +4,6 @@ import tw from "twin.macro";
 
 import useTheme from "@lib/client/hooks/useTheme";
 import Login from "./Login";
-import OrderCode from "./OrderCode";
 import Link from "@components/ui/Link";
 import { useUI } from "@components/ui";
 import ModalLayout from "@components/common/ModalLayout";

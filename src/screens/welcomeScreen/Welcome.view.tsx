@@ -14,9 +14,9 @@ const WelcomeView = () => {
       containPlayer={false}
       className="h-screen w-full justify-start items-center"
     >
-      <div className="flex flex-col h-full w-full sm:max-w-[450px] justify-start items-center px-4 sm:py-8 overflow-y-scroll scrollbar-hide">
+      <div className="flex flex-col h-full w-full sm:max-w-[450px] justify-start items-center px-4 sm:px-10 overflow-y-scroll scrollbar-hide">
         <div
-          className="flex flex-col h-[70%] justify-center items-center"
+          className="flex flex-col h-[70%] pb-[30%] justify-center items-center"
           onClick={() => router.push("/home")}
         >
           <AppTitle>PLAYCE</AppTitle>
@@ -33,7 +33,7 @@ const WelcomeView = () => {
               openModal();
             }}
           >
-            <span>Sign In</span>
+            <span>Log In</span>
           </Button>
           <Button
             variant="naked"

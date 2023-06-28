@@ -102,7 +102,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
         >
           <div className="relative flex justify-center w-full h-full">
             <div className="w-[35%] min-w-[550px] h-full flex justify-around items-center px-4 py-2">
-              <Link href={"home"}>
+              <Link href={"/home"}>
                 {pathName === "home" ? (
                   <HomeFill
                     className="w-7 h-7"

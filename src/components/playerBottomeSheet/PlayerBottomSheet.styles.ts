@@ -21,29 +21,51 @@ export const PBSHandle = styled.div`
   ${tw`shadow-inner`}
 `;
 
-export const PBSHeaderWrapper = styled.section`
+export const PBSHeaderWrapper = styled.nav`
   width: 100%;
   height: ${NAV_HEIGHT}px;
 
   ${tw`fixed  px-4`};
 `;
 
-export const PBSHeader = styled.div`
+export const PBSHeader = styled.ul`
+  list-style: none;
   border-bottom-width: 1.5px;
   border-color: ${props => props.theme.gray_light + 80};
 
-  ${tw`w-full h-full flex justify-between items-center`}
+  ${tw`relative w-full h-full flex justify-between items-center`}
 `;
 
-export const PBSHeaderTabs = styled.div`
-  ${tw`grid place-items-center w-[25%] h-full`}
+export const PBSHeaderTabs = styled.li`
+  list-style: none;
+
+  border-bottom-right-radius: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  user-select: none;
+
+  .underline {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: ${props => props.theme.theme_comparsion_color};
+  }
 `;
 
 export const PBSHeaderA = styled.a<any>`
   color: ${props =>
     props.focused ? props.theme.text_primary_color : props.theme.gray_primary};
 
-  ${tw`text-sm font-bold`};
+  ${tw`w-full text-center text-sm font-bold`};
 `;
 
 export const PBSContentWrapper = styled.section`

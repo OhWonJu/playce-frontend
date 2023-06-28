@@ -206,11 +206,11 @@ const SignUpView: FC<Props> = () => {
                 <span
                   className="px-2 text-sm"
                   style={{
-                    backgroundColor: theme.container_bg_color,
+                    backgroundColor: theme.background_color,
                     color: theme.gray_primary,
                   }}
                 >
-                  Do you already have an aacount?
+                  Do you already have an account?
                 </span>
               </div>
               <div className="flex justify-center items-center">

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -19,7 +19,11 @@ const Container: FC<ContainerProps> = ({
   containPlayer = true,
   ...rest
 }) => {
-  const { viewMode } = useUI();
+  const { viewMode, closePlayer } = useUI();
+
+  useEffect(() => {
+    if (!containPlayer) closePlayer();
+  }, [containPlayer]);
 
   return (
     <>
@@ -53,7 +57,8 @@ const ContainPlayerWrapper = styled.div<any>`
     props.isDesktop &&
     `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH * 2}px);`}
   max-height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
