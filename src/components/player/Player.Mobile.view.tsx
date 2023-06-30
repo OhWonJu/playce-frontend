@@ -57,7 +57,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
   useEffect(() => {
     if (progress <= 0) {
       animate(motionProg, 0, {
-        type: "spring",
+        type: "tween",
         ...DEFAULT_SPRING_CONFIG,
       });
     } else {
@@ -105,7 +105,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
         fixedHeight={
           viewMode !== "DESKTOP"
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
-            : PLAYER_HEADER_HEIGHT + 34
+            : PLAYER_HEADER_HEIGHT // PLAYER_HEADER_HEIGHT + 34
         }
         useSnapPoint={false}
         snapPoints={[

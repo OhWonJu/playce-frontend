@@ -28,48 +28,8 @@ export const PBSHeaderWrapper = styled.nav`
   ${tw`fixed  px-4`};
 `;
 
-export const PBSHeader = styled.ul`
-  list-style: none;
-  border-bottom-width: 1.5px;
-  border-color: ${props => props.theme.gray_light + 80};
-
-  ${tw`relative w-full h-full flex justify-between items-center`}
-`;
-
-export const PBSHeaderTabs = styled.li`
-  list-style: none;
-
-  border-bottom-right-radius: 0;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-  user-select: none;
-
-  .underline {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: ${props => props.theme.theme_comparsion_color};
-  }
-`;
-
-export const PBSHeaderA = styled.a<any>`
-  color: ${props =>
-    props.focused ? props.theme.text_primary_color : props.theme.gray_primary};
-
-  ${tw`w-full text-center text-sm font-bold`};
-`;
-
 export const PBSContentWrapper = styled.section`
   background-color: ${props => props.theme.background_color};
 
-  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 space-y-3 overflow-y-scroll scrollbar-hide z-[100]`}
+  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`}
 `;

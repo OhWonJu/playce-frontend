@@ -2,7 +2,7 @@ import {
   DragHandlers,
   MotionValue,
   MotionProps,
-  AnimationOptions,
+  Transition,
   Spring,
 } from "framer-motion";
 
@@ -91,7 +91,7 @@ export type SheetContextType = {
   callbacks: React.MutableRefObject<SheetEvents>;
   dragProps?: SheetDragProps;
   windowHeight: number;
-  animationOptions: AnimationOptions<number>;
+  animationOptions: Transition;
   reduceMotion: boolean;
 };
 

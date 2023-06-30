@@ -17,7 +17,7 @@ const TrackList = () => {
       {playList.map((track: TRACK, index: number) => (
         <div
           key={index}
-          className="flex w-full min-h-[60px] items-center p-2 rounded-md"
+          className="flex w-full h-[60px] min-h-[60px] p-1 items-center rounded-md"
           style={{
             backgroundColor:
               currentTrack.trackTitle === track.trackTitle

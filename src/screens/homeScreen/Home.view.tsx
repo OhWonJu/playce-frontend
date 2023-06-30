@@ -67,11 +67,10 @@ const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
           {myAlbums.map((album, index) => (
             <div
+              key={index}
               className="relative flex flex-col min-w-[120px] min-h-[170px] snap-center group"
-              // onClick={() => albumClickHandler(album)}
             >
               <Link
-                key={index}
                 href={{
                   pathname: "album/[albumId]",
                   // query: { album: JSON.stringify(album) },

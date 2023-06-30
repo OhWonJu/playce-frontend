@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import {
   animate,
   AnimatePresence,
-  AnimationOptions,
+  Transition,
   PanInfo,
   useMotionValue,
   useReducedMotion,
@@ -67,9 +67,11 @@ const Sheet = React.forwardRef<any, SheetProps>(
     const windowHeight = useWindowHeight();
     const shouldReduceMotion = useReducedMotion();
     const reduceMotion = Boolean(prefersReducedMotion || shouldReduceMotion);
-    const animationOptions: AnimationOptions<number> = reduceMotion
-      ? { type: "tween", duration: 0.01 }
-      : { type: "spring", ...springConfig };
+    const animationOptions: Transition = {
+      type: "spring",
+      ...springConfig,
+      // ...(reduceMotion ? REDUCED_MOTION_TWEEN_CONFIG : springConfig),
+    };
 
     // NOTE: the inital value for `y` doesn't matter since it is overwritten by
     // the value driven by the `AnimatePresence` component when the sheet is opened
@@ -97,7 +99,8 @@ const Sheet = React.forwardRef<any, SheetProps>(
     });
 
     if (fixedHeight && windowHeight) {
-      fixedHeight = windowHeight - fixedHeight - 34;
+      // fixedHeight = windowHeight - fixedHeight - 34;
+      fixedHeight = windowHeight - fixedHeight;
     }
 
     if (snapPoints) {

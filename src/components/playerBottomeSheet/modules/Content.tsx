@@ -5,7 +5,7 @@ const Content = () => {
   const { currentTrack } = usePlayerControl();
 
   return (
-    <div className="flex flex-col w-full">
+    <>
       <section className="__RECO_TRACK__ flex flex-col max-w-full space-y-3 mb-8">
         <a className="font-bold text-lg">Recommend Tracks</a>
         <div className="flex max-w-full space-x-3 snap-mandatory snap-x overflow-x-scroll scrollbar-hide">
@@ -59,7 +59,7 @@ const Content = () => {
           <div className="min-w-[150px] min-h-[150px] rounded-lg bg-zinc-300" />
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

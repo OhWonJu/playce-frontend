@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  animate,
-  useMotionValue,
-  motion,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { animate, useMotionValue, motion, useTransform } from "framer-motion";
 
 import { NAV_HEIGHT } from "constants/constants";
 
@@ -18,12 +12,10 @@ import {
   PBSContentWrapper,
   PBSHandle,
   PBSHandleWrapper,
-  PBSHeader,
-  PBSHeaderA,
-  PBSHeaderTabs,
   PBSHeaderWrapper,
 } from "./PlayerBottomSheet.styles";
 import { Content, Lyrics, TrackList } from "./modules";
+import { Tab, TabSection } from "@components/ui/Tab";
 
 const tabs = ["Tracks", "Lyrics", "Content"];
 
@@ -31,7 +23,7 @@ const PlayerBottomSheetView = () => {
   const [focusedTab, setFocusedTab] = useState(-1);
   const prevFocusedTab = useRef(focusedTab);
 
-  const tabView = [<TrackList />, <Lyrics />, <Content />];
+  const tabViews = [<TrackList />, <Lyrics />, <Content />];
 
   const ref = useRef<SheetRef>();
   const snapTo = (i: number) => ref.current?.snapTo(i);
@@ -121,52 +113,20 @@ const PlayerBottomSheetView = () => {
                 <PBSHandle />
               </PBSHandleWrapper>
               <PBSHeaderWrapper>
-                <PBSHeader>
-                  {tabs.map((item, index) => (
-                    //    <li
-                    //    key={item.label}
-                    //    className={item === selectedTab ? "selected" : ""}
-                    //    onClick={() => setSelectedTab(item)}
-                    //  >
-                    //    {`${item.icon} ${item.label}`}
-                    //    {item === selectedTab ? (
-                    //      <motion.div className="underline" layoutId="underline" />
-                    //    ) : null}
-                    //  </li>
-                    <PBSHeaderTabs
-                      key={index}
-                      onClick={() => tabClickHandler(index)}
-                    >
-                      <PBSHeaderA focused={focusedTab === index}>
-                        {item}
-                      </PBSHeaderA>
-                      {index === focusedTab ? (
-                        <motion.div
-                          className="underline"
-                          layoutId="underline"
-                        />
-                      ) : null}
-                    </PBSHeaderTabs>
-                  ))}
-                </PBSHeader>
+                <Tab
+                  focusedTab={focusedTab}
+                  tabClickHandler={tabClickHandler}
+                  tabContents={tabs}
+                />
               </PBSHeaderWrapper>
             </Sheet.Header>
             <Sheet.Content isMain={false} disableDrag={true}>
               <PBSContentWrapper>
-                <AnimatePresence>
-                  <motion.div
-                    key={focusedTab ? focusedTab : -1}
-                    initial={{
-                      x: prevFocusedTab.current < focusedTab ? 10 : -10,
-                      opacity: 0,
-                    }}
-                    animate={{ x: 0, opacity: 1 }}
-                    // exit={{ x: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {focusedTab !== -1 ? tabView[focusedTab] : null}
-                  </motion.div>
-                </AnimatePresence>
+                <TabSection
+                  focusedTab={focusedTab}
+                  prevFocusedTab={prevFocusedTab.current}
+                  tabViews={tabViews}
+                />
               </PBSContentWrapper>
             </Sheet.Content>
           </Sheet.Container>

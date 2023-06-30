@@ -17,7 +17,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
 
   return (
     <Container>
-      <section className="flex w-full h-[30%] space-x-10 mb-4">
+      <section className="flex w-full h-[30%] min-h-[200px] space-x-10 mb-4">
         <div className="__ART__ relative h-full aspect-square">
           <Image
             src={album?.art}
@@ -40,7 +40,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
           </div>
         </div>
       </section>
-      <section className="w-full h-[70%] bg-blue-50"></section>
+      <section className="w-full h-full bg-blue-50"></section>
     </Container>
   );
 };
