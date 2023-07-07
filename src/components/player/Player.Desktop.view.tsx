@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import { useMotionValue } from "framer-motion";
 
@@ -23,6 +23,7 @@ import { TRACK } from "@lib/client/store/types/playerControlType";
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
 import Image from "next/image";
 import useTheme from "@lib/client/hooks/useTheme";
+import { Track } from "@components/ui";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
@@ -36,6 +37,11 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
   const { setPlayTime } = useSetPlayTime();
 
   const pinOpacity = useMotionValue(1);
+
+  const clickHanlder = (track: TRACK) => {
+    setPlayTime(0);
+    setCurrentTrack(track);
+  };
 
   return (
     <div
@@ -106,39 +112,17 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
 
       {/* TRACK LIST */}
       <section
-        className="__TRACK_LIST__ flex flex-col w-full mt-4 pb-4 space-y-4 overflow-y-scroll scrollbar-hide"
+        className="__TRACK_LIST__ flex flex-col w-full mt-4 pb-4 space-y-1 overflow-y-scroll scrollbar-hide"
         style={{ height: `calc(50vh - ${25}px)` }}
       >
         {playList.map((track: TRACK, index: number) => (
-          <div
+          <Track
             key={index}
-            className="flex w-full min-h-[60px] items-center p-2 rounded-md"
-            style={{
-              backgroundColor:
-                currentTrack.trackTitle === track.trackTitle
-                  ? theme.gray_light + 70
-                  : "",
-            }}
-            onClick={() => {
-              setPlayTime(0);
-              setCurrentTrack(track);
-            }}
-          >
-            <div className="relative h-full aspect-square rounded-full overflow-hidden mr-2">
-              <Image
-                priority
-                src={track.ablumArtURL}
-                alt="product image"
-                layout="fill"
-                sizes="100%"
-                draggable={false}
-              />
-            </div>
-            <div className="flex flex-col">
-              <a className="font-semibold text-base">{track.trackTitle}</a>
-              <a className="font-medium text-xs">{track.artistKo}</a>
-            </div>
-          </div>
+            data={track}
+            trackListType="LIST"
+            focused={currentTrack.trackTitle === track.trackTitle}
+            clickHandler={() => clickHanlder(track)}
+          />
         ))}
       </section>
     </div>

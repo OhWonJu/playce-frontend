@@ -53,17 +53,18 @@ const PlayerBottomSheetView = () => {
   const y = useTransform(motionProg, [85, 100], [NAV_HEIGHT + 20, 0]); // hide or show sheet
   const trigger = useTransform(motionProg, [0, 100], [1, 0]); // 0: to OPEN | 1: to CLOSE
 
-  const triggerHandler = () => {
-    const nowTrigger = trigger.get();
-    if (nowTrigger === 0 || nowTrigger === 1) {
-      snapTo(nowTrigger);
-      trigger.set(Math.abs(nowTrigger - 1));
-    }
-  };
+  // const triggerHandler = () => {
+  //   const nowTrigger = trigger.get();
+  //   if (nowTrigger === 0 || nowTrigger === 1) {
+  //     snapTo(nowTrigger);
+  //     trigger.set(Math.abs(nowTrigger - 1));
+  //   }
+  // };
 
   const tabClickHandler = (index: number) => {
     if (trigger.get() === 0) {
-      triggerHandler();
+      // triggerHandler();
+      snapTo(0);
     }
     prevFocusedTab.current = focusedTab;
     setFocusedTab(index);
@@ -108,7 +109,7 @@ const PlayerBottomSheetView = () => {
               <PBSHandleWrapper
                 className="relative grid place-items-center"
                 style={{ width: "100%", height: 20 }}
-                onClick={() => triggerHandler()}
+                onClick={() => snapTo(0)}
               >
                 <PBSHandle />
               </PBSHandleWrapper>

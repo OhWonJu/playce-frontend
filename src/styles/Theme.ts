@@ -15,6 +15,7 @@ export const lightTheme: object = {
   gray_dark: "#999999",
   gray_primary: "#B3B3B3",
   gray_light: "#E3E3E3",
+  gray_extra_light: "#EFEFEF",
   white_primary: "#FAFAFA",
   red_primary: "#EB2F06",
   red_secondary: "#FF6878",

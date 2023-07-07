@@ -6,11 +6,13 @@ import PlayerDesktopView from "./Player.Desktop.view";
 import PlayerMobileView from "./Player.Mobile.view";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
+import InputModeStore from "@lib/client/store/simpleStore/inputModeSotre";
 
 const PlayerController = () => {
   const { viewMode } = useUI();
   const { setProgress } = MainSheetProgressStore();
   const { play, setPlay } = usePlayerControl();
+  const { inputMode } = InputModeStore();
 
   // Warning: Cannot update a component (`A`) while rendering a different component (`B`). 에러 발생점
   // useMemo => useEffect
@@ -28,11 +30,24 @@ const PlayerController = () => {
     }
   }, [viewMode]);
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!inputMode && e.key === " ") {
+        e.preventDefault();
+        setPlay(!play);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [inputMode, play]);
+
   return (
     <>{viewMode !== "DESKTOP" ? <PlayerMobileView /> : <PlayerDesktopView />}</>
   );
-  // if (viewMode !== "DESKTOP") return <PlayerMobileView />;
-  // else return <PlayerDesktopView />;/
 };
 
 export default PlayerController;

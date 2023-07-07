@@ -32,6 +32,7 @@ const AlbumController = () => {
     shuffle,
     doShuffle,
     currentTrack,
+    play,
   } = usePlayerControl();
 
   const albumClickHandler = (album: T_Album) => {
@@ -65,6 +66,10 @@ const AlbumController = () => {
       doShuffle(TrackList);
     } else {
       setPlayList(TrackList);
+    }
+
+    if (!play) {
+      setTimeout(() => setPlay(true), 800);
     }
   };
 

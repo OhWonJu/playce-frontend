@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
 // 일부 data를  request 할 때 필요한 ID state 관리
-interface MainSheetProgressStore {
+interface MainSheetProgressStoreProps {
   progress: number;
   setProgress: (progress: number) => void;
 }
 
-const MainSheetProgressStore = create<MainSheetProgressStore>(set => ({
+const MainSheetProgressStore = create<MainSheetProgressStoreProps>(set => ({
   // STATE
   progress: 0,
 

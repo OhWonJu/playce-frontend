@@ -15,6 +15,8 @@ export { default as LoadingDots } from "./LoadingDots";
 // export { default as Logo } from './Logo'
 // export { default as Marquee } from './Marquee'
 export { default as Modal } from "./Modal";
+export { Tab, TabSection } from "./Tab";
+export { default as Track } from "./Track";
 // export { default as Quantity } from './Quantity'
 // export { default as Rating } from './Rating'
 // export { default as Skeleton } from './Skeleton'

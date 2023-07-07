@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { animate, motion, useMotionValue } from "framer-motion";
+import { throttle } from "lodash";
 
 import useTheme from "@lib/client/hooks/useTheme";
 import { Link, useUI } from "@components/ui";
@@ -29,7 +30,6 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
   const theme = useTheme();
   const { viewMode, displayPlayer } = useUI();
   const { progress } = MainSheetProgressStore();
-
   const y = useMotionValue(0);
 
   useEffect(() => {

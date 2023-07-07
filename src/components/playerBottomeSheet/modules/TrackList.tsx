@@ -1,50 +1,32 @@
 import React from "react";
-import Image from "next/image";
 
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import useTheme from "@lib/client/hooks/useTheme";
 import { TRACK } from "@lib/client/store/types/playerControlType";
+import { Track } from "@components/ui";
 
 const TrackList = () => {
-  const theme = useTheme();
-
   const { playList, currentTrack, setCurrentTrack } = usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
 
+  const clickHanlder = (track: TRACK) => {
+    setPlayTime(0);
+    setCurrentTrack(track);
+  };
+
   return (
-    <>
+    <div className="flex flex-col w-full h-full space-y-1">
       {playList.map((track: TRACK, index: number) => (
-        <div
+        <Track
           key={index}
-          className="flex w-full h-[60px] min-h-[60px] p-1 items-center rounded-md"
-          style={{
-            backgroundColor:
-              currentTrack.trackTitle === track.trackTitle
-                ? theme.gray_light + 70
-                : "",
-          }}
-          onClick={() => {
-            setPlayTime(0);
-            setCurrentTrack(track);
-          }}
-        >
-          <div className="relative h-full aspect-square rounded-full overflow-hidden mr-2">
-            <Image
-              src={track.ablumArtURL}
-              alt="product image"
-              layout="fill"
-              sizes="100%"
-              draggable={false}
-            />
-          </div>
-          <div className="flex flex-col">
-            <a className="font-semibold text-base">{track.trackTitle}</a>
-            <a className="font-medium text-xs">{track.artistKo}</a>
-          </div>
-        </div>
+          data={track}
+          trackListType="LIST"
+          focused={currentTrack.trackTitle === track.trackTitle}
+          clickHandler={() => clickHanlder(track)}
+        />
       ))}
-    </>
+    </div>
   );
 };
 

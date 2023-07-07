@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import tw from "twin.macro";
 
 import { DESKTOP_PLAYER_WIDTH, NAV_HEIGHT } from "constants/constants";
@@ -53,22 +53,29 @@ export default Container;
 const ContainPlayerWrapper = styled.div<any>`
   position: relative;
   width: 100%;
-  ${props =>
+  /* ${props =>
     props.isDesktop &&
-    `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH * 2}px);`}
+    `max-width: calc(100vw - ${DESKTOP_PLAYER_WIDTH * 2}px);`} */
   max-height: 100vh;
-  /* width: 100vw; */
   height: 100vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   padding-top: ${props => (props.isDesktop ? NAV_HEIGHT * 2 : NAV_HEIGHT)}px;
   padding-bottom: ${NAV_HEIGHT}px;
-  ${props => props.isDesktop && `margin-left: ${DESKTOP_PLAYER_WIDTH}px;`}
+  /* ${props => props.isDesktop && `margin-left: ${DESKTOP_PLAYER_WIDTH}px;`} */
+  ${props => props.isDesktop && `padding-left: ${DESKTOP_PLAYER_WIDTH + 16}px;`}
+  ${props =>
+    props.isDesktop && `padding-right: ${DESKTOP_PLAYER_WIDTH + 16}px;`}
+  
   background-color: ${({ theme }) => theme.background__color};
 
-  ${tw`pl-4 pr-4 md:pl-5 md:pr-5`}
+  ${props => {
+    if (!props.isDesktop) {
+      return css`
+        ${tw`pl-4 pr-4 md:pl-6 md:pr-6`}
+      `;
+    }
+  }}
 `;
 
 const Wrapper = styled.div<any>`
@@ -84,6 +91,6 @@ const Wrapper = styled.div<any>`
   margin: auto;
   background-color: ${props => props.theme.background_color};
 
-  ${tw`lg:max-w-[800px] xl:max-w-[1000px]  2xl:max-w-[1200px]`}
+  ${tw`lg:max-w-[800px] xl:max-w-[1000px] 2xl:max-w-[1200px]`}
   ${tw`pl-4 pr-4 md:pl-5 md:pr-5`}
 `;
