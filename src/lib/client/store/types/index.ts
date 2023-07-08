@@ -1,6 +1,8 @@
 export type { DROP_DOWN_ACTION } from "./dropDownType";
 export type { MODAL_ACTION } from "./modalType";
+export type { PLAYER_CONTROL_ACTION } from "./playerControlType";
 export type { PLAYER_ACTION } from "./playerType";
+export type { PLAY_TIME_ACTION } from "./playTimeType";
 export type { SIDEBAR_ACTION } from "./sidebarType";
 export type { USER_AVATAR_ACTION } from "./userAvatarType";
 export type { VIEW_MODE_ACTION } from "./viewModeType";

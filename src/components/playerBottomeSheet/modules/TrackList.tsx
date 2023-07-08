@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
-import useTheme from "@lib/client/hooks/useTheme";
 import { TRACK } from "@lib/client/store/types/playerControlType";
 import { Track } from "@components/ui";
 
 const TrackList = () => {
-  const { playList, currentTrack, setCurrentTrack } = usePlayerControl();
+  const { playList, playListType, currentTrack, setCurrentTrack } =
+    usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
 
   const clickHanlder = (track: TRACK) => {
@@ -19,9 +19,9 @@ const TrackList = () => {
     <div className="flex flex-col w-full h-full space-y-1">
       {playList.map((track: TRACK, index: number) => (
         <Track
-          key={index}
+          key={index + track.trackTitle + playListType}
           data={track}
-          trackListType="LIST"
+          trackListType={playListType}
           focused={currentTrack.trackTitle === track.trackTitle}
           clickHandler={() => clickHanlder(track)}
         />

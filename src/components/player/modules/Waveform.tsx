@@ -122,7 +122,7 @@ const Waveform = () => {
     return async () => {
       await wavesurfer.current.empty();
     };
-  }, [currentTrack, originTrackList, forwardMode]);
+  }, [currentTrack, forwardMode]); // originTrackList 가 없어도 괜찮은지..?
 
   useEffect(() => {
     if (wavesurfer.current) {

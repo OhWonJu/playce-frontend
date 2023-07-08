@@ -21,6 +21,7 @@ const myAlbums = [
 interface HomeViewProps {
   viewMode: VIEW_MODES;
   displayPlayer: boolean;
+  queueClickHandler: () => void;
   albumClickHandler: (album: any) => void;
   togglePlayerClickhandler: () => void;
 }
@@ -28,6 +29,7 @@ interface HomeViewProps {
 const HomeView: React.FC<HomeViewProps> = ({
   viewMode,
   displayPlayer,
+  queueClickHandler,
   albumClickHandler,
   togglePlayerClickhandler,
 }) => {
@@ -49,6 +51,44 @@ const HomeView: React.FC<HomeViewProps> = ({
         <button onClick={() => togglePlayerClickhandler()}>
           {displayPlayer ? "CLOSE PLAYER" : ""}
         </button>
+      </div>
+
+      {/*  */}
+      <div className="__MY_QUEUE__ w-full pb-10">
+        <div className="flex w-full justify-between pb-3">
+          <SectionHeaderText className="font-bold text-2xl">
+            다시 듣기
+          </SectionHeaderText>
+          <div
+            className="font-semibold text-xs text-center px-1.5 py-1 rounded-full"
+            style={{ borderWidth: 1 }}
+          >
+            <a className="">more</a>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="relative w-[180px] h-[180px] rounded-md mb-1 bg-zinc-500 group mr-2">
+            <div
+              className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2"
+              onClick={queueClickHandler}
+            >
+              <Play
+                width="40"
+                height="40"
+                fill={theme.background_color}
+                strokeWidth={0}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col justify-center">
+          <a className="font-semibold text-sm">My Queue</a>
+          <div className="flex space-x-2">
+            <a className="text-zinc-400 font-semibold text-sm">
+              10 songs • 10 min
+            </a>
+          </div>
+        </div>
       </div>
 
       {/*  */}

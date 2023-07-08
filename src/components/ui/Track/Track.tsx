@@ -10,6 +10,8 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import { useQueue } from "@lib/client/hooks/useQueue";
+import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
 interface TrackComponentProps {
   data: TRACK;
@@ -28,6 +30,10 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
 }) => {
   const { style = {} } = rest;
 
+  const { addTrack: addPlayListTrack, deleteTrack: delPlayListTrack } =
+    usePlayerControl();
+  const { addTrack: addQueueList, deleteTrack: delQueuList } = useQueue();
+
   const [scope, animate] = useAnimate();
   const x = useMotionValue(0);
   const btnOpacity = useTransform(x, [-80, -15], [1, 0]);
@@ -37,6 +43,10 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
   function handleDragStart() {
     dragStarted.current = true;
   }
+
+  useEffect(() => {
+    x.set(0);
+  }, []);
 
   function handleOnDrag(event: any, info: PanInfo) {
     const delta = info.delta;
@@ -65,9 +75,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
     // DELETE MOTION
     if (trackListType !== "ALBUM") {
       if (offset < -100 || velocity < -500) {
-        // animate(scope.current, { x: "-80px" }, { duration: 0 });
         animate(x, -80, { duration: 0.5 });
-        // setTimeout(() => onDelete(index), 200);
       } else {
         animate(x, 0, { duration: 0.5 });
       }
@@ -76,8 +84,11 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
     // ADD TO QUEUE
     if (trackListType !== "QUEUE") {
       if (offset > 100 || velocity > 500) {
-        // alert("ADD TO QUEUE");
         animate(scope.current, { x: 0 }, { duration: 0.5 });
+        setTimeout(() => {
+          addPlayListTrack(data);
+          addQueueList(data);
+        }, 200);
       }
     }
 
@@ -88,6 +99,14 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
     event.preventDefault();
     event.stopPropagation();
     if (!dragStarted.current) clickHandler();
+  }
+
+  function handleDeleteBtn() {
+    if (trackListType === "QUEUE") {
+      delPlayListTrack(data);
+      delQueuList(data);
+    }
+    if (trackListType === "LIST") null;
   }
 
   return (
@@ -127,7 +146,10 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
         </section>
       </TrackMotion>
       {trackListType !== "ALBUM" ? (
-        <TrackDeleteButton style={{ opacity: btnOpacity }}>
+        <TrackDeleteButton
+          style={{ opacity: btnOpacity }}
+          onClick={handleDeleteBtn}
+        >
           <a>delete</a>
         </TrackDeleteButton>
       ) : null}

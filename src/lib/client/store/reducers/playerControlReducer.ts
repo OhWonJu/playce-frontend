@@ -5,6 +5,7 @@ import type {
   PLAYER_CONTROL_ACTION,
   PLAYER_FORWARD_MODE,
   PLAYER_REPEAT_MODE,
+  PLAY_LIST_TYPE,
   TRACK,
 } from "../types/playerControlType";
 
@@ -15,6 +16,7 @@ export type PlayerControlStateType = {
   forwardMode: PLAYER_FORWARD_MODE;
   originTrackList: Array<TRACK>;
   playList: Array<TRACK>;
+  playListType: PLAY_LIST_TYPE;
   currentTrack: TRACK;
   totalTime: number;
 };
@@ -27,6 +29,7 @@ const initialState: PlayerControlStateType = {
   originTrackList: [],
   currentTrack: null,
   playList: [],
+  playListType: "ALBUM",
   totalTime: 0,
 };
 
@@ -77,6 +80,51 @@ const playerControlSlice = createSlice({
             ...state,
             playList: aciton.payload.playList,
           };
+        }
+        case "SET_PLAY_LIST_TYPE": {
+          return {
+            ...state,
+            playListType: aciton.payload.playListType,
+          };
+        }
+        case "ADD_TRACK": {
+          const newTrack = aciton.payload.track;
+          const newOriginPlayList = [...state.originTrackList];
+          const newPlayList = [...state.playList];
+          const existTrack = newPlayList.findIndex(
+            track => track.trackTitle === newTrack.trackTitle,
+          );
+          if (existTrack === -1) {
+            newOriginPlayList.push(newTrack);
+            newPlayList.push(newTrack);
+            return {
+              ...state,
+              originTrackList: newOriginPlayList,
+              playList: newPlayList,
+            };
+          } else return { ...state };
+        }
+        case "DELETE_TRACK": {
+          const deletedTrack = aciton.payload.track;
+          const deletedTrackIndex = state.playList.findIndex(
+            track => track.trackTitle === deletedTrack.trackTitle,
+          );
+
+          if (deletedTrackIndex !== -1) {
+            const deletedOriginTrackIndex = state.originTrackList.findIndex(
+              track => track.trackTitle === deletedTrack.trackTitle,
+            );
+
+            const newOriginPlayList = [...state.originTrackList];
+            const newPlayList = [...state.playList];
+            newOriginPlayList.splice(deletedOriginTrackIndex, 1);
+            newPlayList.splice(deletedTrackIndex, 1);
+            return {
+              ...state,
+              originTrackList: newOriginPlayList,
+              playList: newPlayList,
+            };
+          } else return { ...state };
         }
         case "SET_TOTAL_TIME": {
           return {

@@ -32,7 +32,7 @@ const PlayerBottomSheetView = () => {
   const motionProg = useMotionValue(0);
 
   useEffect(() => {
-    if (progress <= 0) {
+     if (progress <= 0) {
       animate(motionProg, 0, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
@@ -44,9 +44,9 @@ const PlayerBottomSheetView = () => {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
-
-      setFocusedTab(-1);
     }
+
+    if (progress > 99) setFocusedTab(-1);
   }, [progress]);
 
   // sub Progress 처리도 해야함...메인에 다 묶이니까 드레그 이벤트에서 y가 변해가지고 덜컥거리는거

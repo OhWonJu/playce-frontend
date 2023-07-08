@@ -5,18 +5,22 @@ import { useUI } from "@components/ui";
 import HomeView from "./Home.view";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { T_Album } from "@lib/client/types";
+import { useQueue } from "@lib/client/hooks/useQueue";
 
 const HomeController = () => {
   const { viewMode, closePlayer, displayPlayer, openPlayer } = useUI();
   const {
-    currentTrack,
+    play,
+    setPlay,
     setOriginTrackList,
     setCurrentTrack,
-    setPlay,
+    setPlayListType,
     doShuffle,
     setPlayList,
     shuffle,
+    handlePlayListClick,
   } = usePlayerControl();
+  const { queue } = useQueue();
 
   const togglePlayerClickhandler = () => {
     if (displayPlayer) {
@@ -26,47 +30,42 @@ const HomeController = () => {
     }
   };
 
-  // current Play List , Origin Play List를 상태로 둬야할 것 같음
-  // origin 이 바뀌면 리셋하는 형태로 가야함...
+  const queueClickHandler = () => {
+    if (queue.length < 1) return;
+
+    if (!displayPlayer) {
+      openPlayer();
+    }
+
+    setPlayListType("QUEUE");
+
+    setOriginTrackList(queue);
+    setCurrentTrack(queue[0]);
+
+    if (shuffle) {
+      doShuffle(queue);
+    } else {
+      setPlayList(queue);
+    }
+
+    setTimeout(() => setPlay(true), 800);
+  };
 
   const albumClickHandler = (album: T_Album) => {
     if (!displayPlayer) {
       openPlayer();
     }
 
-    const TrackList = album.tracks.map((track: any, index: number) => {
-      return {
-        artistEn: album.nameEn,
-        artistKo: album.nameKr,
-        ablumTitle: album.title,
-        ablumArtURL: album.art,
-        audioURL: track.url,
-        trackNo: index + 1,
-        trackTitle: track.title,
-      };
-    });
+    handlePlayListClick("ALBUM", album);
 
-    const currentIndex = currentTrack
-      ? TrackList.findIndex(
-          (track: any) => track.trackTitle === currentTrack.trackTitle,
-        )
-      : -1;
-
-    if (currentIndex === -1) setPlay(false);
-    setOriginTrackList(TrackList);
-    setCurrentTrack(currentIndex === -1 ? TrackList[0] : currentTrack);
-
-    if (shuffle) {
-      doShuffle(TrackList);
-    } else {
-      setPlayList(TrackList);
-    }
+    setTimeout(() => setPlay(true), 800);
   };
 
   return (
     <HomeView
       viewMode={viewMode}
       displayPlayer={displayPlayer}
+      queueClickHandler={queueClickHandler}
       albumClickHandler={albumClickHandler}
       togglePlayerClickhandler={togglePlayerClickhandler}
     />

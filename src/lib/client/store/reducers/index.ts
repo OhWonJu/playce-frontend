@@ -14,6 +14,7 @@ import playerControlReducer, {
   PlayerControlStateType,
 } from "./playerControlReducer";
 import playTimeReducer, { PlayTimeStateType } from "./playTimeReducer";
+import queueReducer, { QueueStateType } from "./queueReducer";
 
 // actions //
 export { sidebarActions } from "./sidebarReducer";
@@ -25,6 +26,7 @@ export { viewModeActions } from "./viewModeReducer";
 export { playerActions } from "./playerReducer";
 export { playerControlActions } from "./playerControlReducer";
 export { playTimeActions } from "./playTimeReducer";
+export { queueActions } from "./queueReducer";
 
 type ReducerState = {
   sidebar: SidebarStateType;
@@ -36,6 +38,7 @@ type ReducerState = {
   player: PlayerStateType;
   playerControl: PlayerControlStateType;
   playTimeControl: PlayTimeStateType;
+  queue: QueueStateType;
 };
 
 // 원래 "rootReducer"로 합쳐줄 필요 없이 "configureStore()"에서 합칠 수 있지만 "HYDRATE"를 위해서 사용
@@ -62,6 +65,7 @@ const rootReducer = (
         player: playerReducer,
         playerControl: playerControlReducer,
         playTimeControl: playTimeReducer,
+        queue: queueReducer,
       })(state, action);
   }
 };

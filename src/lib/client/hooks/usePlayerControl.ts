@@ -6,8 +6,11 @@ import { useCallback } from "react";
 import {
   PLAYER_FORWARD_MODE,
   PLAYER_REPEAT_MODE,
+  PLAY_LIST_TYPE,
   TRACK,
 } from "../store/types/playerControlType";
+import { T_Album } from "../types";
+import { useUI } from "@components/ui";
 
 export const usePlayerControl = () => {
   const dispatch = useDispatch();
@@ -19,6 +22,7 @@ export const usePlayerControl = () => {
     forwardMode,
     originTrackList,
     playList,
+    playListType,
     currentTrack,
     totalTime,
   } = useSelector(({ playerControl }: RootState) => playerControl);
@@ -89,6 +93,36 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
+  const addTrack = useCallback(
+    (track: TRACK) =>
+      dispatch(
+        playerControlActions.playerControlReducer({ type: "ADD_TRACK", track }),
+      ),
+    [dispatch],
+  );
+
+  const deleteTrack = useCallback(
+    (track: TRACK) =>
+      dispatch(
+        playerControlActions.playerControlReducer({
+          type: "DELETE_TRACK",
+          track,
+        }),
+      ),
+    [dispatch],
+  );
+
+  const setPlayListType = useCallback(
+    (playListType: PLAY_LIST_TYPE) =>
+      dispatch(
+        playerControlActions.playerControlReducer({
+          type: "SET_PLAY_LIST_TYPE",
+          playListType,
+        }),
+      ),
+    [dispatch],
+  );
+
   const setCurrentTrack = useCallback(
     (currentTrack: TRACK) =>
       dispatch(
@@ -143,6 +177,45 @@ export const usePlayerControl = () => {
     [shuffle, currentTrack],
   );
 
+  const handlePlayListClick = (
+    playListType: PLAY_LIST_TYPE,
+    album: T_Album,
+  ) => {
+    setPlayListType(playListType);
+
+    const TrackList = album.tracks.map((track: any, index: number) => {
+      return {
+        artistEn: album.nameEn,
+        artistKo: album.nameKr,
+        ablumTitle: album.title,
+        ablumArtURL: album.art,
+        audioURL: track.url,
+        trackNo: index + 1,
+        trackTitle: track.title,
+      };
+    });
+
+    const currentIndex = currentTrack
+      ? TrackList.findIndex(
+          (track: any) => track.trackTitle === currentTrack.trackTitle,
+        )
+      : -1;
+
+    if (currentIndex === -1) setPlay(false);
+    setOriginTrackList(TrackList);
+    setCurrentTrack(currentIndex === -1 ? TrackList[0] : currentTrack);
+
+    if (shuffle) {
+      doShuffle(TrackList);
+    } else {
+      setPlayList(TrackList);
+    }
+
+    //  if (!play) {
+    //   setTimeout(() => setPlay(true), 800);
+    // }
+  };
+
   const context = {
     play,
     shuffle,
@@ -150,6 +223,7 @@ export const usePlayerControl = () => {
     forwardMode,
     originTrackList,
     playList,
+    playListType,
     currentTrack,
     totalTime,
     setPlay: (play: boolean) => setPlay(play),
@@ -161,9 +235,15 @@ export const usePlayerControl = () => {
     setOriginTrackList: (originTrackList: Array<TRACK>) =>
       setOriginTrackList(originTrackList),
     setPlayList: (playList: Array<TRACK>) => setPlayList(playList),
+    addTrack: (track: TRACK) => addTrack(track),
+    deleteTrack: (track: TRACK) => deleteTrack(track),
+    setPlayListType: (playListType: PLAY_LIST_TYPE) =>
+      setPlayListType(playListType),
     setCurrentTrack: (currentTrack: TRACK) => setCurrentTrack(currentTrack),
     setTotalTime: (totalTime: number) => setTotalTime(totalTime),
     doShuffle: (list: Array<TRACK>) => doShuffle(list),
+    handlePlayListClick: (playListType: PLAY_LIST_TYPE, album: T_Album) =>
+      handlePlayListClick(playListType, album),
   };
 
   return context;

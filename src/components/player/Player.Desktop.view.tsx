@@ -21,8 +21,6 @@ import {
 import { DotMenu } from "@components/icons";
 import { TRACK } from "@lib/client/store/types/playerControlType";
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
-import Image from "next/image";
-import useTheme from "@lib/client/hooks/useTheme";
 import { Track } from "@components/ui";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
@@ -32,8 +30,8 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
 interface PlayerDesktopViewProps {}
 
 const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
-  const theme = useTheme();
-  const { play, currentTrack, playList, setCurrentTrack } = usePlayerControl();
+  const { play, currentTrack, playList, playListType, setCurrentTrack } =
+    usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
 
   const pinOpacity = useMotionValue(1);
@@ -117,9 +115,9 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
       >
         {playList.map((track: TRACK, index: number) => (
           <Track
-            key={index}
+            key={index + track.trackTitle + playListType} // list 간의 전환이 있는 경우 index + track 조합이 같으면 같은 컴포넌트라 생각하는 것 같음.
             data={track}
-            trackListType="LIST"
+            trackListType={playListType}
             focused={currentTrack.trackTitle === track.trackTitle}
             clickHandler={() => clickHanlder(track)}
           />

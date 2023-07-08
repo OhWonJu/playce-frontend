@@ -24,53 +24,16 @@ const AlbumController = () => {
   );
 
   const { openPlayer, displayPlayer } = useUI();
-  const {
-    setCurrentTrack,
-    setPlayList,
-    setPlay,
-    setOriginTrackList,
-    shuffle,
-    doShuffle,
-    currentTrack,
-    play,
-  } = usePlayerControl();
+  const { play, handlePlayListClick, setPlay } = usePlayerControl();
 
   const albumClickHandler = (album: T_Album) => {
     if (!displayPlayer) {
       openPlayer();
     }
 
-    const TrackList = album.tracks.map((track: any, index: number) => {
-      return {
-        artistEn: album.nameEn,
-        artistKo: album.nameKr,
-        ablumTitle: album.title,
-        ablumArtURL: album.art,
-        audioURL: track.url,
-        trackNo: index + 1,
-        trackTitle: track.title,
-      };
-    });
+    handlePlayListClick("ALBUM", album);
 
-    const currentIndex = currentTrack
-      ? TrackList.findIndex(
-          (track: any) => track.trackTitle === currentTrack.trackTitle,
-        )
-      : -1;
-
-    if (currentIndex === -1) setPlay(false);
-    setOriginTrackList(TrackList);
-    setCurrentTrack(currentIndex === -1 ? TrackList[0] : currentTrack);
-
-    if (shuffle) {
-      doShuffle(TrackList);
-    } else {
-      setPlayList(TrackList);
-    }
-
-    if (!play) {
-      setTimeout(() => setPlay(true), 800);
-    }
+    setTimeout(() => setPlay(true), 800);
   };
 
   if (!album) return null;
