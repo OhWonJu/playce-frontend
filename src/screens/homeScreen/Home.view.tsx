@@ -59,12 +59,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           <SectionHeaderText className="font-bold text-2xl">
             다시 듣기
           </SectionHeaderText>
-          <div
-            className="font-semibold text-xs text-center px-1.5 py-1 rounded-full"
-            style={{ borderWidth: 1 }}
-          >
-            <a className="">more</a>
-          </div>
         </div>
         <div className="flex">
           <div className="relative w-[180px] h-[180px] rounded-md mb-1 bg-zinc-500 group mr-2">
@@ -97,12 +91,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           <SectionHeaderText className="font-bold text-2xl">
             MY ALBUM
           </SectionHeaderText>
-          <div
-            className="font-semibold text-xs text-center px-1.5 py-1 rounded-full"
-            style={{ borderWidth: 1 }}
-          >
-            <a className="">more</a>
-          </div>
         </div>
         <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
           {myAlbums.map((album, index) => (
@@ -155,12 +143,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           <SectionHeaderText className="font-bold text-2xl">
             MY PLAY LIST
           </SectionHeaderText>
-          <div
-            className="font-semibold text-xs text-center px-1.5 py-1 rounded-full"
-            style={{ borderWidth: 1 }}
-          >
-            <a className="">more</a>
-          </div>
         </div>
         <div className="flex flex-col flex-wrap content-start w-full max-h-[310px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
           {Array.from({ length: 12 }, () => 0).map((arr, index) => (
@@ -186,12 +168,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           <SectionHeaderText className="font-bold text-2xl">
             Recommend
           </SectionHeaderText>
-          <div
-            className="font-semibold text-xs text-center px-1.5 py-1 rounded-full"
-            style={{ borderWidth: 1 }}
-          >
-            <a className="">more</a>
-          </div>
         </div>
         <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
           {Array.from({ length: 12 }, () => 0).map((arr, index) => (
