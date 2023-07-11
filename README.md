@@ -35,11 +35,9 @@ BackEnd (예정)
 ||||
 |----|----|----|
 |![init](img/1.jpeg)|![login](img/2.jpeg)|![signin](img/3.jpeg)|
-|![init](img/4.jpeg)|![login](img/5.jpeg)|![signin](img/6.jpeg)|
-|![init](img/7.jpeg)|
+|![init](img/4.jpeg)|![login](img/5.jpeg)|![sheet](img/sheet.gif)
 
 ![full](img/8.jpeg)
-
 <!-- <table>
   <tr>
      <td><img src="img/1.jpeg" alt="google"></td>
