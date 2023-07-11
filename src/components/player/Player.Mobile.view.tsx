@@ -30,7 +30,7 @@ import {
   PlayerMicroCtlr,
 } from "./Player.styles";
 import { DotMenu } from "@components/icons";
-import { useUI } from "@components/ui";
+import { EllipsisText, useUI } from "@components/ui";
 import { useWindowSize } from "react-use";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
@@ -163,12 +163,16 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                     }}
                   >
                     <div className="__MICRO_TRACK__ flex flex-col max-w-[80%]">
-                      <a className="__MICRO_TRACK_TITLE__ font-extrabold text-sm">
-                        {currentTrack?.trackTitle}
-                      </a>
-                      <a className="__MICRO_ARTIST__ font-semibold text-xs">
-                        {currentTrack?.artistKo}
-                      </a>
+                      <EllipsisText
+                        context={currentTrack?.trackTitle}
+                        lineClamp={1}
+                        className="__MICRO_TRACK_TITLE__ font-extrabold text-sm"
+                      />
+                      <EllipsisText
+                        context={currentTrack?.artistKo}
+                        lineClamp={1}
+                        className="__MICRO_ARTIST__ font-semibold text-xs"
+                      />
                     </div>
                     <div className="flex items-center">
                       <PlayButton className={"w-5 h-5"} />

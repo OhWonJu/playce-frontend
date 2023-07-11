@@ -51,22 +51,11 @@ const HomeController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
-  const albumClickHandler = (album: T_Album) => {
-    if (!displayPlayer) {
-      openPlayer();
-    }
-
-    handlePlayListClick("ALBUM", album);
-
-    setTimeout(() => setPlay(true), 800);
-  };
-
   return (
     <HomeView
       viewMode={viewMode}
       displayPlayer={displayPlayer}
       queueClickHandler={queueClickHandler}
-      albumClickHandler={albumClickHandler}
       togglePlayerClickhandler={togglePlayerClickhandler}
     />
   );

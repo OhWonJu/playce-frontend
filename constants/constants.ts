@@ -33,7 +33,14 @@ export const DESKTOP_PLAYER_WIDTH = 300;
 
 export const NAV_HEIGHT: number = 60;
 
+// PLAYER ----------------------------------------------------- //
 export const PLAYER_HEADER_HEIGHT: number = 70;
 export const WAVE_FORM_HEIGHT: number = 50;
-
 export const PLAYER_BOTTOM_SHEET_HEADER_HEIGHT: number = 20;
+// ----------------------------------------------------- PLAYER //
+
+// CARDS -------------------------------------------------------- //
+export const ALBUM_CARD_HEIGHT: number = 180;
+export const ALBUM_CARD_WIDTH: number = 130;
+export const TRACK_CARD_HEIGHT: number = 60;
+// -------------------------------------------------------- CARDS //

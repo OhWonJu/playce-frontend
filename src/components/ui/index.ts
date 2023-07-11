@@ -1,3 +1,4 @@
+export { default as AlbumCard } from "./AlbumCard";
 export { default as BottomSheet } from "./BottomSheet";
 export { default as Button } from "./Button";
 export { default as Collapse } from "./Collapse";

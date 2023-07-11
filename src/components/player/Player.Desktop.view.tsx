@@ -21,7 +21,7 @@ import {
 import { DotMenu } from "@components/icons";
 import { TRACK } from "@lib/client/store/types/playerControlType";
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
-import { Track } from "@components/ui";
+import { EllipsisText, Track } from "@components/ui";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
@@ -77,12 +77,17 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
         <div className="__PLAYER_CONTROLL__ flex flex-col w-full">
           {/* TRACK INFO */}
           <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
-            <div className="__TRACK_TITLE__ font-extrabold text-3xl max-w-full overflow-hidden">
-              {currentTrack?.trackTitle}
-            </div>
-            <div className="__ARTIST__ font-bold text-base">
-              {currentTrack?.artistEn}
-            </div>
+            <EllipsisText
+              context={currentTrack?.trackTitle}
+              lineClamp={1}
+              lineHeight={3}
+              className="__MICRO_TRACK_TITLE__  font-extrabold text-3xl"
+            />
+            <EllipsisText
+              context={currentTrack?.artistKo}
+              lineClamp={1}
+              className="__MICRO_ARTIST__ font-bold text-base"
+            />
           </section>
           {/* WAVE FORM  */}
           <section

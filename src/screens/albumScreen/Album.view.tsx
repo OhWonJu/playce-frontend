@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useMemo } from "react";
 
-import { Container } from "@components/ui";
+import { Container, EllipsisText } from "@components/ui";
 import { T_Album } from "@lib/client/types";
 import { Play } from "@components/icons";
 import { convertTime } from "@lib/client/convertTime";
@@ -31,7 +31,12 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
           />
         </div>
         <div className="__INFO__ flex flex-col justify-center">
-          <a className="font-extrabold text-3xl">{album?.title}</a>
+          <EllipsisText
+            context={album?.title}
+            lineClamp={1}
+            lineHeight={3}
+            className="font-extrabold text-3xl"
+          />
           <a className="font-bold pb-3">{album?.nameKr}</a>
           <a className="text-zinc-400 font-semibold text-sm">
             EP • 2022 • genre genre genre

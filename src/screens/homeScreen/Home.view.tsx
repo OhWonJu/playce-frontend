@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
-import { Container, Link } from "@components/ui";
+import { AlbumCard, Container, Link } from "@components/ui";
 
-import { PLAYER_HEADER_HEIGHT } from "constants/constants";
+import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
 
 import { SectionHeaderText, SymbolText } from "src/styles/GlobalStyle";
 
@@ -22,7 +22,6 @@ interface HomeViewProps {
   viewMode: VIEW_MODES;
   displayPlayer: boolean;
   queueClickHandler: () => void;
-  albumClickHandler: (album: any) => void;
   togglePlayerClickhandler: () => void;
 }
 
@@ -30,7 +29,6 @@ const HomeView: React.FC<HomeViewProps> = ({
   viewMode,
   displayPlayer,
   queueClickHandler,
-  albumClickHandler,
   togglePlayerClickhandler,
 }) => {
   const theme = useTheme();
@@ -41,10 +39,10 @@ const HomeView: React.FC<HomeViewProps> = ({
 
   return (
     <Container className="overflow-y-scroll scrollbar-hide">
-      <div className="flex flex-col pb-5">
+      {/* <div className="flex flex-col pb-5">
         <SymbolText className=" ">PLAYCE {viewMode}</SymbolText>
         <a className="font-semibold text-lg">connect your pysical albums</a>
-      </div>
+      </div> */}
 
       {/*  */}
       <div className="pb-5">
@@ -60,7 +58,7 @@ const HomeView: React.FC<HomeViewProps> = ({
             다시 듣기
           </SectionHeaderText>
         </div>
-        <div className="flex">
+        <div className="__Q_CARD__ flex flex-col">
           <div className="relative w-[180px] h-[180px] rounded-md mb-1 bg-zinc-500 group mr-2">
             <div
               className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2"
@@ -74,13 +72,13 @@ const HomeView: React.FC<HomeViewProps> = ({
               />
             </div>
           </div>
-        </div>
-        <div className="flex flex-col justify-center">
-          <a className="font-semibold text-sm">My Queue</a>
-          <div className="flex space-x-2">
-            <a className="text-zinc-400 font-semibold text-sm">
-              10 songs • 10 min
-            </a>
+          <div className="flex flex-col justify-center">
+            <a className="font-semibold text-sm">My Queue</a>
+            <div className="flex space-x-2">
+              <a className="text-zinc-400 font-semibold text-sm">
+                10 songs • 10 min
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -92,47 +90,12 @@ const HomeView: React.FC<HomeViewProps> = ({
             MY ALBUM
           </SectionHeaderText>
         </div>
-        <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
+        <div
+          style={{ maxHeight: ALBUM_CARD_HEIGHT * 2 + 20 }}
+          className="flex flex-col flex-wrap content-start w-full snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-3"
+        >
           {myAlbums.map((album, index) => (
-            <div
-              key={index}
-              className="relative flex flex-col min-w-[120px] min-h-[170px] snap-center group"
-            >
-              <Link
-                href={{
-                  pathname: "album/[albumId]",
-                  // query: { album: JSON.stringify(album) },
-                  query: { albumId: album.title },
-                }}
-                // as={`/album/${album.title}`}
-              >
-                <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden snap-center mb-1 ">
-                  <Image
-                    // priority={true}
-                    src={album.art}
-                    alt="product image"
-                    layout="fill"
-                    sizes="100%"
-                    draggable={false}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <a className="font-bold">{album.title}</a>
-                  <a className="font-semibold text-sm">{album.nameKr}</a>
-                </div>
-              </Link>
-              <div
-                className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-[90px] left-[90px] p-1"
-                onClick={() => albumClickHandler(album)}
-              >
-                <Play
-                  width="20"
-                  height="20"
-                  fill={theme.background_color}
-                  strokeWidth={0}
-                />
-              </div>
-            </div>
+            <AlbumCard key={index} data={album} />
           ))}
         </div>
       </div>

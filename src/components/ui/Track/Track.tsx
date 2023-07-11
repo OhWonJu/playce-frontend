@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { TRACK } from "@lib/client/store/types/playerControlType";
 
-import { TrackDeleteButton, TrackMotion, TrackWrapper } from "./Track.styles";
+import { ArtWrapper, TrackDeleteButton, TrackMotion, TrackWrapper } from "./Track.styles";
 import {
   PanInfo,
   useAnimate,
@@ -12,6 +12,7 @@ import {
 } from "framer-motion";
 import { useQueue } from "@lib/client/hooks/useQueue";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
+import EllipsisText from "../EllipsisText/EllipsisText";
 
 interface TrackComponentProps {
   data: TRACK;
@@ -131,7 +132,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         ref={scope}
       >
-        <section className="relative h-full aspect-square rounded-full overflow-hidden mr-2">
+        <ArtWrapper className="">
           <Image
             src={data.ablumArtURL}
             alt="product image"
@@ -139,10 +140,18 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
             sizes="100%"
             draggable={false}
           />
-        </section>
+        </ArtWrapper>
         <section className="flex flex-col">
-          <a className="font-semibold text-base">{data.trackTitle}</a>
-          <a className="font-medium text-xs">{data.artistKo}</a>
+          <EllipsisText
+            context={data.trackTitle}
+            lineClamp={1}
+            className="font-semibold text-base"
+          />
+          <EllipsisText
+            context={data.artistKo}
+            lineClamp={1}
+            className="font-medium text-xs"
+          />
         </section>
       </TrackMotion>
       {trackListType !== "ALBUM" ? (
