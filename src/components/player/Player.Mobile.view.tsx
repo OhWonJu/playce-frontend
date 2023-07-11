@@ -190,12 +190,17 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                 >
                   {/* TRACK INFO */}
                   <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
-                    <div className="__TRACK_TITLE__ font-extrabold text-3xl overflow-hidden">
-                      {currentTrack?.trackTitle}
-                    </div>
-                    <div className="__ARTIST__ font-bold text-base">
-                      {currentTrack?.artistEn}
-                    </div>
+                    <EllipsisText
+                      className="__TRACK_TITLE__ font-extrabold text-3xl"
+                      context={currentTrack?.trackTitle}
+                      lineClamp={1}
+                      lineHeight={3}
+                    />
+                    <EllipsisText
+                      className="__ARTIST__ font-bold text-base"
+                      context={currentTrack?.artistEn}
+                      lineClamp={1}
+                    />
                   </section>
                   {/* WAVE FORM  */}
                   <section
