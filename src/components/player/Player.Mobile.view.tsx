@@ -175,8 +175,8 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                       />
                     </div>
                     <div className="flex items-center">
-                      <PlayButton className={"w-5 h-5"} />
-                      <ForwardButton isForward={true} />
+                      <PlayButton className="w-[48px] h-[48px] p-[13px]" />
+                      <ForwardButton className="flex-1" isForward={true} />
                     </div>
                   </PlayerMicroCtlr>
                 </AlbumArea>

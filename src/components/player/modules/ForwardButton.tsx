@@ -1,11 +1,22 @@
-import React, { useCallback } from "react";
+import React from "react";
 import _ from "lodash";
+import cn from "clsx";
 
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { Forward } from "@components/icons";
 import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
+import RippleButton from "@components/ui/RippleButton/RippleButton";
 
-const ForwardButton: React.FC<{ isForward: boolean }> = ({ isForward }) => {
+const ForwardButton: React.FC<{ isForward: boolean; className?: string }> = ({
+  isForward,
+  className,
+}) => {
+  const rootClassName = cn(
+    "w-12 h-12 rounded-full flex justify-center items-center",
+    {},
+    className,
+  );
+
   const { currentTrack, playList, setCurrentTrack, setForwardMode } =
     usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
@@ -82,12 +93,12 @@ const ForwardButton: React.FC<{ isForward: boolean }> = ({ isForward }) => {
   );
 
   return (
-    <div
-      className={`w-12 h-12 rounded-full flex justify-center items-center`}
-      onClick={() => debouncedHandleForwardButton(isForward)}
+    <RippleButton
+      className={rootClassName}
+      clickHandler={() => debouncedHandleForwardButton(isForward)}
     >
       {isForward ? <Forward /> : <Forward className="rotate-180" />}
-    </div>
+    </RippleButton>
   );
 };
 

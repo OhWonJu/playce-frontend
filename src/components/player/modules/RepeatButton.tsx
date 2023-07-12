@@ -1,8 +1,10 @@
 import React, { useCallback } from "react";
 
-import { Repeat } from "@components/icons";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import useTheme from "@lib/client/hooks/useTheme";
+
+import { Repeat } from "@components/icons";
+import RippleButton from "@components/ui/RippleButton/RippleButton";
 
 const RepeatButton = () => {
   const theme = useTheme();
@@ -26,9 +28,9 @@ const RepeatButton = () => {
   }, [setRepeatMode]);
 
   return (
-    <div
-      className="relative grid place-items-center"
-      onClick={() => _handleClick()}
+    <RippleButton
+      className="relative grid place-items-center p-2 rounded-full"
+      clickHandler={_handleClick}
     >
       {repeatMode === "NONE" ? (
         <Repeat fill={theme.gray_dark} />
@@ -48,7 +50,7 @@ const RepeatButton = () => {
           </a>
         </>
       )}
-    </div>
+    </RippleButton>
   );
 };
 

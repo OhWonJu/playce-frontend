@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
 import { AlbumCard, Container, Link } from "@components/ui";
@@ -11,6 +10,7 @@ import { SectionHeaderText, SymbolText } from "src/styles/GlobalStyle";
 import { artist } from "mock/mock";
 import { Play } from "@components/icons";
 import useTheme from "@lib/client/hooks/useTheme";
+import RippleButton from "@components/ui/RippleButton/RippleButton";
 
 const myAlbums = [
   artist.ADOY.ablums[0],
@@ -45,10 +45,14 @@ const HomeView: React.FC<HomeViewProps> = ({
       </div> */}
 
       {/*  */}
-      <div className="pb-5">
-        <button onClick={() => togglePlayerClickhandler()}>
-          {displayPlayer ? "CLOSE PLAYER" : ""}
-        </button>
+      <div className="relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2">
+          <RippleButton clickHandler={togglePlayerClickhandler} className="">
+            <a className="">
+              {displayPlayer ? "CLOSE PLAYER" : ""}
+            </a>
+          </RippleButton>
+        </div>
       </div>
 
       {/*  */}
