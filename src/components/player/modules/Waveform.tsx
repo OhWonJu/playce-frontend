@@ -18,7 +18,6 @@ const Waveform = () => {
     playList,
     setPlay,
     originTrackList,
-    setForwardMode,
   } = usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
 

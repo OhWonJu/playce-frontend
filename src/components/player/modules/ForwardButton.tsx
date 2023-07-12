@@ -61,13 +61,12 @@ const ForwardButton: React.FC<{ isForward: boolean; className?: string }> = ({
 
       if (isForword) {
         nextIdx = (currentIdx + 1) % playList.length;
-        setForwardMode("FORWARD");
+        setForwardMode("FORWARD"); // 0 ~ 1 해벌면... N % 1 
       } else if (playTime < 10) {
         // 재생시간이 10초 미만이면 이전 트랙
         // 그렇지 않다면 현재트랙
         if (currentIdx === 0) nextIdx = playList.length - 1;
         else nextIdx = (currentIdx - 1) % playList.length;
-
         setForwardMode("BACKWARD");
       } else {
         setForwardMode("RESTART");
@@ -88,7 +87,9 @@ const ForwardButton: React.FC<{ isForward: boolean; className?: string }> = ({
 
   const debouncedHandleForwardButton = React.useMemo(
     () =>
-      _.debounce((isForward: boolean) => handleForwardButton(isForward), 300),
+      _.debounce((isForward: boolean) => {
+        handleForwardButton(isForward);
+      }, 300),
     [handleForwardButton],
   );
 
