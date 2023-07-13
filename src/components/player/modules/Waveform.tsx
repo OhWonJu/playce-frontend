@@ -12,7 +12,7 @@ const Waveform = () => {
     setCurrentTrack,
     play,
     repeatMode,
-    forwardMode,
+    forwardTrigger,
     currentTrack,
     setTotalTime,
     playList,
@@ -121,7 +121,7 @@ const Waveform = () => {
     return async () => {
       await wavesurfer.current.empty();
     };
-  }, [currentTrack, forwardMode]); // originTrackList 가 없어도 괜찮은지..?
+  }, [currentTrack, forwardTrigger]); // originTrackList 가 없어도 괜찮은지..?
 
   useEffect(() => {
     if (wavesurfer.current) {

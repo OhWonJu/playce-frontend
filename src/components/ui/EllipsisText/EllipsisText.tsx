@@ -21,7 +21,6 @@ const EllipsisText: React.FC<Props> = ({
   lineHeight,
   ...rest
 }) => {
-  console.log(lineHeight);
   const rootClassName = cn("", {}, className);
 
   return (

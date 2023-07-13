@@ -20,6 +20,7 @@ export const usePlayerControl = () => {
     shuffle,
     repeatMode,
     forwardMode,
+    forwardTrigger,
     originTrackList,
     playList,
     playListType,
@@ -66,6 +67,16 @@ export const usePlayerControl = () => {
         playerControlActions.playerControlReducer({
           type: "SET_FORWARD_MODE",
           forwardMode,
+        }),
+      ),
+    [dispatch],
+  );
+
+  const setForwardTrigger = useCallback(
+    () =>
+      dispatch(
+        playerControlActions.playerControlReducer({
+          type: "SET_FORWARD_TRIGGER",
         }),
       ),
     [dispatch],
@@ -221,6 +232,7 @@ export const usePlayerControl = () => {
     shuffle,
     repeatMode,
     forwardMode,
+    forwardTrigger,
     originTrackList,
     playList,
     playListType,
@@ -232,6 +244,7 @@ export const usePlayerControl = () => {
       setRepeatMode(repeatMode),
     setForwardMode: (forwardMode: PLAYER_FORWARD_MODE) =>
       setForwardMode(forwardMode),
+    setForwardTrigger: () => setForwardTrigger(),
     setOriginTrackList: (originTrackList: Array<TRACK>) =>
       setOriginTrackList(originTrackList),
     setPlayList: (playList: Array<TRACK>) => setPlayList(playList),

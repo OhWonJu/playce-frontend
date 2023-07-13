@@ -17,39 +17,9 @@ const ForwardButton: React.FC<{ isForward: boolean; className?: string }> = ({
     className,
   );
 
-  const { currentTrack, playList, setCurrentTrack, setForwardMode } =
+  const { currentTrack, playList, setCurrentTrack, setForwardTrigger } =
     usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
-
-  // const handleForwardButton = (isForword: boolean) => {
-  //   const currentIdx = playList.findIndex(
-  //     el => el.trackTitle === currentTrack.trackTitle,
-  //   );
-
-  //   let nextIdx = currentIdx;
-
-  //   if (isForword) {
-  //     nextIdx = (currentIdx + 1) % playList.length;
-  //     setForwardMode("FORWARD");
-  //   } else if (playTime < 10) {
-  //     // 재생시간이 10초 미만이면 이전 트랙
-  //     // 그렇지 않다면 현재트랙
-  //     if (currentIdx === 0) nextIdx = playList.length - 1;
-  //     else nextIdx = (currentIdx - 1) % playList.length;
-
-  //     setForwardMode("BACKWARD");
-  //   } else {
-  //     setForwardMode("RESTART");
-  //   }
-
-  //   setPlayTime(0);
-  //   setCurrentTrack(playList[nextIdx]);
-  // };
-
-  // const throttledHandleForwardButton = _.throttle(
-  //   (isForward: boolean) => handleForwardButton(isForward),
-  //   500,
-  // );
 
   const handleForwardButton = React.useCallback(
     (isForword: boolean) => {
@@ -61,35 +31,37 @@ const ForwardButton: React.FC<{ isForward: boolean; className?: string }> = ({
 
       if (isForword) {
         nextIdx = (currentIdx + 1) % playList.length;
-        setForwardMode("FORWARD"); // 0 ~ 1 해벌면... N % 1 
+        // setForwardMode("FORWARD"); // 0 ~ 1 해벌면... N % 1
       } else if (playTime < 10) {
         // 재생시간이 10초 미만이면 이전 트랙
         // 그렇지 않다면 현재트랙
         if (currentIdx === 0) nextIdx = playList.length - 1;
         else nextIdx = (currentIdx - 1) % playList.length;
-        setForwardMode("BACKWARD");
+        // setForwardMode("BACKWARD");
       } else {
-        setForwardMode("RESTART");
+        // setForwardMode("RESTART");
       }
 
+      setForwardTrigger();
       setPlayTime(0);
       setCurrentTrack(playList[nextIdx]);
     },
     [
       currentTrack,
       playList,
-      setForwardMode,
+      setForwardTrigger,
       playTime,
       setPlayTime,
       setCurrentTrack,
     ],
   );
 
+  // 개선 필요
   const debouncedHandleForwardButton = React.useMemo(
     () =>
       _.debounce((isForward: boolean) => {
         handleForwardButton(isForward);
-      }, 300),
+      }, 100),
     [handleForwardButton],
   );
 
