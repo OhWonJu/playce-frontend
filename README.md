@@ -56,7 +56,7 @@ BackEnd (예정)
 </table> -->
 
 
-# 개발 내역
+<!-- # 개발 내역
 ## 23-04-28 ~ 23-07-07
 styled-compoent, tailwind 를 통한 모바일, 태블릿, 데스트톱 폼팩터에 대한 반응형 디자인 구현 <br/>
 react-modal-sheet(일부 수정), framer-motion 을 통한 플레이어 바텀 시트 구현 <br/>
@@ -70,4 +70,4 @@ Play List 기능보다 좀 더 직관적이고, 간편하게 재생 목록을 �
 
 ## 23-07-12
 - Ellipsis Texts Component
-- Ripple effect buttom component
+- Ripple effect buttom component -->
