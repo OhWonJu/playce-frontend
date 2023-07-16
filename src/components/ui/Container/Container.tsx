@@ -3,7 +3,11 @@ import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 import tw from "twin.macro";
 
-import { DESKTOP_PLAYER_WIDTH, NAV_HEIGHT } from "constants/constants";
+import {
+  DESKTOP_PLAYER_WIDTH,
+  NAV_HEIGHT,
+  PLAYER_HEADER_HEIGHT,
+} from "constants/constants";
 import { useUI } from "../context";
 
 interface ContainerProps {
@@ -61,7 +65,10 @@ const ContainPlayerWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   padding-top: ${props => (props.isDesktop ? NAV_HEIGHT * 2 : NAV_HEIGHT)}px;
-  padding-bottom: ${NAV_HEIGHT}px;
+  ${props =>
+    props.isDesktop
+      ? `padding-bottom: ${NAV_HEIGHT}px`
+      : `padding-bottom: ${NAV_HEIGHT + PLAYER_HEADER_HEIGHT}px;`};
   /* ${props => props.isDesktop && `margin-left: ${DESKTOP_PLAYER_WIDTH}px;`} */
   ${props => props.isDesktop && `padding-left: ${DESKTOP_PLAYER_WIDTH + 16}px;`}
   ${props =>

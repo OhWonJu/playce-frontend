@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { convertTime } from "@lib/client/convertTime";
 import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
