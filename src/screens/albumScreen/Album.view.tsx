@@ -87,7 +87,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
       </AlbumInfoWrapper>
 
       {/* TRACK LIST */}
-      <section className="flex flex-col w-full h-[70%] space-y-2">
+      <section className="flex flex-col w-full space-y-2">
         {album.tracks.map((track, index) => (
           <div
             key={index}

@@ -31,9 +31,9 @@ export const AlbumInfo = styled.section`
   display: flex;
   flex-direction: column;
 
-  ${tw`row-span-3 sm:justify-center mb-4 sm:mb-0`}
+  ${tw`row-start-1 row-span-3 sm:justify-center mb-4 sm:mb-0`}
 `;
 
 export const AlbumButton = styled.section`
-  ${tw`row-start-4 row-span-1 sm:pt-3`}
+  ${tw`row-start-4 row-span-1  sm:pt-3 lg:pt-1 xl:pt-3`}
 `;
