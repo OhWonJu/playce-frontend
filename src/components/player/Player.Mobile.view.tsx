@@ -150,7 +150,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                     }}
                   >
                     <AlbumArt
-                      artURL={currentTrack?.ablumArtURL}
+                      artURL={currentTrack?.albumArtURL}
                       isPlay={play}
                       pinOpacity={pinOpacity}
                     />
@@ -169,7 +169,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                         className="__MICRO_TRACK_TITLE__ font-extrabold text-sm"
                       />
                       <EllipsisText
-                        context={currentTrack?.artistKo}
+                        context={currentTrack?.artistName}
                         lineClamp={1}
                         className="__MICRO_ARTIST__ font-semibold text-xs"
                       />
@@ -198,7 +198,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                     />
                     <EllipsisText
                       className="__ARTIST__ font-bold text-base"
-                      context={currentTrack?.artistEn}
+                      context={currentTrack?.artistName}
                       lineClamp={1}
                     />
                   </section>

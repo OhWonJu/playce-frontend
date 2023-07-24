@@ -16,7 +16,7 @@ export { default as LoadingDots } from "./LoadingDots";
 export { default as Modal } from "./Modal";
 export { default as RippleButton } from "./RippleButton/RippleButton";
 export { Tab, TabSection } from "./Tab";
-export { default as Track } from "./Track";
+export { default as TrackCard } from "./TrackCard";
 export { default as Window } from "./Window";
 // export * from './Dropdown/Dropdown'
 export { useUI } from "./context";

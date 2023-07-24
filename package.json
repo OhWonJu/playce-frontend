@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@prisma/client": "^5.0.0",
     "@react-aria/utils": "^3.18.0",
     "@react-spring/web": "^9.7.2",
     "@redux-devtools/extension": "^3.2.3",
@@ -34,7 +35,7 @@
     "nuka-carousel": "^5.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.36.1",
+    "react-hook-form": "^7.45.2",
     "react-intersection-observer": "^9.4.1",
     "react-merge-refs": "^2.0.1",
     "react-redux": "^8.0.2",
@@ -47,7 +48,7 @@
     "styled-normalize": "^8.0.7",
     "tabbable": "^6.0.0",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "wavesurfer.js": "^7.0.0-beta.11",
+    "wavesurfer.js": "^7.0.6",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

@@ -4,13 +4,10 @@ import type { RootState } from "@lib/client/store/store";
 import { playerControlActions } from "@lib/client/store/reducers";
 import { useCallback } from "react";
 import {
-  PLAYER_FORWARD_MODE,
   PLAYER_REPEAT_MODE,
   PLAY_LIST_TYPE,
-  TRACK,
 } from "../store/types/playerControlType";
-import { T_Album } from "../types";
-import { useUI } from "@components/ui";
+import { AlbumDetail, Track } from "../types";
 
 export const usePlayerControl = () => {
   const dispatch = useDispatch();
@@ -61,17 +58,6 @@ export const usePlayerControl = () => {
     [dispatch],
   );
 
-  const setForwardMode = useCallback(
-    (forwardMode: PLAYER_FORWARD_MODE) =>
-      dispatch(
-        playerControlActions.playerControlReducer({
-          type: "SET_FORWARD_MODE",
-          forwardMode,
-        }),
-      ),
-    [dispatch],
-  );
-
   const setForwardTrigger = useCallback(
     () =>
       dispatch(
@@ -83,7 +69,7 @@ export const usePlayerControl = () => {
   );
 
   const setOriginTrackList = useCallback(
-    (originTrackList: Array<TRACK>) =>
+    (originTrackList: Array<Track>) =>
       dispatch(
         playerControlActions.playerControlReducer({
           type: "SET_ORIGIN_TRACK_LIST",
@@ -94,7 +80,7 @@ export const usePlayerControl = () => {
   );
 
   const setPlayList = useCallback(
-    (playList: Array<TRACK>) =>
+    (playList: Array<Track>) =>
       dispatch(
         playerControlActions.playerControlReducer({
           type: "SET_PLAY_LIST",
@@ -105,7 +91,7 @@ export const usePlayerControl = () => {
   );
 
   const addTrack = useCallback(
-    (track: TRACK) =>
+    (track: Track) =>
       dispatch(
         playerControlActions.playerControlReducer({ type: "ADD_TRACK", track }),
       ),
@@ -113,7 +99,7 @@ export const usePlayerControl = () => {
   );
 
   const deleteTrack = useCallback(
-    (track: TRACK) =>
+    (track: Track) =>
       dispatch(
         playerControlActions.playerControlReducer({
           type: "DELETE_TRACK",
@@ -135,7 +121,7 @@ export const usePlayerControl = () => {
   );
 
   const setCurrentTrack = useCallback(
-    (currentTrack: TRACK) =>
+    (currentTrack: Track) =>
       dispatch(
         playerControlActions.playerControlReducer({
           type: "SET_CURRENT_TRACK",
@@ -157,7 +143,7 @@ export const usePlayerControl = () => {
   );
 
   const doShuffle = useCallback(
-    (list: Array<TRACK>) => {
+    (list: Array<Track>) => {
       if (shuffle) {
         const currentIndex = list.findIndex(
           track => track.trackTitle === currentTrack.trackTitle,
@@ -190,21 +176,23 @@ export const usePlayerControl = () => {
 
   const handlePlayListClick = (
     playListType: PLAY_LIST_TYPE,
-    album: T_Album,
+    album: AlbumDetail,
   ) => {
     setPlayListType(playListType);
 
-    const TrackList = album.tracks.map((track: any, index: number) => {
-      return {
-        artistEn: album.nameEn,
-        artistKo: album.nameKr,
-        ablumTitle: album.title,
-        ablumArtURL: album.art,
-        audioURL: track.url,
-        trackNo: index + 1,
-        trackTitle: track.title,
-      };
-    });
+    // const TrackList = album.tracks.map((track: any, index: number) => {
+    //   return {
+    //     artistEn: album.nameEn,
+    //     artistKo: album.nameKr,
+    //     ablumTitle: album.title,
+    //     ablumArtURL: album.art,
+    //     audioURL: track.url,
+    //     trackNo: index + 1,
+    //     trackTitle: track.title,
+    //   };
+    // });
+
+    const TrackList = album.tracks;
 
     const currentIndex = currentTrack
       ? TrackList.findIndex(
@@ -242,20 +230,18 @@ export const usePlayerControl = () => {
     setShuffle: (shuffle: boolean) => setShuffle(shuffle),
     setRepeatMode: (repeatMode: PLAYER_REPEAT_MODE) =>
       setRepeatMode(repeatMode),
-    setForwardMode: (forwardMode: PLAYER_FORWARD_MODE) =>
-      setForwardMode(forwardMode),
     setForwardTrigger: () => setForwardTrigger(),
-    setOriginTrackList: (originTrackList: Array<TRACK>) =>
+    setOriginTrackList: (originTrackList: Array<Track>) =>
       setOriginTrackList(originTrackList),
-    setPlayList: (playList: Array<TRACK>) => setPlayList(playList),
-    addTrack: (track: TRACK) => addTrack(track),
-    deleteTrack: (track: TRACK) => deleteTrack(track),
+    setPlayList: (playList: Array<Track>) => setPlayList(playList),
+    addTrack: (track: Track) => addTrack(track),
+    deleteTrack: (track: Track) => deleteTrack(track),
     setPlayListType: (playListType: PLAY_LIST_TYPE) =>
       setPlayListType(playListType),
-    setCurrentTrack: (currentTrack: TRACK) => setCurrentTrack(currentTrack),
+    setCurrentTrack: (currentTrack: Track) => setCurrentTrack(currentTrack),
     setTotalTime: (totalTime: number) => setTotalTime(totalTime),
-    doShuffle: (list: Array<TRACK>) => doShuffle(list),
-    handlePlayListClick: (playListType: PLAY_LIST_TYPE, album: T_Album) =>
+    doShuffle: (list: Array<Track>) => doShuffle(list),
+    handlePlayListClick: (playListType: PLAY_LIST_TYPE, album: AlbumDetail) =>
       handlePlayListClick(playListType, album),
   };
 

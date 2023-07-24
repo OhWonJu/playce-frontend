@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useUI } from "@components/ui";
 
 import HomeView from "./Home.view";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
-import { T_Album } from "@lib/client/types";
+import { AlbumFreeView, T_Album } from "@lib/client/types";
 import { useQueue } from "@lib/client/hooks/useQueue";
+import { useQuery } from "@tanstack/react-query";
+import { _GET } from "@lib/server/rootAPI";
+import { useMe } from "@lib/client/hooks/useMe";
 
 const HomeController = () => {
   const { viewMode, closePlayer, displayPlayer, openPlayer } = useUI();
@@ -21,6 +24,20 @@ const HomeController = () => {
     handlePlayListClick,
   } = usePlayerControl();
   const { queue } = useQueue();
+  const { id } = useMe();
+
+  const [myAlbumsData, setMyAlbumsData] = useState<{
+    albums: AlbumFreeView[];
+    own: boolean;
+  }>(null);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["myAlbum"],
+    queryFn: async () => await _GET(`api/users/${id}/a/albums`),
+    onSuccess: data => {
+      setMyAlbumsData(data.data);
+    },
+  });
 
   const togglePlayerClickhandler = () => {
     if (displayPlayer) {
@@ -55,6 +72,7 @@ const HomeController = () => {
     <HomeView
       viewMode={viewMode}
       displayPlayer={displayPlayer}
+      myAlbumsData={myAlbumsData}
       queueClickHandler={queueClickHandler}
       togglePlayerClickhandler={togglePlayerClickhandler}
     />

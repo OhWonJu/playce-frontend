@@ -1,21 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-
-import { TRACK } from "@lib/client/store/types/playerControlType";
-
-import { ArtWrapper, TrackDeleteButton, TrackMotion, TrackWrapper } from "./Track.styles";
 import {
   PanInfo,
   useAnimate,
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import { useQueue } from "@lib/client/hooks/useQueue";
+
+import { Track } from "@lib/client/types";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
+import { useQueue } from "@lib/client/hooks/useQueue";
+
 import EllipsisText from "../EllipsisText/EllipsisText";
 
+import {
+  ArtWrapper,
+  TrackDeleteButton,
+  TrackMotion,
+  TrackWrapper,
+} from "./TrackCard.styles";
+
 interface TrackComponentProps {
-  data: TRACK;
+  data: Track;
   trackListType: "ALBUM" | "LIST" | "QUEUE";
   focused?: boolean;
   clickHandler?: () => void;
@@ -134,7 +140,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
       >
         <ArtWrapper className="">
           <Image
-            src={data.ablumArtURL}
+            src={data.albumArtURL}
             alt="product image"
             layout="fill"
             sizes="100%"
@@ -148,7 +154,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
             className="font-semibold text-base"
           />
           <EllipsisText
-            context={data.artistKo}
+            context={data.artistName}
             lineClamp={1}
             className="font-medium text-xs"
           />

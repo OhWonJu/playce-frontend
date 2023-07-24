@@ -6,8 +6,8 @@ import type {
   PLAYER_FORWARD_MODE,
   PLAYER_REPEAT_MODE,
   PLAY_LIST_TYPE,
-  TRACK,
 } from "../types/playerControlType";
+import { Track } from "@lib/client/types";
 
 export type PlayerControlStateType = {
   play: boolean;
@@ -15,10 +15,10 @@ export type PlayerControlStateType = {
   repeatMode: PLAYER_REPEAT_MODE;
   forwardMode: PLAYER_FORWARD_MODE;
   forwardTrigger: number;
-  originTrackList: Array<TRACK>;
-  playList: Array<TRACK>;
+  originTrackList: Array<Track>;
+  playList: Array<Track>;
   playListType: PLAY_LIST_TYPE;
-  currentTrack: TRACK;
+  currentTrack: Track;
   totalTime: number;
 };
 

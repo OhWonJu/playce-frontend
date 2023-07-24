@@ -11,16 +11,19 @@ import { artist } from "mock/mock";
 import { Play } from "@components/icons";
 import useTheme from "@lib/client/hooks/useTheme";
 import RippleButton from "@components/ui/RippleButton/RippleButton";
+import { useMe } from "@lib/client/hooks/useMe";
+import { AlbumFreeView } from "@lib/client/types";
 
-const myAlbums = [
-  artist.ADOY.ablums[0],
-  artist.BaekYeRin.ablums[0],
-  artist.The1975.ablums[0],
-];
+// const myAlbums = [
+//   artist.ADOY.ablums[0],
+//   artist.BaekYeRin.ablums[0],
+//   artist.The1975.ablums[0],
+// ];
 
 interface HomeViewProps {
   viewMode: VIEW_MODES;
   displayPlayer: boolean;
+  myAlbumsData: { albums: AlbumFreeView[]; own: boolean };
   queueClickHandler: () => void;
   togglePlayerClickhandler: () => void;
 }
@@ -28,10 +31,12 @@ interface HomeViewProps {
 const HomeView: React.FC<HomeViewProps> = ({
   viewMode,
   displayPlayer,
+  myAlbumsData,
   queueClickHandler,
   togglePlayerClickhandler,
 }) => {
   const theme = useTheme();
+  const { userName } = useMe();
 
   if (viewMode === "INIT") {
     return null;
@@ -43,6 +48,7 @@ const HomeView: React.FC<HomeViewProps> = ({
         <SymbolText className=" ">PLAYCE {viewMode}</SymbolText>
         <a className="font-semibold text-lg">connect your pysical albums</a>
       </div> */}
+      <span>{`welcome ${userName}`}</span>
 
       {/*  */}
       <div className="relative">
@@ -100,8 +106,8 @@ const HomeView: React.FC<HomeViewProps> = ({
           style={{ maxHeight: ALBUM_CARD_HEIGHT * 2 + 20 }}
           className="flex flex-col flex-wrap content-start w-full snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-3"
         >
-          {myAlbums.map((album, index) => (
-            <AlbumCard key={index} data={album} />
+          {myAlbumsData?.albums?.map((album, index) => (
+            <AlbumCard key={index} data={album} isOwn={myAlbumsData.own} />
           ))}
         </div>
       </div>

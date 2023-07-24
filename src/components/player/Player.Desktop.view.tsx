@@ -19,9 +19,9 @@ import {
   ShuffleButton,
 } from "./modules";
 import { DotMenu } from "@components/icons";
-import { TRACK } from "@lib/client/store/types/playerControlType";
 import { useSetPlayTime } from "@lib/client/hooks/usePlayTimeControl";
-import { EllipsisText, Track } from "@components/ui";
+import { EllipsisText, TrackCard } from "@components/ui";
+import { Track } from "@lib/client/types";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
@@ -36,7 +36,7 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
 
   const pinOpacity = useMotionValue(1);
 
-  const clickHanlder = (track: TRACK) => {
+  const clickHanlder = (track: Track) => {
     setPlayTime(0);
     setCurrentTrack(track);
   };
@@ -69,7 +69,7 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
       >
         <div className="__ALBUM__ w-full aspect-square p-1">
           <AlbumArt
-            artURL={currentTrack?.ablumArtURL}
+            artURL={currentTrack?.albumArtURL}
             isPlay={play}
             pinOpacity={pinOpacity}
           />
@@ -84,7 +84,7 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
               className="__MICRO_TRACK_TITLE__  font-extrabold text-3xl"
             />
             <EllipsisText
-              context={currentTrack?.artistKo}
+              context={currentTrack?.artistName}
               lineClamp={1}
               className="__MICRO_ARTIST__ font-bold text-base"
             />
@@ -118,8 +118,8 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
         className="__TRACK_LIST__ flex flex-col w-full mt-4 pb-4 space-y-1 overflow-y-scroll scrollbar-hide"
         style={{ height: `calc(50vh - ${25}px)` }}
       >
-        {playList.map((track: TRACK, index: number) => (
-          <Track
+        {playList.map((track: Track, index: number) => (
+          <TrackCard
             key={index + track.trackTitle + playListType} // list 간의 전환이 있는 경우 index + track 조합이 같으면 같은 컴포넌트라 생각하는 것 같음.
             data={track}
             trackListType={playListType}

@@ -3,6 +3,8 @@ import { combineReducers } from "@reduxjs/toolkit";
 import type { AnyAction, CombinedState } from "@reduxjs/toolkit";
 
 // reducers & actions //
+import authReducer, { authStateType } from "./authReducer";
+import meReducer, { meStateType } from "./meReducer";
 import sidebarReducer, { SidebarStateType } from "./sidebarReducer";
 import modalReducer, { ModalStateType } from "./modalReducer";
 import dropDownReducer, { dropDownStateType } from "./dropDownReducer";
@@ -29,6 +31,8 @@ export { playTimeActions } from "./playTimeReducer";
 export { queueActions } from "./queueReducer";
 
 type ReducerState = {
+  auth: authStateType;
+  me: meStateType;
   sidebar: SidebarStateType;
   modal: ModalStateType;
   dropDown: dropDownStateType;
@@ -56,6 +60,8 @@ const rootReducer = (
 
     default:
       return combineReducers({
+        auth: authReducer,
+        me: meReducer,
         sidebar: sidebarReducer,
         modal: modalReducer,
         dropDown: dropDownReducer,

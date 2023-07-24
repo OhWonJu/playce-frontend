@@ -5,7 +5,9 @@ import { artist } from "mock/mock";
 import { useRouter } from "next/router";
 import { useUI } from "@components/ui";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
-import { T_Album } from "@lib/client/types";
+import { AlbumDetail, T_Album } from "@lib/client/types";
+import { useQuery } from "@tanstack/react-query";
+import { _GET } from "@lib/server/rootAPI";
 
 const myAlbums = [
   artist.ADOY.ablums[0],
@@ -16,17 +18,28 @@ const myAlbums = [
 const AlbumController = () => {
   const router = useRouter();
 
-  const [album, setAlbum] = useState(null);
+  const [album, setAlbum] = useState<AlbumDetail>(null);
+  const [albumId, setAlbumId] = useState(null);
+  const [own, setOwn] = useState(false);
 
-  useEffect(
-    () => setAlbum(myAlbums.find(al => al.title === router.query?.albumId)),
-    [router],
-  );
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["albums"],
+    queryFn: async () => await _GET(`api/albums/${albumId}`),
+    enabled: albumId !== null,
+    onSuccess: data => {
+      setAlbum(data.data);
+    },
+  });
+
+  useEffect(() => {
+    setAlbumId(router.query?.id);
+    setOwn(Boolean(router.query?.isOwn));
+  }, [router]);
 
   const { openPlayer, displayPlayer } = useUI();
   const { play, handlePlayListClick, setPlay } = usePlayerControl();
 
-  const albumClickHandler = (album: T_Album) => {
+  const albumClickHandler = (album: AlbumDetail) => {
     if (!displayPlayer) {
       openPlayer();
     }
@@ -36,9 +49,15 @@ const AlbumController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
-  if (!album) return null;
+  if (isLoading || album === null) return null;
 
-  return <AlbumView album={album} albumClickHandler={albumClickHandler} />;
+  return (
+    <AlbumView
+      album={album}
+      isOwn={own}
+      albumClickHandler={albumClickHandler}
+    />
+  );
 };
 
 export default AlbumController;

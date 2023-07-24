@@ -6,13 +6,14 @@ export const useLocalStorage = (key: string): [string, Function] => {
   const value = useSyncExternalStore(
     subscribe,
     () => getSnapshot(key),
-    getServerSnapshot,
+    () => getServerSnapshot(key),
   );
 
   function changeValue(value: string) {
     localStorage.setItem(key, value);
     emitChange();
   }
+
   return [value, changeValue];
 };
 
@@ -20,8 +21,9 @@ function getSnapshot(key: string) {
   return localStorage.getItem(key);
 }
 
-function getServerSnapshot() {
-  return "light";
+function getServerSnapshot(key: string) {
+  if (key === "theme") return "light";
+  else return null;
 }
 
 function subscribe(listener: Function) {

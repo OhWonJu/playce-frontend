@@ -29,7 +29,6 @@ import type { MODAL_VIEWS } from "@lib/client/store/types/modalType";
 import type { DROP_DOWN_VIEWS } from "@lib/client/store/types/dropDownType";
 import type { WINDOW_VIEWS } from "@lib/client/store/types/windowType";
 import { userAvatarActions } from "@lib/client/store/reducers/userAvatarReducer";
-import useToggle from "@lib/client/hooks/useToggle";
 import { useLocalStorage } from "@lib/client/hooks/useLocalStorage";
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
 

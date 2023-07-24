@@ -1,10 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import NavigatorView from "./Navigator.view";
 
-import useTheme from "@lib/client/hooks/useTheme";
 import { Link } from "@components/ui";
+import { useQuery } from "@tanstack/react-query";
+import { _ME } from "@lib/server/api/user/me";
+import { useMe } from "@lib/client/hooks/useMe";
 
 interface Link {
   href: string;
@@ -17,7 +19,6 @@ interface NavigatorProps {
 }
 
 const Navigator: FC<NavigatorProps> = ({ links, logoVisible }) => {
-  const theme = useTheme();
   const router = useRouter();
 
   return (

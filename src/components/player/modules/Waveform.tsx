@@ -126,7 +126,7 @@ const Waveform = () => {
   useEffect(() => {
     if (wavesurfer.current) {
       wavesurfer.current.pause();
-      wavesurfer.current.load(currentTrack.audioURL);
+      wavesurfer.current.load(currentTrack.trackURL);
       wavesurfer.current.on("ready", handleTrackChange);
     }
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 
 import { Container, EllipsisText } from "@components/ui";
-import { T_Album } from "@lib/client/types";
+import { AlbumDetail, T_Album } from "@lib/client/types";
 import { Play } from "@components/icons";
 import { convertTime } from "@lib/client/convertTime";
 
@@ -15,13 +15,18 @@ import {
 } from "./Album.styles";
 
 interface AlbumViewProps {
-  album: T_Album;
+  album: AlbumDetail;
+  isOwn: boolean;
   albumClickHandler: (album: any) => void;
 }
 
-const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
+const AlbumView: React.FC<AlbumViewProps> = ({
+  album,
+  isOwn,
+  albumClickHandler,
+}) => {
   const totalTimes = useMemo(
-    () => album?.tracks?.reduce((acc, cur) => acc + cur.time, 0),
+    () => album?.tracks?.reduce((acc, cur) => acc + cur.trackTime, 0),
     [album],
   );
 
@@ -30,8 +35,8 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
       <AlbumInfoWrapper>
         <AlbumArt>
           <Image
-            src={album?.art}
-            alt="product image"
+            src={album?.albumArtURL}
+            alt="album art"
             layout="fill"
             sizes="100%"
             draggable={false}
@@ -40,13 +45,13 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
         <AlbumUtils>
           <AlbumInfo>
             <EllipsisText
-              context={album?.title}
+              context={album?.albumName}
               lineClamp={1}
               lineHeight={3}
               className="font-extrabold text-3xl"
             />
             <EllipsisText
-              context={album?.nameKr}
+              context={album?.artist?.artistName}
               lineClamp={1}
               className="font-bold pb-2"
             />
@@ -62,33 +67,38 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
             </div>
           </AlbumInfo>
           <AlbumButton className="flex w-full space-x-2">
-            <div
-              onClick={() => albumClickHandler(album)}
-              className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black"
-            >
-              <Play
-                width="22"
-                height="22"
-                fill={"#FFFFFF"}
-                stroke={"#FFFFFF"}
-              />
-              <a className="font-semibold text-white">Play</a>
-            </div>
-            {/*  */}
-            <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
-              <a className="font-semibold text-white">Buy</a>
-            </div>
-            {/*  */}
-            <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
-              <a className="font-semibold text-sm text-white">Add To Cart</a>
-            </div>
+            {isOwn ? (
+              <div
+                onClick={() => albumClickHandler(album)}
+                className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black"
+              >
+                <Play
+                  width="22"
+                  height="22"
+                  fill={"#FFFFFF"}
+                  stroke={"#FFFFFF"}
+                />
+                <a className="font-semibold text-white">Play</a>
+              </div>
+            ) : (
+              <>
+                <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
+                  <a className="font-semibold text-white">Buy</a>
+                </div>
+                <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
+                  <a className="font-semibold text-sm text-white">
+                    Add To Cart
+                  </a>
+                </div>
+              </>
+            )}
           </AlbumButton>
         </AlbumUtils>
       </AlbumInfoWrapper>
 
       {/* TRACK LIST */}
       <section className="flex flex-col w-full space-y-2">
-        {album.tracks.map((track, index) => (
+        {album?.tracks?.map((track, index) => (
           <div
             key={index}
             className="relative flex items-center w-full min-h-[45px]"
@@ -96,9 +106,9 @@ const AlbumView: React.FC<AlbumViewProps> = ({ album, albumClickHandler }) => {
             <div className="w-[45px] h-full grid place-items-center mr-4">
               <a className="font-semibold">{index + 1}.</a>
             </div>
-            <a className="font-semibold">{track.title}</a>
+            <a className="font-semibold">{track.trackTitle}</a>
             <div className="absolute flex items-center right-0 h-full">
-              {convertTime(track.time, "string")}
+              {convertTime(track.trackTime, "string")}
             </div>
           </div>
         ))}
