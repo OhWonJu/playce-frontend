@@ -37,9 +37,11 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
 });
 
-interface PlayerMobileViewProps {}
+interface PlayerMobileViewProps {
+  audioURL: string;
+}
 
-const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
+const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
   const { viewMode } = useUI();
   const { height } = useWindowSize();
   const { play, currentTrack } = usePlayerControl();
@@ -208,7 +210,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                     style={{ height: WAVE_FORM_HEIGHT }}
                   >
                     <div className="absolute w-full h-full bottom-[15.5px]">
-                      <DynamicWaveform />
+                      <DynamicWaveform url={audioURL} />
                     </div>
                   </section>
                   {/* PLAY TIME INDICATOER */}

@@ -27,9 +27,11 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
 });
 
-interface PlayerDesktopViewProps {}
+interface PlayerDesktopViewProps {
+  audioURL: string;
+}
 
-const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
+const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({ audioURL }) => {
   const { play, currentTrack, playList, playListType, setCurrentTrack } =
     usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
@@ -95,7 +97,7 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
             style={{ height: WAVE_FORM_HEIGHT }}
           >
             <div className="absolute w-full h-full bottom-[15.5px]">
-              <DynamicWaveform />
+              <DynamicWaveform url={audioURL} />
             </div>
           </section>
           {/* PLAY TIME INDICATOER */}

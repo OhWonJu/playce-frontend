@@ -21,9 +21,10 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   } = usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
 
+  const prevOriginTrackListRef = useRef(originTrackList);
+
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef(null);
-  const prevOriginTrackListRef = useRef(originTrackList);
 
   // CREATE WAVE FORM ============================== //
   useEffect(() => {
@@ -44,14 +45,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
           redirect: "follow",
           referrer: "client",
         },
-        autoplay: play,
         // 기타 wavesurfer.js 설정 옵션 추가
-      });
-
-      wavesurfer.current.load(url);
-
-      wavesurfer.current.on("ready", () => {
-        setTotalTime(wavesurfer.current.getDuration());
       });
 
       wavesurfer.current.on("timeupdate", (currentTime: number) =>
@@ -65,7 +59,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
         wavesurfer.current = null;
       };
     }
-  }, [url]);
+  }, []);
   // ============================== CREATE WAVE FORM //
 
   const handleFinish = useCallback(() => {
@@ -88,6 +82,8 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
       }
     }
 
+    // console.log(currentIdx, nextIdx);
+
     setPlayTime(0);
 
     if (!stopLast) {
@@ -107,7 +103,10 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
     };
   }, [handleFinish]);
 
-  const handleForwardTrigger = useCallback(() => {
+  // 멈추는 이유는...대강 pause, load, play 사이의 비동기가 꼬이는..?
+  const handleTrackChange = useCallback(() => {
+    setTotalTime(wavesurfer.current.getDuration());
+
     if (
       JSON.stringify(prevOriginTrackListRef.current) ===
       JSON.stringify(originTrackList)
@@ -120,11 +119,32 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
     }
 
     prevOriginTrackListRef.current = originTrackList;
+
+    if (play) {
+      // await wavesurfer.current.play();
+      setTimeout(function () {
+        wavesurfer.current.play();
+      }, 5);
+    }
+
+    return async () => {
+      await wavesurfer.current.empty();
+    };
   }, [currentTrack, forwardTrigger]); // originTrackList 가 없어도 괜찮은지..?
 
   useEffect(() => {
-    handleForwardTrigger();
-  }, [handleForwardTrigger]);
+    if (wavesurfer.current) {
+      wavesurfer.current.pause();
+      wavesurfer.current.load(currentTrack.trackURL);
+      wavesurfer.current.on("ready", handleTrackChange);
+    }
+
+    return () => {
+      if (wavesurfer.current) {
+        wavesurfer.current.un("ready", handleTrackChange);
+      }
+    };
+  }, [handleTrackChange]);
 
   const handlePlay = async () => {
     if (play) {
@@ -133,8 +153,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   };
 
   useEffect(() => {
-    // load 되기 전 handlePlay() 실행을 막기 위해
-    if (wavesurfer.current && wavesurfer.current.getDuration() > 0) {
+    if (wavesurfer.current) {
       handlePlay();
     }
   }, [play]);
