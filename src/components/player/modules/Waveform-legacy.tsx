@@ -45,6 +45,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
           redirect: "follow",
           referrer: "client",
         },
+        autoplay: play,
         // 기타 wavesurfer.js 설정 옵션 추가
       });
 
@@ -153,7 +154,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   };
 
   useEffect(() => {
-    if (wavesurfer.current) {
+    if (wavesurfer.current && wavesurfer.current.getDuration() > 0) {
       handlePlay();
     }
   }, [play]);

@@ -4,10 +4,12 @@ import WaveSurfer from "wavesurfer.js";
 import useTheme from "@lib/client/hooks/useTheme";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
+import { useUI } from "@components/ui";
 
 const Waveform: React.FC<{ url: string }> = ({ url }) => {
   const theme = useTheme();
 
+  const { displayPlayer } = useUI();
   const {
     setCurrentTrack,
     play,
@@ -44,7 +46,6 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
           redirect: "follow",
           referrer: "client",
         },
-        autoplay: play,
         // 기타 wavesurfer.js 설정 옵션 추가
       });
 
@@ -52,6 +53,8 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
 
       wavesurfer.current.on("ready", () => {
         setTotalTime(wavesurfer.current.getDuration());
+
+        if (play) wavesurfer.current.play();
       });
 
       wavesurfer.current.on("timeupdate", (currentTime: number) =>
@@ -62,10 +65,9 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
         // WaveSurfer 인스턴스 파기
         wavesurfer.current.unAll();
         wavesurfer.current.destroy();
-        wavesurfer.current = null;
       };
     }
-  }, [url]);
+  }, [url, displayPlayer]);
   // ============================== CREATE WAVE FORM //
 
   const handleFinish = useCallback(() => {
