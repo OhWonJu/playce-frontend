@@ -47,6 +47,19 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
 
   if (viewMode === "INIT") return null;
 
+  const PROFILE = () => (
+    <div className="relative w-7 h-7 rounded-full overflow-hidden">
+      <Image
+        priority={true}
+        src={"/onneul.jpeg"}
+        alt="profile image"
+        layout="fill"
+        sizes="100%"
+        draggable={false}
+      />
+    </div>
+  );
+
   return (
     <>
       {viewMode !== "DESKTOP" ? (
@@ -81,15 +94,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
               )}
             </Link>
             <Search className="w-7 h-7" />
-            <div className="relative w-7 h-7 rounded-full overflow-hidden">
-              <Image
-                src={"/onneul.jpeg"}
-                alt="product image"
-                layout="fill"
-                sizes="100%"
-                draggable={false}
-              />
-            </div>
+            <PROFILE />
           </div>
         </motion.div>
       ) : (
@@ -126,15 +131,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
             </div>
           </div>
           <div className="absolute top-0 right-0 h-full grid place-items-center px-[1.5rem]">
-            <div className="relative w-7 h-7 rounded-full overflow-hidden">
-              <Image
-                src={"/onneul.jpeg"}
-                alt="product image"
-                layout="fill"
-                sizes="100%"
-                draggable={false}
-              />
-            </div>
+            <PROFILE />
           </div>
         </div>
       )}

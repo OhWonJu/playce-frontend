@@ -35,6 +35,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({
       <AlbumInfoWrapper>
         <AlbumArt>
           <Image
+            priority={true}
             src={album?.albumArtURL}
             alt="album art"
             layout="fill"

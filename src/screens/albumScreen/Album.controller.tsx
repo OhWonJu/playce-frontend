@@ -22,19 +22,21 @@ const AlbumController = () => {
   const [albumId, setAlbumId] = useState(null);
   const [own, setOwn] = useState(false);
 
+  useEffect(() => {
+    setAlbumId(router.query.id);
+    // setOwn(Boolean(router.query?.isOwn));
+  }, [router]);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["albums"],
     queryFn: async () => await _GET(`api/albums/${albumId}`),
-    enabled: albumId !== null,
+    enabled: !!albumId,
     onSuccess: data => {
-      setAlbum(data.data);
+      const { album, own } = data.data;
+      setAlbum(album);
+      setOwn(own);
     },
   });
-
-  useEffect(() => {
-    setAlbumId(router.query?.id);
-    setOwn(Boolean(router.query?.isOwn));
-  }, [router]);
 
   const { openPlayer, displayPlayer } = useUI();
   const { play, handlePlayListClick, setPlay } = usePlayerControl();
@@ -49,7 +51,7 @@ const AlbumController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
-  if (isLoading || album === null) return null;
+  if (isLoading || !album) return null;
 
   return (
     <AlbumView

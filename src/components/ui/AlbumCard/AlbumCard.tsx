@@ -36,11 +36,10 @@ const AlbumCardComponent: React.FC<AlbumCardComponentProps> = ({
     <AlbumCard className="snap-center group">
       <Link
         href={{
-          pathname: "album/[albumName]",
-          // query: { album: JSON.stringify(album) },
-          query: { albumName: data.albumName, id: data.id, isOwn: isOwn },
+          pathname: `album/${data.id}`,
+          // query: { albumName: data.albumName, id: data.id, isOwn: isOwn },
         }}
-        as={`/album/${data.albumName}`}
+        // as={`/album/${data.id}`}
       >
         <AlbumArtWrapper>
           <Image
