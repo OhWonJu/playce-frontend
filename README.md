@@ -27,7 +27,7 @@ FrontEnd
 <br/>
 
 [BackEnd](https://github.com/OhWonJu/playce-backend)
-- NestJS (구현을 위한 단순한 서버)
+- NestJS (구현을 위한 단순한 서버), Prisma
 
 <br/>
 <br/>
