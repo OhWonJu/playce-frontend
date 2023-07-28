@@ -30,14 +30,29 @@ const HomeController = () => {
     albums: AlbumFreeView[];
     own: boolean;
   }>(null);
+  const [recoAlbums, setRecoAlbums] = useState<AlbumFreeView[]>(null);
 
+  // QUERY ========================================================== //
   const { data, isLoading, error } = useQuery({
     queryKey: ["myAlbum"],
     queryFn: async () => await _GET(`api/users/${id}/a/albums`),
+    refetchOnWindowFocus: false,
     onSuccess: data => {
+      // console.log("home");
       setMyAlbumsData(data.data);
     },
   });
+
+  const { isLoading: recoLoading } = useQuery({
+    queryKey: ["recoAlbums"],
+    queryFn: async () => await _GET("api/albums/getAll"),
+    refetchOnWindowFocus: false,
+    onSuccess: data => {
+      // console.log("home");
+      setRecoAlbums(data.data);
+    },
+  });
+  // ========================================================== QUERY //
 
   const togglePlayerClickhandler = () => {
     if (displayPlayer) {
@@ -68,11 +83,14 @@ const HomeController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
+  if (isLoading || recoLoading) return null;
+
   return (
     <HomeView
       viewMode={viewMode}
       displayPlayer={displayPlayer}
       myAlbumsData={myAlbumsData}
+      recommendAlbumsData={recoAlbums}
       queueClickHandler={queueClickHandler}
       togglePlayerClickhandler={togglePlayerClickhandler}
     />

@@ -5,25 +5,19 @@ import { AlbumCard, Container, Link } from "@components/ui";
 
 import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
 
-import { SectionHeaderText, SymbolText } from "src/styles/GlobalStyle";
+import { SectionHeaderText } from "src/styles/GlobalStyle";
 
-import { artist } from "mock/mock";
 import { Play } from "@components/icons";
 import useTheme from "@lib/client/hooks/useTheme";
 import RippleButton from "@components/ui/RippleButton/RippleButton";
 import { useMe } from "@lib/client/hooks/useMe";
 import { AlbumFreeView } from "@lib/client/types";
 
-// const myAlbums = [
-//   artist.ADOY.ablums[0],
-//   artist.BaekYeRin.ablums[0],
-//   artist.The1975.ablums[0],
-// ];
-
 interface HomeViewProps {
   viewMode: VIEW_MODES;
   displayPlayer: boolean;
   myAlbumsData: { albums: AlbumFreeView[]; own: boolean };
+  recommendAlbumsData: AlbumFreeView[];
   queueClickHandler: () => void;
   togglePlayerClickhandler: () => void;
 }
@@ -32,6 +26,7 @@ const HomeView: React.FC<HomeViewProps> = ({
   viewMode,
   displayPlayer,
   myAlbumsData,
+  recommendAlbumsData,
   queueClickHandler,
   togglePlayerClickhandler,
 }) => {
@@ -107,7 +102,7 @@ const HomeView: React.FC<HomeViewProps> = ({
           className="flex flex-col flex-wrap content-start w-full snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-3"
         >
           {myAlbumsData?.albums?.map((album, index) => (
-            <AlbumCard key={index} data={album} isOwn={myAlbumsData.own} />
+            <AlbumCard key={index} data={album} playAble={true} />
           ))}
         </div>
       </div>
@@ -144,18 +139,12 @@ const HomeView: React.FC<HomeViewProps> = ({
             Recommend
           </SectionHeaderText>
         </div>
-        <div className="flex flex-col flex-wrap content-start w-full max-h-[350px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
-          {Array.from({ length: 12 }, () => 0).map((arr, index) => (
-            <div
-              key={index}
-              className="flex flex-col min-w-[120px] min-h-[170px] snap-center"
-            >
-              <div className="w-[120px] h-[120px] rounded-md snap-center mb-1 bg-zinc-500" />
-              <div className="flex flex-col">
-                <a className="font-bold">Title</a>
-                <a className="font-semibold text-sm">artist</a>
-              </div>
-            </div>
+        <div
+          style={{ maxHeight: ALBUM_CARD_HEIGHT * 2 + 20 }}
+          className="flex flex-col flex-wrap content-start w-full snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-3"
+        >
+          {recommendAlbumsData?.map((album, index) => (
+            <AlbumCard key={index} data={album} />
           ))}
         </div>
       </div>

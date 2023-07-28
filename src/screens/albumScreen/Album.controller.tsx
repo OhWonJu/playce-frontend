@@ -17,6 +17,8 @@ const myAlbums = [
 
 const AlbumController = () => {
   const router = useRouter();
+  const { openPlayer, displayPlayer } = useUI();
+  const { handlePlayListClick, setPlay } = usePlayerControl();
 
   const [album, setAlbum] = useState<AlbumDetail>(null);
   const [albumId, setAlbumId] = useState(null);
@@ -31,15 +33,14 @@ const AlbumController = () => {
     queryKey: ["albums"],
     queryFn: async () => await _GET(`api/albums/${albumId}`),
     enabled: !!albumId,
+    refetchOnWindowFocus: false,
     onSuccess: data => {
       const { album, own } = data.data;
       setAlbum(album);
       setOwn(own);
+      // console.log("detail");
     },
   });
-
-  const { openPlayer, displayPlayer } = useUI();
-  const { play, handlePlayListClick, setPlay } = usePlayerControl();
 
   const albumClickHandler = (album: AlbumDetail) => {
     if (!displayPlayer) {

@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { useCallback } from "react";
-import { TRACK } from "../store/types/playerControlType";
 import { queueActions } from "../store/reducers";
+import { Track } from "../types";
 
 export const useQueue = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const useQueue = () => {
   const { queue } = useSelector(({ queue }: RootState) => queue);
 
   const setQueue = useCallback(
-    (queue: Array<TRACK>) =>
+    (queue: Array<Track>) =>
       dispatch(
         queueActions.queueReducer({
           type: "SET_QUEUE",
@@ -22,13 +22,13 @@ export const useQueue = () => {
   );
 
   const addTrack = useCallback(
-    (track: TRACK) =>
+    (track: Track) =>
       dispatch(queueActions.queueReducer({ type: "ADD_TRACK", track })),
     [dispatch],
   );
 
   const deleteTrack = useCallback(
-    (track: TRACK) =>
+    (track: Track) =>
       dispatch(queueActions.queueReducer({ type: "DELETE_TRACK", track })),
     [dispatch],
   );
@@ -40,9 +40,9 @@ export const useQueue = () => {
 
   const context = {
     queue,
-    setQueue: (queue: Array<TRACK>) => setQueue(queue),
-    addTrack: (track: TRACK) => addTrack(track),
-    deleteTrack: (track: TRACK) => deleteTrack(track),
+    setQueue: (queue: Array<Track>) => setQueue(queue),
+    addTrack: (track: Track) => addTrack(track),
+    deleteTrack: (track: Track) => deleteTrack(track),
     initQueue: () => initQueue(),
   };
 

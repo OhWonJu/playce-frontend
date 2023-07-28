@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React, { useMemo } from "react";
 
-import { Container, EllipsisText } from "@components/ui";
+import { Container, EllipsisText, RippleButton } from "@components/ui";
 import { AlbumDetail, T_Album } from "@lib/client/types";
-import { Play } from "@components/icons";
+import { DotMenu, Heart, Play } from "@components/icons";
 import { convertTime } from "@lib/client/convertTime";
 
 import {
@@ -13,6 +13,7 @@ import {
   AlbumInfoWrapper,
   AlbumUtils,
 } from "./Album.styles";
+import { TrackLi } from "./modules";
 
 interface AlbumViewProps {
   album: AlbumDetail;
@@ -33,7 +34,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({
   return (
     <Container className="overflow-y-scroll scrollbar-hide">
       <AlbumInfoWrapper>
-        <AlbumArt>
+        <AlbumArt className="group">
           <Image
             priority={true}
             src={album?.albumArtURL}
@@ -42,6 +43,16 @@ const AlbumView: React.FC<AlbumViewProps> = ({
             sizes="100%"
             draggable={false}
           />
+          <div className="relative w-full h-full hidden group-hover:block group-hover:bg-gradient-to-b from-black">
+            <div className="absolute top-1 right-1">
+              <RippleButton
+                className="p-2 rounded-full"
+                clickHandler={() => console.log("!")}
+              >
+                <DotMenu fill={"#E3E3E3"} />
+              </RippleButton>
+            </div>
+          </div>
         </AlbumArt>
         <AlbumUtils>
           <AlbumInfo>
@@ -71,25 +82,31 @@ const AlbumView: React.FC<AlbumViewProps> = ({
             {isOwn ? (
               <div
                 onClick={() => albumClickHandler(album)}
-                className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black"
+                className="bottom-0 w-28  rounded-md bg-black"
               >
-                <Play
-                  width="22"
-                  height="22"
-                  fill={"#FFFFFF"}
-                  stroke={"#FFFFFF"}
-                />
-                <a className="font-semibold text-white">Play</a>
+                <RippleButton className="flex justify-around items-center w-full h-full px-2 py-3">
+                  <Play
+                    width="22"
+                    height="22"
+                    fill={"#FFFFFF"}
+                    stroke={"#FFFFFF"}
+                  />
+                  <a className="font-semibold text-white">Play</a>
+                </RippleButton>
               </div>
             ) : (
               <>
-                <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
-                  <a className="font-semibold text-white">Buy</a>
+                <div className="bottom-0 w-28">
+                  <RippleButton className="grid place-content-center w-full h-full px-2 py-3 rounded-md bg-black">
+                    <a className="font-semibold text-white">Buy</a>
+                  </RippleButton>
                 </div>
-                <div className="flex justify-around items-center bottom-0 w-28 px-2 py-3 rounded-md bg-zinc-800 hover:bg-black">
-                  <a className="font-semibold text-sm text-white">
-                    Add To Cart
-                  </a>
+                <div className="bottom-0 w-28">
+                  <RippleButton className="grid place-content-center w-full h-full px-2 py-3 rounded-md bg-black">
+                    <a className="font-semibold text-sm text-white">
+                      Add To Cart
+                    </a>
+                  </RippleButton>
                 </div>
               </>
             )}
@@ -98,22 +115,17 @@ const AlbumView: React.FC<AlbumViewProps> = ({
       </AlbumInfoWrapper>
 
       {/* TRACK LIST */}
-      <section className="flex flex-col w-full space-y-2">
+      <ul className="flex flex-col w-full space-y-2">
         {album?.tracks?.map((track, index) => (
-          <div
+          <TrackLi
             key={index}
-            className="relative flex items-center w-full min-h-[45px]"
-          >
-            <div className="w-[45px] h-full grid place-items-center mr-4">
-              <a className="font-semibold">{index + 1}.</a>
-            </div>
-            <a className="font-semibold">{track.trackTitle}</a>
-            <div className="absolute flex items-center right-0 h-full">
-              {convertTime(track.trackTime, "string")}
-            </div>
-          </div>
+            index={index}
+            data={track}
+            isOwn={isOwn}
+            trackListType="ALBUM"
+          />
         ))}
-      </section>
+      </ul>
     </Container>
   );
 };

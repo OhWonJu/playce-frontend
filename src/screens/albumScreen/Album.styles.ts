@@ -37,3 +37,13 @@ export const AlbumInfo = styled.section`
 export const AlbumButton = styled.section`
   ${tw`row-start-4 row-span-1  sm:pt-3 lg:pt-1 xl:pt-3`}
 `;
+
+export const TrackLISubA = styled.a`
+  color: ${props => props.theme.gray_primary};
+  ${tw`font-semibold text-xs`}
+`;
+
+export const QueuePlayIconBox = styled.div`
+  background-color: ${props => props.theme.background_color};
+  ${tw`absolute grid place-content-center bottom-1 right-1 w-[14px] h-[14px] rounded-full`}
+`;

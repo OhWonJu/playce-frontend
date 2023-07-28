@@ -180,18 +180,6 @@ export const usePlayerControl = () => {
   ) => {
     setPlayListType(playListType);
 
-    // const TrackList = album.tracks.map((track: any, index: number) => {
-    //   return {
-    //     artistEn: album.nameEn,
-    //     artistKo: album.nameKr,
-    //     ablumTitle: album.title,
-    //     ablumArtURL: album.art,
-    //     audioURL: track.url,
-    //     trackNo: index + 1,
-    //     trackTitle: track.title,
-    //   };
-    // });
-
     const TrackList = album.tracks;
 
     const currentIndex = currentTrack

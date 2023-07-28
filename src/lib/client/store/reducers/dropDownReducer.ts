@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { DROP_DOWN_ACTION } from "@lib/client/store/types";
+import { DROP_DOWN_VIEWS } from "../types/dropDownType";
 
 export type dropDownStateType = {
   displayDropDown: boolean;
-  dropDownView: string;
+  dropDownView: DROP_DOWN_VIEWS;
 };
 
 const initialState: dropDownStateType = {

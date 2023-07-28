@@ -1,36 +1,48 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 
+import { _GET } from "@lib/server/rootAPI";
 import useTheme from "@lib/client/hooks/useTheme";
-import { AlbumFreeView, T_Album } from "@lib/client/types";
+import { AlbumDetail, AlbumFreeView, T_Album } from "@lib/client/types";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { EllipsisText, Link, useUI } from "@components/ui";
 import { Play } from "@components/icons";
 
 import { AlbumArtWrapper, AlbumCard } from "./AlbumCard.styles";
+import useEventQuery from "@lib/client/hooks/useEventQuery";
 
 interface AlbumCardComponentProps {
   data: AlbumFreeView;
-  isOwn: boolean;
+  playAble?: boolean;
 }
 
 const AlbumCardComponent: React.FC<AlbumCardComponentProps> = ({
   data,
-  isOwn,
+  playAble = false,
 }) => {
   const theme = useTheme();
   const { displayPlayer, openPlayer } = useUI();
   const { setPlay, handlePlayListClick } = usePlayerControl();
 
-  // const albumClickHandler = useCallback(() => {
-  //   if (!displayPlayer) {
-  //     openPlayer();
-  //   }
+  const { refetch } = useEventQuery({
+    key: `albumDetail-${data.id}`,
+    endPoint: `api/albums/${data.id}`,
+  });
 
-  //   handlePlayListClick("ALBUM", data);
+  const albumClickHandler = async () => {
+    const { album, own } = (await refetch()).data.data;
 
-  //   setTimeout(() => setPlay(true), 800);
-  // }, [data]);
+    if (album && own) {
+      handlePlayListClick("ALBUM", album);
+
+      if (!displayPlayer) {
+        openPlayer();
+      }
+
+      setTimeout(() => setPlay(true), 800);
+    }
+  };
 
   return (
     <AlbumCard className="snap-center group">
@@ -64,17 +76,19 @@ const AlbumCardComponent: React.FC<AlbumCardComponentProps> = ({
           />
         </div>
       </Link>
-      <div
-        className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-[90px] left-[90px] p-1"
-        // onClick={albumClickHandler}
-      >
-        <Play
-          width="20"
-          height="20"
-          fill={theme.background_color}
-          strokeWidth={0}
-        />
-      </div>
+      {playAble ? (
+        <div
+          className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-[90px] left-[90px] p-1"
+          onClick={albumClickHandler}
+        >
+          <Play
+            width="20"
+            height="20"
+            fill={theme.background_color}
+            strokeWidth={0}
+          />
+        </div>
+      ) : null}
     </AlbumCard>
   );
 };

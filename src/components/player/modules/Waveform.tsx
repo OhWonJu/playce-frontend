@@ -110,19 +110,25 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   }, [handleFinish]);
 
   const handleForwardTrigger = useCallback(() => {
+    // forward 버튼에 의해 currentTrack 이 바뀌거나
+    // playList 의 변화에 따른 플레이타임 갱신
     if (
       JSON.stringify(prevOriginTrackListRef.current) ===
       JSON.stringify(originTrackList)
     ) {
+      // 동일 playList의 경우
+      // playTime 이 0 이상이라면 forward 액션이 아닌, 트랙 재호출 등의 액션일 수 있음
+      // 연속적인 플레이를 위한 처리
       playTime > 0
-        ? wavesurfer.current.setTime(playTime)
-        : wavesurfer.current.setTime(0);
+        ? wavesurfer.current.setTime(playTime) // 지속적으로 플레이
+        : wavesurfer.current.setTime(0); // Forward 액션이므로 플레이 시간 초기화
     } else {
+      // playList기 다른 경우 플레이 시간 초기화
       wavesurfer.current.setTime(0);
     }
 
     prevOriginTrackListRef.current = originTrackList;
-  }, [currentTrack, forwardTrigger]); // originTrackList 가 없어도 괜찮은지..?
+  }, [currentTrack, originTrackList, forwardTrigger]);
 
   useEffect(() => {
     handleForwardTrigger();

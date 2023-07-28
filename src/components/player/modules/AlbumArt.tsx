@@ -10,7 +10,7 @@ interface AlbumArtProps {
 }
 
 const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
-  const { originTrackList } = usePlayerControl();
+  const { originTrackList, currentTrack } = usePlayerControl();
 
   const [rotation, setRotation] = useState(0);
   const [speed, setSpeed] = useState(0.8);
@@ -24,7 +24,7 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
 
   useEffect(() => {
     setRotation(0);
-  }, [originTrackList]);
+  }, [currentTrack]); // ??
 
   useEffect(() => {
     if (isPlay && !prevIsPlayRef.current) {

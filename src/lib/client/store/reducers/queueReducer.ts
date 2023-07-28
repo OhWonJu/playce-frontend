@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TRACK } from "../types/playerControlType";
 import { QUEUE_ACTION } from "../types/queueType";
+import { Track } from "@lib/client/types";
 
 export type QueueStateType = {
-  queue: Array<TRACK>;
+  queue: Array<Track>;
 };
 
 const initialState: QueueStateType = {
