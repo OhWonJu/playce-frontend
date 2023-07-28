@@ -15,6 +15,7 @@ export type PlayerControlStateType = {
   repeatMode: PLAYER_REPEAT_MODE;
   forwardMode: PLAYER_FORWARD_MODE;
   forwardTrigger: number;
+  originTrackId: string;
   originTrackList: Array<Track>;
   playList: Array<Track>;
   playListType: PLAY_LIST_TYPE;
@@ -28,6 +29,7 @@ const initialState: PlayerControlStateType = {
   repeatMode: "NONE",
   forwardMode: "INIT",
   forwardTrigger: 0,
+  originTrackId: null,
   originTrackList: [],
   currentTrack: null,
   playList: [],
@@ -75,6 +77,7 @@ const playerControlSlice = createSlice({
         case "SET_ORIGIN_TRACK_LIST": {
           return {
             ...state,
+            originTrackId: aciton.payload.originTrackId,
             originTrackList: aciton.payload.originTrackList,
           };
         }

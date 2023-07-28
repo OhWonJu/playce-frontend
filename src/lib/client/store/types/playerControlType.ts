@@ -12,7 +12,11 @@ export type PLAYER_CONTROL_ACTION =
   | { type: "SET_REPEAT_MODE"; repeatMode: PLAYER_REPEAT_MODE }
   // | { type: "SET_FORWARD_MODE"; forwardMode: PLAYER_FORWARD_MODE }
   | { type: "SET_FORWARD_TRIGGER" }
-  | { type: "SET_ORIGIN_TRACK_LIST"; originTrackList: Array<Track> }
+  | {
+      type: "SET_ORIGIN_TRACK_LIST";
+      originTrackId: string;
+      originTrackList: Array<Track>;
+    }
   | { type: "SET_PLAY_LIST"; playList: Array<Track> }
   | { type: "SET_PLAY_LIST_TYPE"; playListType: PLAY_LIST_TYPE }
   | { type: "ADD_TRACK"; track: Track }

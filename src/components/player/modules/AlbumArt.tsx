@@ -10,7 +10,7 @@ interface AlbumArtProps {
 }
 
 const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
-  const { originTrackList, currentTrack } = usePlayerControl();
+  const { originTrackId, currentTrack } = usePlayerControl();
 
   const [rotation, setRotation] = useState(0);
   const [speed, setSpeed] = useState(0.8);
@@ -24,7 +24,7 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
 
   useEffect(() => {
     setRotation(0);
-  }, [currentTrack]); // ??
+  }, [originTrackId]); // originTrackId, currentTrack  둘 중 어떤게 로직에 맞을까..?
 
   useEffect(() => {
     if (isPlay && !prevIsPlayRef.current) {

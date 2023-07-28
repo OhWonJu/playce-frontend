@@ -71,7 +71,7 @@ const HomeController = () => {
 
     setPlayListType("QUEUE");
 
-    setOriginTrackList(queue);
+    setOriginTrackList("queue", queue);
     setCurrentTrack(queue[0]);
 
     if (shuffle) {

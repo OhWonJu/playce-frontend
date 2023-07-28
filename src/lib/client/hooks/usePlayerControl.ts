@@ -18,6 +18,7 @@ export const usePlayerControl = () => {
     repeatMode,
     forwardMode,
     forwardTrigger,
+    originTrackId,
     originTrackList,
     playList,
     playListType,
@@ -69,10 +70,11 @@ export const usePlayerControl = () => {
   );
 
   const setOriginTrackList = useCallback(
-    (originTrackList: Array<Track>) =>
+    (originTrackId: string, originTrackList: Array<Track>) =>
       dispatch(
         playerControlActions.playerControlReducer({
           type: "SET_ORIGIN_TRACK_LIST",
+          originTrackId,
           originTrackList,
         }),
       ),
@@ -189,7 +191,7 @@ export const usePlayerControl = () => {
       : -1;
 
     if (currentIndex === -1) setPlay(false);
-    setOriginTrackList(TrackList);
+    setOriginTrackList(album.id, TrackList);
     setCurrentTrack(currentIndex === -1 ? TrackList[0] : currentTrack);
 
     if (shuffle) {
@@ -209,6 +211,7 @@ export const usePlayerControl = () => {
     repeatMode,
     forwardMode,
     forwardTrigger,
+    originTrackId,
     originTrackList,
     playList,
     playListType,
@@ -219,8 +222,10 @@ export const usePlayerControl = () => {
     setRepeatMode: (repeatMode: PLAYER_REPEAT_MODE) =>
       setRepeatMode(repeatMode),
     setForwardTrigger: () => setForwardTrigger(),
-    setOriginTrackList: (originTrackList: Array<Track>) =>
-      setOriginTrackList(originTrackList),
+    setOriginTrackList: (
+      originTrackId: string,
+      originTrackList: Array<Track>,
+    ) => setOriginTrackList(originTrackId, originTrackList),
     setPlayList: (playList: Array<Track>) => setPlayList(playList),
     addTrack: (track: Track) => addTrack(track),
     deleteTrack: (track: Track) => deleteTrack(track),

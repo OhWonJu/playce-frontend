@@ -19,13 +19,14 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
     setTotalTime,
     playList,
     setPlay,
+    originTrackId,
     originTrackList,
   } = usePlayerControl();
   const { playTime, setPlayTime } = usePlayTimeControl();
 
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef(null);
-  const prevOriginTrackListRef = useRef(originTrackList);
+  const prevOriginTrackIdRef = useRef(originTrackId);
 
   // CREATE WAVE FORM ============================== //
   useEffect(() => {
@@ -113,8 +114,8 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
     // forward 버튼에 의해 currentTrack 이 바뀌거나
     // playList 의 변화에 따른 플레이타임 갱신
     if (
-      JSON.stringify(prevOriginTrackListRef.current) ===
-      JSON.stringify(originTrackList)
+      JSON.stringify(prevOriginTrackIdRef.current) ===
+      JSON.stringify(originTrackId)
     ) {
       // 동일 playList의 경우
       // playTime 이 0 이상이라면 forward 액션이 아닌, 트랙 재호출 등의 액션일 수 있음
@@ -127,8 +128,8 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
       wavesurfer.current.setTime(0);
     }
 
-    prevOriginTrackListRef.current = originTrackList;
-  }, [currentTrack, originTrackList, forwardTrigger]);
+    prevOriginTrackIdRef.current = originTrackId;
+  }, [currentTrack, originTrackId, forwardTrigger]);
 
   useEffect(() => {
     handleForwardTrigger();
