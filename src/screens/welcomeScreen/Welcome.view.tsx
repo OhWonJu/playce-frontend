@@ -15,10 +15,7 @@ const WelcomeView = () => {
       className="h-screen w-full justify-start items-center"
     >
       <div className="flex flex-col h-full w-full sm:max-w-[450px] justify-start items-center px-4 sm:px-10 overflow-y-scroll scrollbar-hide">
-        <div
-          className="flex flex-col h-[70%] pb-[30%] justify-center items-center"
-          onClick={() => router.push("/home")}
-        >
+        <div className="flex flex-col h-[70%] pb-[30%] justify-center items-center">
           <AppTitle>PLAYCE</AppTitle>
           <AppSubText className="font-semibold text-lg">
             connect your pysical albums

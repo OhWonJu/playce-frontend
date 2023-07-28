@@ -21,7 +21,6 @@ const HomeController = () => {
     doShuffle,
     setPlayList,
     shuffle,
-    handlePlayListClick,
   } = usePlayerControl();
   const { queue } = useQueue();
   const { id } = useMe();
@@ -36,6 +35,7 @@ const HomeController = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["myAlbum"],
     queryFn: async () => await _GET(`api/users/${id}/a/albums`),
+    enabled: id !== null,
     refetchOnWindowFocus: false,
     onSuccess: data => {
       // console.log("home");
