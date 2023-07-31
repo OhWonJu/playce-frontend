@@ -28,7 +28,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
   pathName,
 }) => {
   const theme = useTheme();
-  const { viewMode, displayPlayer } = useUI();
+  const { viewMode, displayPlayer, openDropDown, setDropDownView } = useUI();
   const { progress } = MainSheetProgressStore();
   const y = useMotionValue(0);
 
@@ -93,7 +93,14 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
                 <Explore className="w-7 h-7" />
               )}
             </Link>
-            <Search className="w-7 h-7" />
+            <button
+              onClick={() => {
+                setDropDownView("SEARCH_VIEW");
+                openDropDown();
+              }}
+            >
+              <Search className="w-7 h-7" />
+            </button>
             <PROFILE />
           </div>
         </motion.div>
@@ -127,7 +134,14 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
                   <Explore className="w-7 h-7" />
                 )}
               </Link>
-              <Search className="w-7 h-7" />
+              <button
+                onClick={() => {
+                  setDropDownView("SEARCH_VIEW");
+                  openDropDown();
+                }}
+              >
+                <Search className="w-7 h-7" />
+              </button>
             </div>
           </div>
           <div className="absolute top-0 right-0 h-full grid place-items-center px-[1.5rem]">

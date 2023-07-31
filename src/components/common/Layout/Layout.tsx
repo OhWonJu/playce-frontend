@@ -10,8 +10,7 @@ import { LoginView } from "@components/pages/auth";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
 import { PlayerBottomSheet } from "@components/playerBottomeSheet";
-// import { TestDropDown, TestDropDown2 } from "../NavDroupDown";
-// import { Cross } from "@components/icons";
+import { SearchDropDown } from "../SearchDropDown";
 import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
 
 const Loading = () => (
@@ -98,10 +97,10 @@ const DropDownView: React.FC<{
 }> = ({ dropDownView, closeDropDown }) => {
   return (
     <>
-      {/* {dropDownView === "SEARCH_VIEW" && (
+      {dropDownView === "SEARCH_VIEW" && (
         <SearchDropDown onClose={closeDropDown} />
       )}
-      {dropDownView === "STORE_VIEW" && (
+      {/* {dropDownView === "STORE_VIEW" && (
         <StoreDropDown onClose={closeDropDown} />
       )}
       {dropDownView === "TEST_VIEW2" && (
