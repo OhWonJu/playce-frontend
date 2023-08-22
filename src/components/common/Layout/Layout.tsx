@@ -6,7 +6,7 @@ import useTheme from "@lib/client/hooks/useTheme";
 import useWindowSize from "@lib/client/hooks/useWindowSize";
 
 import { LoadingDots, useUI } from "@components/ui";
-import { LoginView } from "@components/pages/auth";
+import { LoginView } from "@components/auth";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
 import { PlayerBottomSheet } from "@components/playerBottomeSheet";

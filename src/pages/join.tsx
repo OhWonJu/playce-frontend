@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SignUpView } from "@components/pages/auth";
+import { SignUpView } from "@components/auth";
 import { Container } from "@components/ui";
 
 const join = () => {

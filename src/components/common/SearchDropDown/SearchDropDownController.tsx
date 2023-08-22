@@ -55,7 +55,7 @@ const SearchDropDownController: React.FC<SearchDropDownProps> = ({
   // ================================================================ Data fetching //
 
   // React Hook Form ============================================================= //
-  const { register, handleSubmit, watch, setValue, setFocus } =
+  const { register, handleSubmit, watch, setValue, setFocus} =
     useForm<SearchProps>({
       mode: "onChange",
     });

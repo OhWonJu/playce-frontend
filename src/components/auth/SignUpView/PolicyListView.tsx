@@ -4,7 +4,7 @@ import useTheme from "@lib/client/hooks/useTheme";
 import { useUI, Window } from "@components/ui";
 import { Col, Row } from "src/styles/GlobalStyle";
 import { Check } from "@components/icons";
-import Policy from "@components/pages/policy";
+import Policy from "@components/policy/Policy";
 import { WINDOW_VIEWS } from "@lib/client/store/types/windowType";
 
 // Policy Window View //

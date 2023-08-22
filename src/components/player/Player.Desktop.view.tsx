@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useMotionValue } from "framer-motion";
 
@@ -15,6 +15,7 @@ import {
   ForwardButton,
   PlayButton,
   PlayTimer,
+  PlayerMarquee,
   RepeatButton,
   ShuffleButton,
 } from "./modules";
@@ -32,6 +33,8 @@ interface PlayerDesktopViewProps {
 }
 
 const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({ audioURL }) => {
+  const titleRef: MutableRefObject<HTMLDivElement> = useRef();
+
   const { play, currentTrack, playList, playListType, setCurrentTrack } =
     usePlayerControl();
   const { setPlayTime } = useSetPlayTime();
@@ -78,13 +81,14 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({ audioURL }) => {
         </div>
         <div className="__PLAYER_CONTROLL__ flex flex-col w-full">
           {/* TRACK INFO */}
-          <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
-            <EllipsisText
+          <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2 overflow-hidden">
+            {/* <EllipsisText
               context={currentTrack?.trackTitle}
               lineClamp={1}
               lineHeight={3}
               className="__MICRO_TRACK_TITLE__  font-extrabold text-3xl"
-            />
+            /> */}
+            <PlayerMarquee title={currentTrack?.trackTitle} />
             <EllipsisText
               context={currentTrack?.artistName}
               lineClamp={1}

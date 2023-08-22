@@ -48,7 +48,7 @@ const TrackLiComponent: React.FC<TrackLIComponentProps> = ({
       </Col>
       {/* COL-3 */}
       {isOwn ? (
-        <Row className="absolute items-center justify-center right-0 h-full space-x-1">
+        <div className="absolute items-center justify-center right-0 h-full space-x-1">
           <RippleButton
             className="relative p-2 rounded-full"
             clickHandler={handleClick}
@@ -61,7 +61,7 @@ const TrackLiComponent: React.FC<TrackLIComponentProps> = ({
           <RippleButton className="p-2 rounded-full">
             <DotMenu className="w-4 h-4" />
           </RippleButton>
-        </Row>
+        </div>
       ) : null}
     </li>
   );
