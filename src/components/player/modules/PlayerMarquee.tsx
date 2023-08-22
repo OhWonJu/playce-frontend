@@ -23,11 +23,10 @@ const PlayerMarquee: React.FC<PlayerMarqueeProps> = ({ title }) => {
     //   titleRef.current?.clientWidth,
     //   containerRef.current?.clientWidth,
     // );
-
     if (titleRef.current?.clientWidth > containerRef.current?.clientWidth)
       setScrollable(true);
     else setScrollable(false);
-  }, [title, containerRef, titleRef]);
+  }, [title, containerRef.current?.clientWidth, titleRef]);
 
   const marqueeVariants = useMemo(() => {
     if (titleRef.current) {

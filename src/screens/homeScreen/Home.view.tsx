@@ -94,7 +94,7 @@ const HomeView: React.FC<HomeViewProps> = ({
       <div className="__MY_ALBUM__ w-full pb-10">
         <div className="flex w-full justify-between pb-3">
           <SectionHeaderText className="font-bold text-2xl">
-            MY ALBUM
+            나의 앨범
           </SectionHeaderText>
         </div>
         <div
@@ -111,7 +111,7 @@ const HomeView: React.FC<HomeViewProps> = ({
       <div className="__MY_PLAY_LIST__ w-full pb-10">
         <div className="flex w-full justify-between pb-3">
           <SectionHeaderText className="font-bold text-2xl">
-            MY PLAY LIST
+            나의 플레이리스트
           </SectionHeaderText>
         </div>
         <div className="flex flex-col flex-wrap content-start w-full max-h-[310px] snap-mandatory snap-x overflow-x-scroll scrollbar-hide gap-2">
@@ -136,7 +136,7 @@ const HomeView: React.FC<HomeViewProps> = ({
       >
         <div className="flex w-full justify-between pb-3">
           <SectionHeaderText className="font-bold text-2xl">
-            Recommend
+            추천 앨범
           </SectionHeaderText>
         </div>
         <div

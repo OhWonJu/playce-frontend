@@ -80,7 +80,7 @@ const Searchbar: FC<SearchbarProps> = ({
           })}
           id={id}
           type="text"
-          className="px-10 shadow-none"
+          className="px-[2.5rem] shadow-none"
           style={{ backgroundColor: "transparent" }}
           placeholder="Search for products..."
           required={false}

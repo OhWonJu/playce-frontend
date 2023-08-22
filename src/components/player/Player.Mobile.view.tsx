@@ -17,6 +17,7 @@ import {
   AlbumArt,
   ForwardButton,
   PlayButton,
+  PlayerMarquee,
   PlayTimer,
   RepeatButton,
   ShuffleButton,
@@ -192,12 +193,13 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
                 >
                   {/* TRACK INFO */}
                   <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
-                    <EllipsisText
+                    {/* <EllipsisText
                       className="__TRACK_TITLE__ font-extrabold text-3xl"
                       context={currentTrack?.trackTitle}
                       lineClamp={1}
                       lineHeight={3}
-                    />
+                    /> */}
+                    <PlayerMarquee title={currentTrack?.trackTitle} />
                     <EllipsisText
                       className="__ARTIST__ font-bold text-base"
                       context={currentTrack?.artistName}

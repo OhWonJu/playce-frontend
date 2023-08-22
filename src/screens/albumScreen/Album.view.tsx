@@ -73,8 +73,7 @@ const AlbumView: React.FC<AlbumViewProps> = ({
             </a>
             <div className="flex space-x-2">
               <a className="text-zinc-400 font-semibold text-sm">
-                {album?.tracks?.length} songs • {Math.round(totalTimes / 60)}{" "}
-                min
+                {album?.tracks?.length} 곡 • {Math.round(totalTimes / 60)} 분
               </a>
             </div>
           </AlbumInfo>
