@@ -10,8 +10,9 @@ export const Container = styled(ToastContainer)`
     background-color: #fafafa50;
     backdrop-filter: blur(6px);
     padding: 0px 10px 0px 10px;
+    z-index: 9999999;
 
-    ${tw`flex items-center rounded-xl`}
+    ${tw`flex items-center rounded-xl`};
   }
 
   .Toastify__toast-icon {

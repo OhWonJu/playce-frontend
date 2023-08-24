@@ -32,7 +32,7 @@ const PlayerBottomSheetView = () => {
   const motionProg = useMotionValue(0);
 
   useEffect(() => {
-     if (progress <= 0) {
+    if (progress <= 0) {
       animate(motionProg, 0, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
@@ -88,6 +88,7 @@ const PlayerBottomSheetView = () => {
         // onSnap={snapIndex =>
         //   console.log("> Current snap point index:", snapIndex)
         // }
+        // style={{ zIndex: 60 }}
       >
         <motion.div
           id="player-bottom-sheet"

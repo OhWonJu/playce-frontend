@@ -106,7 +106,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
         </motion.div>
       ) : (
         <div
-          className="fixed top-0 w-full z-[100]"
+          className="fixed top-0 w-full z-50"
           style={{
             height: NAV_HEIGHT,
             backgroundColor: theme.background_color,

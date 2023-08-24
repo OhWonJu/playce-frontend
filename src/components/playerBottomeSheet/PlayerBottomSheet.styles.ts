@@ -31,5 +31,6 @@ export const PBSHeaderWrapper = styled.nav`
 export const PBSContentWrapper = styled.section`
   background-color: ${props => props.theme.background_color};
 
-  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`}
+  /* ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`} */
+  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[60]`}
 `;

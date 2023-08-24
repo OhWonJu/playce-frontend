@@ -7,7 +7,7 @@ const styles: { [key: string]: CSS.Properties } = {
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 9999999,
+    zIndex: 1000,
     overflow: "hidden",
     pointerEvents: "none",
   },
