@@ -26,7 +26,7 @@ const Content = () => {
 
       <section className="__OTHER_ALBUM__ flex flex-col max-w-full space-y-3 mb-8">
         <a className="font-bold text-lg">
-          {currentTrack.artistKo}'s Other Albums
+          {currentTrack.artistName}'s Other Albums
         </a>
         <div className="flex max-w-full space-x-3 snap-mandatory snap-x overflow-x-scroll scrollbar-hide">
           <div className="min-w-[150px] min-h-[150px] rounded-lg bg-zinc-300" />

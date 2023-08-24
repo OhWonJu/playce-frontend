@@ -12,6 +12,7 @@ import { Navigator } from "../Navigator";
 import { PlayerBottomSheet } from "@components/playerBottomeSheet";
 import { SearchDropDown } from "../SearchDropDown";
 import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
+import { StyledToastContainer } from "../Toastify";
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -203,6 +204,7 @@ const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {
       <SidebarUI />
       <DropDownUI />
       <ModalUI />
+      <StyledToastContainer />
     </div>
   );
 };

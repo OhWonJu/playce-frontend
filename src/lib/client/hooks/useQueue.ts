@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { RootState } from "../store/store";
 import { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
+import { RootState } from "../store/store";
 import { queueActions } from "../store/reducers";
 import { Track } from "../types";
+import QueueToast from "@components/common/Toastify/Toasts/QueueToast";
 
 export const useQueue = () => {
   const dispatch = useDispatch();
@@ -22,14 +24,18 @@ export const useQueue = () => {
   );
 
   const addTrack = useCallback(
-    (track: Track) =>
-      dispatch(queueActions.queueReducer({ type: "ADD_TRACK", track })),
+    (track: Track) => {
+      QueueToast({ track, isInQueue: true });
+      dispatch(queueActions.queueReducer({ type: "ADD_TRACK", track }));
+    },
     [dispatch],
   );
 
   const deleteTrack = useCallback(
-    (track: Track) =>
-      dispatch(queueActions.queueReducer({ type: "DELETE_TRACK", track })),
+    (track: Track) => {
+      QueueToast({ track, isInQueue: false });
+      dispatch(queueActions.queueReducer({ type: "DELETE_TRACK", track }));
+    },
     [dispatch],
   );
 
