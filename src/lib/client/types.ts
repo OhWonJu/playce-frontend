@@ -53,3 +53,11 @@ export interface AlbumDetail {
   tracks: Array<Track>;
   updatedAt: string;
 }
+
+export interface QueueFreeView {
+  id: string;
+  queueThumbNail: Array<string>;
+  songCount: number;
+  totalPlayTime: number;
+  tracks: Array<Track>;
+}

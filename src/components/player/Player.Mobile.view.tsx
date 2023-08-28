@@ -10,6 +10,7 @@ import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import {
   NAV_HEIGHT,
   PLAYER_HEADER_HEIGHT,
+  PLAYER_MOBILE,
   WAVE_FORM_HEIGHT,
 } from "constants/constants";
 
@@ -120,7 +121,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         // onSnap={snapIndex =>
         //   console.log("> Current snap point index:", snapIndex)
         // }
-        style={{ zIndex: 40 }}
+        style={{ zIndex: PLAYER_MOBILE }}
       >
         <Sheet.Container isMain={true}>
           <Sheet.Content isMain={true} style={{ maxHeight: "90%" }}>

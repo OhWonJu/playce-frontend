@@ -4,7 +4,7 @@ import { useUI } from "@components/ui";
 
 import HomeView from "./Home.view";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
-import { AlbumFreeView, T_Album } from "@lib/client/types";
+import { AlbumFreeView, QueueFreeView, T_Album } from "@lib/client/types";
 import { useQueue } from "@lib/client/hooks/useQueue";
 import { useQuery } from "@tanstack/react-query";
 import { _GET } from "@lib/server/rootAPI";
@@ -22,13 +22,14 @@ const HomeController = () => {
     setPlayList,
     shuffle,
   } = usePlayerControl();
-  const { queue } = useQueue();
+  const { queue, setQueue } = useQueue();
   const { id } = useMe();
 
   const [myAlbumsData, setMyAlbumsData] = useState<{
     albums: AlbumFreeView[];
     own: boolean;
   }>(null);
+  const [queueFreeView, setQueueFreeView] = useState<QueueFreeView>(null);
   const [recoAlbums, setRecoAlbums] = useState<AlbumFreeView[]>(null);
 
   // QUERY ========================================================== //
@@ -38,8 +39,18 @@ const HomeController = () => {
     enabled: id !== null,
     refetchOnWindowFocus: false,
     onSuccess: data => {
-      // console.log("home");
       setMyAlbumsData(data.data);
+    },
+  });
+
+  const { data: queueData, isLoading: queueLoading } = useQuery({
+    queryKey: ["myQueue"],
+    queryFn: async () => await _GET("api/users/queue"),
+    enabled: id !== null,
+    refetchOnWindowFocus: false,
+    onSuccess: data => {
+      setQueueFreeView(data.data);
+      setQueue(data.data.tracks);
     },
   });
 
@@ -48,7 +59,6 @@ const HomeController = () => {
     queryFn: async () => await _GET("api/albums/getAll"),
     refetchOnWindowFocus: false,
     onSuccess: data => {
-      // console.log("home");
       setRecoAlbums(data.data);
     },
   });
@@ -83,13 +93,14 @@ const HomeController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
-  if (isLoading || recoLoading) return null;
+  if (isLoading || recoLoading || queueLoading) return null;
 
   return (
     <HomeView
       viewMode={viewMode}
       displayPlayer={displayPlayer}
       myAlbumsData={myAlbumsData}
+      queueData={queueFreeView}
       recommendAlbumsData={recoAlbums}
       queueClickHandler={queueClickHandler}
       togglePlayerClickhandler={togglePlayerClickhandler}

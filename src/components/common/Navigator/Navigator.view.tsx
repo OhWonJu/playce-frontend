@@ -15,7 +15,7 @@ import {
 } from "@components/icons";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
 
-import { NAV_HEIGHT } from "constants/constants";
+import { NAVIGATION, NAV_HEIGHT } from "constants/constants";
 import { PlayIndicator } from "./modules";
 
 interface NavigatorViewProps {
@@ -64,11 +64,12 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
     <>
       {viewMode !== "DESKTOP" ? (
         <motion.div
-          className="fixed flex flex-col justify-around bottom-0 w-full z-50"
+          className="fixed flex flex-col justify-around bottom-0 w-full"
           style={{
             height: NAV_HEIGHT,
             y,
             backgroundColor: theme.background_color,
+            zIndex: NAVIGATION,
           }}
         >
           {displayPlayer && progress < 1 ? <PlayIndicator /> : null}
@@ -106,10 +107,11 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
         </motion.div>
       ) : (
         <div
-          className="fixed top-0 w-full z-50"
+          className="fixed top-0 w-full"
           style={{
             height: NAV_HEIGHT,
             backgroundColor: theme.background_color,
+            zIndex: NAVIGATION,
           }}
         >
           <div className="relative flex justify-center w-full h-full">

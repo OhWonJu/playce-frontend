@@ -44,3 +44,11 @@ export const ALBUM_CARD_HEIGHT: number = 180;
 export const ALBUM_CARD_WIDTH: number = 130;
 export const TRACK_CARD_HEIGHT: number = 60;
 // -------------------------------------------------------- CARDS //
+
+// Zindex //
+// 10
+// 20
+export const SEARCH_BAR = 30;
+export const PLAYER_MOBILE = 40;
+export const NAVIGATION = 50;
+export const COVER_PAGE = 100;

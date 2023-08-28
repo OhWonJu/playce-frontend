@@ -12,7 +12,7 @@ import tw from "twin.macro";
 import { Cross, Search } from "@components/icons";
 import { Input, useUI } from "@components/ui";
 import useTheme from "@lib/client/hooks/useTheme";
-import { NAV_HEIGHT } from "constants/constants";
+import { NAV_HEIGHT, SEARCH_BAR } from "constants/constants";
 import { SearchProps } from "../SearchDropDownController";
 
 interface SearchbarProps {
@@ -128,6 +128,7 @@ const Searchbar: FC<SearchbarProps> = ({
 export default memo(Searchbar);
 
 const Container = styled.div<any>`
-  ${tw`relative z-30 top-0 left-0 flex px-5 w-full justify-start md:justify-center`};
+  ${tw`relative top-0 left-0 flex px-5 w-full justify-start md:justify-center`};
   height: ${NAV_HEIGHT}px;
+  z-index: ${SEARCH_BAR};
 `;

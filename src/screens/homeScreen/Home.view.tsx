@@ -1,7 +1,7 @@
 import React from "react";
 
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
-import { AlbumCard, Container, Link } from "@components/ui";
+import { AlbumCard, Container, Link, QueueCard } from "@components/ui";
 
 import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
 
@@ -11,12 +11,14 @@ import { Play } from "@components/icons";
 import useTheme from "@lib/client/hooks/useTheme";
 import RippleButton from "@components/ui/RippleButton/RippleButton";
 import { useMe } from "@lib/client/hooks/useMe";
-import { AlbumFreeView } from "@lib/client/types";
+import { AlbumFreeView, QueueFreeView } from "@lib/client/types";
+import { convertTime } from "@lib/client/convertTime";
 
 interface HomeViewProps {
   viewMode: VIEW_MODES;
   displayPlayer: boolean;
   myAlbumsData: { albums: AlbumFreeView[]; own: boolean };
+  queueData: QueueFreeView;
   recommendAlbumsData: AlbumFreeView[];
   queueClickHandler: () => void;
   togglePlayerClickhandler: () => void;
@@ -26,6 +28,7 @@ const HomeView: React.FC<HomeViewProps> = ({
   viewMode,
   displayPlayer,
   myAlbumsData,
+  queueData,
   recommendAlbumsData,
   queueClickHandler,
   togglePlayerClickhandler,
@@ -65,29 +68,7 @@ const HomeView: React.FC<HomeViewProps> = ({
             다시 듣기
           </SectionHeaderText>
         </div>
-        <div className="__Q_CARD__ flex flex-col">
-          <div className="relative w-[180px] h-[180px] rounded-md mb-1 bg-zinc-500 group mr-2">
-            <div
-              className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2"
-              onClick={queueClickHandler}
-            >
-              <Play
-                width="40"
-                height="40"
-                fill={theme.background_color}
-                strokeWidth={0}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <a className="font-semibold text-sm">My Queue</a>
-            <div className="flex space-x-2">
-              <a className="text-zinc-400 font-semibold text-sm">
-                10 songs • 10 min
-              </a>
-            </div>
-          </div>
-        </div>
+        <QueueCard data={queueData} queueClickHandler={queueClickHandler} />
       </div>
 
       {/*  */}

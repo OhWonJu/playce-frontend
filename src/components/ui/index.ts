@@ -14,6 +14,7 @@ export { default as LoadingDots } from "./LoadingDots";
 // export { default as Logo } from './Logo'
 // export { default as Marquee } from './Marquee'
 export { default as Modal } from "./Modal";
+export { default as QueueCard } from "./QueueCard";
 export { default as RippleButton } from "./RippleButton/RippleButton";
 export { default as SearchKeyword } from "./SearchKeyword";
 export { Tab, TabSection } from "./Tab";
