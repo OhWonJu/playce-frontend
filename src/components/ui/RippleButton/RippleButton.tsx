@@ -1,5 +1,4 @@
 import React, { MouseEvent, useCallback, useRef } from "react";
-import cn from "clsx";
 
 import { ButtonWrapper, Ripple } from "./RippleButton.styles";
 import s from "./RippleButton.module.css";
