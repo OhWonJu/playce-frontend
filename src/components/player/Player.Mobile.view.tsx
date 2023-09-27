@@ -34,6 +34,7 @@ import {
 import { DotMenu } from "@components/icons";
 import { EllipsisText, useUI } from "@components/ui";
 import { useWindowSize } from "react-use";
+import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
@@ -52,6 +53,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
   // const snapTo = (i: number) => ref.current?.snapTo(i);
 
   const { progress } = MainSheetProgressStore();
+  const { progress: subProgress } = SubSheetProgressStore();
   const motionProg = useMotionValue(0);
 
   // useEffect(() => {
@@ -70,6 +72,8 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         ...DEFAULT_SPRING_CONFIG,
       });
     }
+    // console.log("main:", progress);
+    // console.log("sub:", subProgress);
   }, [progress]);
 
   const gap = useTransform(motionProg, [0, 100], ["0rem", "0.5rem"]);
@@ -118,6 +122,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
             : PLAYER_HEADER_HEIGHT,
         ]}
+        disableDrag={subProgress > 99 ? true : false}
         // onSnap={snapIndex =>
         //   console.log("> Current snap point index:", snapIndex)
         // }

@@ -32,7 +32,9 @@ interface PlayerDesktopViewProps {
   audioURL: string;
 }
 
-const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({ audioURL }) => {
+const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({
+  audioURL,
+}) => {
   const titleRef: MutableRefObject<HTMLDivElement> = useRef();
 
   const { play, currentTrack, playList, playListType, setCurrentTrack } =

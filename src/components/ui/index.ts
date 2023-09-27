@@ -3,7 +3,7 @@ export { default as BottomSheet } from "./BottomSheet";
 export { default as Button } from "./Button";
 export { default as Collapse } from "./Collapse";
 export { default as Container } from "./Container";
-export { default as DotIndicator } from "./RippleButton/DotIndicator";
+export { default as DotIndicator } from "./DotIndicator";
 export { default as DropDown } from "./DropDown";
 export { default as EllipsisSpan } from "./EllipsisSpan";
 export { default as EllipsisText } from "./EllipsisText";

@@ -31,6 +31,7 @@ import { SheetContext, SubSheetContext } from "./context";
 import { getClosest, inDescendingOrder, validateSnapTo } from "./utils";
 import { usePreventScroll } from "./use-prevent-scroll";
 import styles from "./styles";
+import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 const Sheet = React.forwardRef<any, SheetProps>(
   (
@@ -61,6 +62,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
     ref,
   ) => {
     const { setProgress } = MainSheetProgressStore();
+    const { setProgress: setSubProgress } = SubSheetProgressStore();
 
     const sheetRef = React.useRef<any>(null);
     const indicatorRotation = useMotionValue(0);
@@ -228,7 +230,10 @@ const Sheet = React.forwardRef<any, SheetProps>(
         // main sheet
         if (isMain) setProgress(lastest);
         // sub sheet
-        else setProgress(100 - lastest);
+        else {
+          setSubProgress(lastest);
+          setProgress(100 - lastest);
+        }
       });
     }, []);
 

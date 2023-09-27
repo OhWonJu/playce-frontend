@@ -4,6 +4,7 @@ import { animate, useMotionValue, motion, useTransform } from "framer-motion";
 import { NAV_HEIGHT } from "constants/constants";
 
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
+import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
@@ -28,30 +29,50 @@ const PlayerBottomSheetView = () => {
   const ref = useRef<SheetRef>();
   const snapTo = (i: number) => ref.current?.snapTo(i);
 
-  const { progress } = MainSheetProgressStore();
+  const { progress } = SubSheetProgressStore();
+  const { progress: mainProgress } = MainSheetProgressStore();
   const motionProg = useMotionValue(0);
+  const mainMotionProg = useMotionValue(0);
+
+  useEffect(() => {
+    if (mainProgress <= 0) {
+      // 메인시트가 close 되는 경우
+      animate(mainMotionProg, 0, {
+        type: "spring",
+        ...DEFAULT_SPRING_CONFIG,
+      });
+    } else {
+      // 메인 플레이어가 열리는 경우
+      animate(mainMotionProg, mainProgress, {
+        type: "spring",
+        ...DEFAULT_SPRING_CONFIG,
+      });
+    }
+    // 플레이어가 full screen이 되면 -> 플레이어 바텀 시트의 탭 초기화
+    if (mainProgress > 99) setFocusedTab(-1);
+  }, [mainProgress]);
 
   useEffect(() => {
     if (progress <= 0) {
+      // 바텀시트가 close 되는 경우
       animate(motionProg, 0, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
-
+      // 탭을 기본탭으로 이동시킨다.
       if (focusedTab === -1) setFocusedTab(0);
     } else {
+      // 바텀시트가 열리는 경우
       animate(motionProg, progress, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
     }
-
-    if (progress > 99) setFocusedTab(-1);
   }, [progress]);
 
   // sub Progress 처리도 해야함...메인에 다 묶이니까 드레그 이벤트에서 y가 변해가지고 덜컥거리는거
-  const y = useTransform(motionProg, [85, 100], [NAV_HEIGHT + 20, 0]); // hide or show sheet
-  const trigger = useTransform(motionProg, [0, 100], [1, 0]); // 0: to OPEN | 1: to CLOSE
+  const y = useTransform(mainMotionProg, [85, 100], [NAV_HEIGHT + 20, 0]); // hide or show sheet
+  const trigger = useTransform(motionProg, [0, 100], [0, 1]); // 0: to OPEN | 1: to CLOSE
 
   // const triggerHandler = () => {
   //   const nowTrigger = trigger.get();
