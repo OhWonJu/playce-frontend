@@ -48,8 +48,6 @@ const PlayerBottomSheetView = () => {
         ...DEFAULT_SPRING_CONFIG,
       });
     }
-    // 플레이어가 full screen이 되면 -> 플레이어 바텀 시트의 탭 초기화
-    if (mainProgress > 99) setFocusedTab(-1);
   }, [mainProgress]);
 
   useEffect(() => {
@@ -59,14 +57,22 @@ const PlayerBottomSheetView = () => {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
-      // 탭을 기본탭으로 이동시킨다.
-      if (focusedTab === -1) setFocusedTab(0);
     } else {
       // 바텀시트가 열리는 경우
       animate(motionProg, progress, {
         type: "spring",
         ...DEFAULT_SPRING_CONFIG,
       });
+      // 탭을 기본탭으로 이동시킨다.
+      if (focusedTab === -1) {
+        console.log("shee");
+        setFocusedTab(0);
+      }
+    }
+    // 플레이어가 full screen이 되면 -> 플레이어 바텀 시트의 탭 초기화
+    if (mainProgress > 99) {
+      console.log("case");
+      setFocusedTab(-1);
     }
   }, [progress]);
 
@@ -83,6 +89,7 @@ const PlayerBottomSheetView = () => {
   // };
 
   const tabClickHandler = (index: number) => {
+    // 탭 클릭시 바텀시트 완전 오픈
     if (trigger.get() === 0) {
       // triggerHandler();
       snapTo(0);
