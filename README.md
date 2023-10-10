@@ -35,7 +35,7 @@ FrontEnd
 ||||
 |----|----|----|
 |![init](img/1.jpeg)|![login](img/2.jpeg)|![signin](img/3.jpeg)|
-|![init](img/4.jpeg)|![login](img/5.jpeg)|https://github.com/OhWonJu/playce-frontend/assets/42432063/82bdbe81-c810-453e-8491-4abed3d35645|
+|![init](img/4.jpeg)|![login](img/5.jpeg)||![demo](img/demo.gif)|
 
 https://github.com/OhWonJu/playce-frontend/assets/42432063/82bdbe81-c810-453e-8491-4abed3d35645
 
