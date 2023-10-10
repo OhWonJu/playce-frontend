@@ -16,14 +16,14 @@ const QueueCard: React.FC<QueueCardProps> = ({ data, queueClickHandler }) => {
   return (
     <div className="__Q_CARD__ flex flex-col">
       <div className="relative w-[180px] h-[180px] rounded-md mb-1 overflow-hidden group mr-2">
-        <Image
+        {/* <Image
           priority={true}
           src={data?.queueThumbNail[0]}
           alt="product image"
           layout="fill"
           sizes="100%"
           draggable={false}
-        />
+        /> */}
         <div className="absolute left-0 top-0 w-full h-full bg-white bg-opacity-50 backdrop-blur-xl"/>
         <div
           className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2"

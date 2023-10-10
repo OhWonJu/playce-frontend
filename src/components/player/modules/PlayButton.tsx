@@ -5,8 +5,10 @@ import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
 import { Pause, Play } from "@components/icons";
 import RippleButton from "@components/ui/RippleButton/RippleButton";
+import useTheme from "@lib/client/hooks/useTheme";
 
 const PlayButton: React.FC<{ className?: string }> = ({ className }) => {
+  const theme = useTheme();
   const { setPlay, play } = usePlayerControl();
 
   const rootClassName = cn(
@@ -30,9 +32,9 @@ const PlayButton: React.FC<{ className?: string }> = ({ className }) => {
     // </div>
     <RippleButton className={rootClassName} clickHandler={() => setPlay(!play)}>
       {play === true ? (
-        <Pause width="30" height="30" />
+        <Pause width="30" height="30" fill={theme.theme_comparsion_color} />
       ) : (
-        <Play width="30" height="30" />
+        <Play width="30" height="30" fill={theme.theme_comparsion_color} />
       )}
     </RippleButton>
   );

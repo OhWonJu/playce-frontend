@@ -46,8 +46,8 @@ export const TrackDeleteButton = styled(motion.div)`
 
 export const ArtWrapper = styled.section`
   position: relative;
-  height: ${TRACK_CARD_HEIGHT - 8}px;
-  width: ${TRACK_CARD_HEIGHT - 8}px;
+  min-height: ${TRACK_CARD_HEIGHT - 8}px;
+  min-width: ${TRACK_CARD_HEIGHT - 8}px;
   overflow: hidden;
 
   ${tw`rounded-full mr-2`}

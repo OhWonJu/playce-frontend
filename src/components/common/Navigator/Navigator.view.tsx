@@ -73,7 +73,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
           }}
         >
           {displayPlayer && progress < 1 ? <PlayIndicator /> : null}
-          <div className="flex justify-around px-4 py-2 w-full h-full">
+          <div className="flex justify-around items-center px-4 py-2 w-full h-full">
             <Link href={"/home"}>
               {pathName === "home" ? (
                 <HomeFill

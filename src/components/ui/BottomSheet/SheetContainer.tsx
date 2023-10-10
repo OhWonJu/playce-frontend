@@ -8,8 +8,12 @@ import { MAX_HEIGHT } from "./constants";
 import { mergeRefs } from "./utils";
 import styles from "./styles";
 
+import useTheme from "@lib/client/hooks/useTheme";
+
 const SheetContainer = React.forwardRef<any, SheetContainerProps>(
   ({ children, isMain, style = {}, className = "", ...rest }, ref) => {
+    const theme = useTheme();
+
     const {
       y,
       isOpen,
@@ -54,6 +58,7 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
         ref={mergeRefs([sheetRef, ref])}
         className={`react-modal-sheet-container ${className}`}
         style={{
+          backgroundColor: theme.background_color,
           ...styles.container,
           ...style,
           ...(detent === "full-height" && { height }),

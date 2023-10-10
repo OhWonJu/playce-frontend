@@ -35,10 +35,10 @@ const RepeatButton = () => {
       {repeatMode === "NONE" ? (
         <Repeat fill={theme.gray_dark} />
       ) : repeatMode === "REPEAT_ALL" ? (
-        <Repeat />
+        <Repeat fill={theme.theme_comparsion_color} />
       ) : (
         <>
-          <Repeat />
+          <Repeat fill={theme.theme_comparsion_color} />
           <a
             className="absolute inset-0 grid place-items-center w-full h-full font-extrabold"
             style={{

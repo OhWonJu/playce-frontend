@@ -33,7 +33,7 @@ const TrackLiComponent: React.FC<TrackLIComponentProps> = ({
   return (
     <li
       key={index}
-      className="relative flex items-center w-full min-h-[45px] max-h-[45px]"
+      className="relative flex items-center w-full min-h-[50px] max-h-[45px]"
     >
       {/* COL-1 */}
       <div className="w-[45px] h-full grid place-items-center mr-4">

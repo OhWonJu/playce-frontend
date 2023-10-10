@@ -47,7 +47,6 @@ const HomeView: React.FC<HomeViewProps> = ({
         <a className="font-semibold text-lg">connect your pysical albums</a>
       </div> */}
       <span>{`welcome ${userName}`}</span>
-
       {/*  */}
       <div className="relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -60,7 +59,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           </RippleButton>
         </div>
       </div>
-
       {/*  */}
       <div className="__MY_QUEUE__ w-full pb-10">
         <div className="flex w-full justify-between pb-3">
@@ -70,7 +68,6 @@ const HomeView: React.FC<HomeViewProps> = ({
         </div>
         <QueueCard data={queueData} queueClickHandler={queueClickHandler} />
       </div>
-
       {/*  */}
       <div className="__MY_ALBUM__ w-full pb-10">
         <div className="flex w-full justify-between pb-3">
@@ -87,7 +84,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           ))}
         </div>
       </div>
-
       {/*  */}
       <div className="__MY_PLAY_LIST__ w-full pb-10">
         <div className="flex w-full justify-between pb-3">
@@ -109,7 +105,6 @@ const HomeView: React.FC<HomeViewProps> = ({
           ))}
         </div>
       </div>
-
       {/*  */}
       <div
         className="__RECOMMEND__ w-full"

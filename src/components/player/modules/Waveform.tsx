@@ -71,6 +71,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   }, [url, displayPlayer]);
   // ============================== CREATE WAVE FORM //
 
+  // 음원 재생 완료 처리 ==================================== //
   const handleFinish = useCallback(() => {
     const currentIdx = playList.findIndex(
       el => el.trackTitle === currentTrack.trackTitle,
@@ -109,7 +110,9 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
       }
     };
   }, [handleFinish]);
+  // ==================================== 음원 재생 완료 처리 //
 
+  // 트랙 변경 처리 ========================================= //
   const handleForwardTrigger = useCallback(() => {
     // forward 버튼에 의해 currentTrack 이 바뀌거나
     // playList 의 변화에 따른 플레이타임 갱신
@@ -134,7 +137,9 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   useEffect(() => {
     handleForwardTrigger();
   }, [handleForwardTrigger]);
+  // ========================================= 트랙 변경 처리 //
 
+  // 재생/정지 처리 ======================================================== //
   const handlePlay = async () => {
     if (play) {
       await wavesurfer.current.play();
@@ -147,6 +152,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
       handlePlay();
     }
   }, [play]);
+  // ======================================================== 재생/정지 처리 //
 
   return <div id="waveform" ref={waveformRef}></div>;
 };

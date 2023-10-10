@@ -7,7 +7,7 @@ export const Container = styled(ToastContainer)`
     font-size: 16px;
     /* border-radius: 50px; */
     /* color: #fff; */
-    background-color: #fafafa50;
+    background-color: ${props => props.theme.gray_transparent};
     backdrop-filter: blur(6px);
     padding: 0px 10px 0px 10px;
     z-index: 9999999;

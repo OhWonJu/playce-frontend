@@ -17,7 +17,7 @@ function RecommnedSection() {
   return (
     <div className="flex flex-col h-full py-4">
       <h2 className="font-semibold text-lg">Recommed Keywords</h2>
-      <div className="flex flex-wrap pt-3 overflow-y-scroll">
+      <div className="flex flex-wrap pt-3 overflow-y-scroll scrollbar-hide">
         {cardData.map((v, i) => (
           <Tag key={i} context={v} />
         ))}

@@ -72,13 +72,11 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         ...DEFAULT_SPRING_CONFIG,
       });
     }
-    // console.log("main:", progress);
-    // console.log("sub:", subProgress);
   }, [progress]);
 
   const gap = useTransform(motionProg, [0, 100], ["0rem", "0.5rem"]);
 
-  const headerOpacity = useTransform(motionProg, [85, 100], [0, 1]);
+  const headerOpacity = useTransform(motionProg, [75, 100], [0, 1]);
   const headerHeight = useTransform(motionProg, [10, 70], ["0%", "8%"]);
 
   const albumHeight = useTransform(
@@ -108,8 +106,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         isMain={true}
         isOpen={true}
         modalMode={false}
-        // onClose={() => setOpen(false)}
-        onClose={() => console.log("CLOSE")}
+        onClose={() => null}
         fixedHeight={
           viewMode !== "DESKTOP"
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT

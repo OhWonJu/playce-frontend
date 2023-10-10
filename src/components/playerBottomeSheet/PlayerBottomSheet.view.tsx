@@ -64,29 +64,22 @@ const PlayerBottomSheetView = () => {
         ...DEFAULT_SPRING_CONFIG,
       });
       // 탭을 기본탭으로 이동시킨다.
-      if (focusedTab === -1) {
-        console.log("shee");
-        setFocusedTab(0);
-      }
+      if (focusedTab === -1) setFocusedTab(0);
     }
     // 플레이어가 full screen이 되면 -> 플레이어 바텀 시트의 탭 초기화
-    if (mainProgress > 99) {
-      console.log("case");
-      setFocusedTab(-1);
-    }
+    if (mainProgress > 99) setFocusedTab(-1);
   }, [progress]);
 
-  // sub Progress 처리도 해야함...메인에 다 묶이니까 드레그 이벤트에서 y가 변해가지고 덜컥거리는거
-  const y = useTransform(mainMotionProg, [85, 100], [NAV_HEIGHT + 20, 0]); // hide or show sheet
-  const trigger = useTransform(motionProg, [0, 100], [0, 1]); // 0: to OPEN | 1: to CLOSE
 
-  // const triggerHandler = () => {
-  //   const nowTrigger = trigger.get();
-  //   if (nowTrigger === 0 || nowTrigger === 1) {
-  //     snapTo(nowTrigger);
-  //     trigger.set(Math.abs(nowTrigger - 1));
-  //   }
-  // };
+  // 버벅거리는 이유이자 원흉
+  // 플레이어 팝업 여부에 따라 바텀탭이 나오거나 들어가는 로직 떄문에 쓰는 로직임
+  // mainProgress, subProgress 로 대체할 수 있는 방법은..?
+  const y =
+    progress <= 0
+      ? useTransform(mainMotionProg, [85, 100], [NAV_HEIGHT + 20, 0])
+      : useTransform(motionProg, [50, 100], [0, NAV_HEIGHT + 20]);
+
+  const trigger = useTransform(motionProg, [0, 100], [0, 1]); // 0: to OPEN | 1: to CLOSE
 
   const tabClickHandler = (index: number) => {
     // 탭 클릭시 바텀시트 완전 오픈
@@ -110,13 +103,8 @@ const PlayerBottomSheetView = () => {
         modalMode={false}
         onClose={() => null}
         fixedHeight={NAV_HEIGHT + 20}
-        initialSnap={1}
-        // useSnapPoint={true}
+        // initialSnap={1}
         snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
-        // onSnap={snapIndex =>
-        //   console.log("> Current snap point index:", snapIndex)
-        // }
-        // style={{ zIndex: 60 }}
       >
         <motion.div
           id="player-bottom-sheet"
