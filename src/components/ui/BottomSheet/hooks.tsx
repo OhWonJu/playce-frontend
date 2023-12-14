@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { IS_SSR } from './constants';
-import { SheetEvents } from './types';
-import { applyRootStyles, cleanupRootStyles } from './utils';
+import { IS_SSR } from "./constants";
+import { SheetEvents } from "./types";
+import { applyRootStyles, cleanupRootStyles } from "./utils";
 
 export const useIsomorphicLayoutEffect = IS_SSR
   ? React.useEffect
@@ -30,7 +30,7 @@ export const useModalEffect = (isOpen: boolean, rootId?: string) => {
 
 export const useEventCallbacks = (
   isOpen: boolean,
-  callbacks: React.MutableRefObject<SheetEvents>
+  callbacks: React.MutableRefObject<SheetEvents>,
 ) => {
   const prevOpen = usePrevious(isOpen);
   const didOpen = React.useRef(false);
@@ -64,9 +64,9 @@ export function useWindowHeight() {
 
   useIsomorphicLayoutEffect(() => {
     const updateHeight = () => setWindowHeight(window.innerHeight);
-    window.addEventListener('resize', updateHeight);
+    window.addEventListener("resize", updateHeight);
     updateHeight();
-    return () => window.removeEventListener('resize', updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   return windowHeight;

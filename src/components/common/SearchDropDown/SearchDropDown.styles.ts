@@ -34,7 +34,7 @@ export const Span = styled.span<any>`
 // Sections ============================================== //
 export const Ul = styled.ul`
   border-bottom-width: ${BORDER_TINE_WIDTH}px;
-  border-color: ${props => props.theme.gray_light + 50};
+  border-color: ${props => props.theme.gray_light};
   margin-bottom: 1rem;
 `;
 // ============================================== Sections //

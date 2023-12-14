@@ -201,7 +201,7 @@ export const ManagedUIContext: FC<any> = ({ children }) => {
   // const theme = useLocalStorage("theme");
   const [localTheme, _] = useLocalStorage("theme");
 
-  let themeMode = useMemo((): string => {
+  const themeMode = useMemo((): string => {
     if (localTheme) return localTheme;
     else
       return window.matchMedia("(prefers-color-scheme: dark)").matches

@@ -48,7 +48,7 @@ const HomeView: React.FC<HomeViewProps> = ({
       </div> */}
       <span>{`welcome ${userName}`}</span>
       {/*  */}
-      <div className="relative">
+      <div className="__TEST__ relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <RippleButton
             clickHandler={togglePlayerClickhandler}
