@@ -13,7 +13,7 @@ import {
   HomeFill,
   Search,
 } from "@components/icons";
-import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet-legacy/constants";
+import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
 
 import { NAVIGATION, NAV_HEIGHT } from "constants/constants";
 import { PlayIndicator } from "./modules";
@@ -36,12 +36,14 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
     if (viewMode === "DESKTOP") return;
 
     if (progress <= 0) {
-      animate(y, 0, { type: "spring", ...DEFAULT_SPRING_CONFIG });
+      animate(y, 0, { type: "tween", ...DEFAULT_TWEEN_CONFIG } as {
+        type: "tween";
+      });
     } else {
       animate(y, (progress / 100) * NAV_HEIGHT, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+        type: "tween",
+        ...DEFAULT_TWEEN_CONFIG,
+      } as { type: "tween" });
     }
   }, [progress]);
 
@@ -71,6 +73,7 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
             backgroundColor: theme.background_color,
             zIndex: NAVIGATION,
           }}
+          initial={progress <= 0 ? { y: 0 } : false}
         >
           {displayPlayer && progress < 1 ? <PlayIndicator /> : null}
           <div className="flex justify-around items-center px-4 py-2 w-full h-full">

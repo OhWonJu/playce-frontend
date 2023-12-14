@@ -103,7 +103,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         isOpen={true}
         modalMode={false}
         onClose={() => null}
-        fixedHeight={ 
+        fixedHeight={
           viewMode !== "DESKTOP"
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
             : PLAYER_HEADER_HEIGHT // PLAYER_HEADER_HEIGHT + 34
