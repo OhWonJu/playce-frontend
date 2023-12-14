@@ -1,7 +1,7 @@
 import React from "react";
 
 const Lyrics = () => {
-  return <div>Lyrics</div>;
+  return <section>Lyrics</section>;
 };
 
 export default Lyrics;

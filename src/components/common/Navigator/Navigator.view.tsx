@@ -13,7 +13,7 @@ import {
   HomeFill,
   Search,
 } from "@components/icons";
-import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
+import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet-legacy/constants";
 
 import { NAVIGATION, NAV_HEIGHT } from "constants/constants";
 import { PlayIndicator } from "./modules";

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { animate, useMotionValue, useTransform } from "framer-motion";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
-import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
+import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 
@@ -56,21 +56,17 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
   const { progress: subProgress } = SubSheetProgressStore();
   const motionProg = useMotionValue(0);
 
-  // useEffect(() => {
-  //   setProgress(0);
-  // }, []);
-
   useEffect(() => {
     if (progress <= 0) {
       animate(motionProg, 0, {
         type: "tween",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+        ...DEFAULT_TWEEN_CONFIG,
+      } as { type: "tween" });
     } else {
       animate(motionProg, progress, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+        type: "tween",
+        ...DEFAULT_TWEEN_CONFIG,
+      } as { type: "tween" });
     }
   }, [progress]);
 
@@ -102,17 +98,17 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         ref={ref}
         id="player"
         rootId="root-layout"
-        mountPoint={document.getElementById("root-layoout")}
+        mountPoint={document.getElementById("root-layout")}
         isMain={true}
         isOpen={true}
         modalMode={false}
         onClose={() => null}
-        fixedHeight={
+        fixedHeight={ 
           viewMode !== "DESKTOP"
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
             : PLAYER_HEADER_HEIGHT // PLAYER_HEADER_HEIGHT + 34
         }
-        useSnapPoint={false}
+        // useSnapPoint={false}
         snapPoints={[
           viewMode !== "DESKTOP" ? 1 : height - NAV_HEIGHT,
           viewMode !== "DESKTOP"

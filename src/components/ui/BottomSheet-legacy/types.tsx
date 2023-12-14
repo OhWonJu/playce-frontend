@@ -2,9 +2,8 @@ import {
   DragHandlers,
   MotionValue,
   MotionProps,
-  motion,
-  EasingDefinition,
   Transition,
+  Spring,
 } from "framer-motion";
 
 export type SheetEvents = {
@@ -18,33 +17,29 @@ export type SheetEvents = {
 export type SheetDetent = "full-height" | "content-height";
 
 type CommonProps = MotionProps & {
-  isMain?: boolean; // added
+  isMain?: boolean;
   className?: string;
 };
 
-export type SheetTweenConfig = {
-  ease: EasingDefinition;
-  duration: number;
-};
-
+// 생성될 시트의 Props
 export type SheetProps = {
-  isMain: boolean; // added
+  isMain: boolean;
   isOpen: boolean;
-  modalMode: boolean; // added
+  modalMode: boolean;
   children: React.ReactNode;
   onClose: () => void;
   rootId?: string;
   mountPoint?: Element;
+  useSnapPoint?: boolean;
   snapPoints?: number[];
   detent?: SheetDetent;
-  fixedHeight?: number; // added
+  fixedHeight?: number;
   initialSnap?: number; // index of snap points array
-  tweenConfig?: SheetTweenConfig;
+  springConfig?: Omit<Spring, "type">;
   disableDrag?: boolean;
-  disableScrollLocking?: boolean;
   prefersReducedMotion?: boolean;
 } & SheetEvents &
-  React.ComponentPropsWithoutRef<typeof motion.div>;
+  React.HTMLAttributes<HTMLDivElement>;
 
 export type SheetContainerProps = Omit<
   CommonProps,
@@ -72,27 +67,25 @@ export type SheetBackdropProps = Omit<
   "initial" | "animate" | "exit"
 >;
 
-export type SheetScrollerProps = React.HTMLAttributes<HTMLDivElement> & {
-  draggableAt?: "top" | "bottom" | "both";
-};
-
 export type SheetDragProps = {
   drag: "y";
   dragElastic: number;
+  dragConstraints: any;
   dragMomentum: boolean;
   dragPropagation: boolean;
   onDrag: DragHandlers["onDrag"];
   onDragEnd: DragHandlers["onDragEnd"];
 };
 
+// 리덕스 -> 시트의 전해줄 상태값.
 export type SheetContextType = {
   y: MotionValue<any>;
   sheetRef: React.MutableRefObject<any>;
   isOpen: boolean;
-  progress: MotionValue<any>; // added
+  progress: MotionValue<any>;
   snapPoints: SheetProps["snapPoints"];
   detent: SheetDetent;
-  fixedHeight: SheetProps["fixedHeight"]; // added
+  fixedHeight: SheetProps["fixedHeight"];
   initialSnap: SheetProps["initialSnap"];
   indicatorRotation: MotionValue<number>;
   callbacks: React.MutableRefObject<SheetEvents>;
@@ -100,13 +93,6 @@ export type SheetContextType = {
   windowHeight: number;
   animationOptions: Transition;
   reduceMotion: boolean;
-  disableDrag: boolean;
-};
-
-export type SheetScrollerContextType = {
-  disableDrag: boolean;
-  setDragDisabled: () => void;
-  setDragEnabled: () => void;
 };
 
 type ContainerComponent = React.ForwardRefExoticComponent<
@@ -125,16 +111,11 @@ type SheetComponent = React.ForwardRefExoticComponent<
   SheetProps & React.RefAttributes<any>
 >;
 
-type ScrollerComponent = React.ForwardRefExoticComponent<
-  SheetScrollerProps & React.RefAttributes<any>
->;
-
 type SheetCompoundComponent = {
   Container: ContainerComponent;
   Header: DraggableComponent;
   Content: DraggableComponent;
   Backdrop: BackdropComponent;
-  Scroller: ScrollerComponent;
 };
 
 export type SheetCompound = SheetComponent & SheetCompoundComponent;
