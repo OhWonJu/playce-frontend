@@ -53,7 +53,8 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
   // const snapTo = (i: number) => ref.current?.snapTo(i);
 
   const { progress } = MainSheetProgressStore();
-  const { progress: subProgress } = SubSheetProgressStore();
+  const { progress: subProgress, setProgress: setSubProgress } =
+    SubSheetProgressStore();
   const motionProg = useMotionValue(0);
 
   useEffect(() => {
@@ -62,6 +63,8 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
         type: "tween",
         ...DEFAULT_TWEEN_CONFIG,
       } as { type: "tween" });
+
+      if (subProgress > 0) setSubProgress(0);
     } else {
       animate(motionProg, progress, {
         type: "tween",
@@ -72,7 +75,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
 
   const gap = useTransform(motionProg, [0, 100], ["0rem", "0.5rem"]);
 
-  const headerOpacity = useTransform(motionProg, [75, 100], [0, 1]);
+  const headerOpacity = useTransform(motionProg, [90, 100], [0, 1]);
   const headerHeight = useTransform(motionProg, [10, 70], ["0%", "8%"]);
 
   const albumHeight = useTransform(
@@ -108,7 +111,6 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
             ? NAV_HEIGHT + PLAYER_HEADER_HEIGHT
             : PLAYER_HEADER_HEIGHT // PLAYER_HEADER_HEIGHT + 34
         }
-        // useSnapPoint={false}
         snapPoints={[
           viewMode !== "DESKTOP" ? 1 : height - NAV_HEIGHT,
           viewMode !== "DESKTOP"
@@ -139,7 +141,6 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
                   <DotMenu className="w-5 h-5" />
                 </div>
               </PlayerHeader>
-
               {/* BODY */}
               <PlayerBody id="player-body">
                 <AlbumArea>
@@ -192,12 +193,6 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
                 >
                   {/* TRACK INFO */}
                   <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
-                    {/* <EllipsisText
-                      className="__TRACK_TITLE__ font-extrabold text-3xl"
-                      context={currentTrack?.trackTitle}
-                      lineClamp={1}
-                      lineHeight={3}
-                    /> */}
                     <PlayerMarquee title={currentTrack?.trackTitle} />
                     <EllipsisText
                       className="__ARTIST__ font-bold text-base"

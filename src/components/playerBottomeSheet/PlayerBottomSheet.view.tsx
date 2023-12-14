@@ -20,7 +20,7 @@ import { Tab, TabSection } from "@components/ui/Tab";
 
 const HEADER_BAR_HEIGHT = 20;
 
-const tabs = ["Tracks", "Lyrics", "Content"];
+const TAB_NAMES = ["Tracks", "Lyrics", "Content"];
 
 const PlayerBottomSheetView = () => {
   const [focusedTab, setFocusedTab] = useState(-1);
@@ -98,7 +98,7 @@ const PlayerBottomSheetView = () => {
       : useTransform(
           motionProg,
           [50, 100],
-          [0, NAV_HEIGHT + HEADER_BAR_HEIGHT],
+          [0, NAV_HEIGHT + HEADER_BAR_HEIGHT], // [ OPEN , CLOSE ]
         );
 
   const trigger = useTransform(motionProg, [0, 100], [0, 1]); // 0: to OPEN | 1: to CLOSE
@@ -160,7 +160,7 @@ const PlayerBottomSheetView = () => {
                 <Tab
                   focusedTab={focusedTab}
                   tabClickHandler={tabClickHandler}
-                  tabContents={tabs}
+                  tabContents={TAB_NAMES}
                 />
               </PBSHeaderWrapper>
             </Sheet.Header>

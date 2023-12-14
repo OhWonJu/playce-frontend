@@ -244,10 +244,11 @@ const Sheet = React.forwardRef<any, SheetProps>(
     // updata progress
     React.useEffect(() => {
       progress.on("change", (lastest: number) => {
-        // main sheet
-        if (isMain) setProgress(lastest);
-        // sub sheet
-        else {
+        if (isMain) {
+          // main sheet
+          setProgress(lastest);
+        } else {
+          // sub sheet
           setSubProgress(lastest);
           setProgress(100 - lastest);
         }
