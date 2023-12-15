@@ -70,7 +70,7 @@ const SearchKeyword: React.FC<SearchKeyWordProps> = ({
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
                   <a key={index}>{tag}</a>
-                  {index !== tags.length - 1 && <a>/</a>}
+                  {index !== tags.length - 1 && <p>/</p>}
                 </React.Fragment>
               ))}
             </div>

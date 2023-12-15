@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-import { _GET } from "@lib/server/rootAPI";
 import useTheme from "@lib/client/hooks/useTheme";
-import {  AlbumFreeView } from "@lib/client/types";
+import { AlbumFreeView } from "@lib/client/types";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
-import { EllipsisText, Link, useUI } from "@components/ui";
+import { EllipsisText, useUI } from "@components/ui";
 import { Play } from "@components/icons";
 
 import { AlbumArtWrapper, AlbumCard } from "./AlbumCard.styles";
@@ -57,8 +57,9 @@ const AlbumCardComponent: React.FC<AlbumCardComponentProps> = ({
             priority={true}
             src={data.albumArtURL}
             alt="product image"
-            layout="fill"
+            fill={true}
             sizes="100%"
+            style={{ objectFit: "cover" }}
             draggable={false}
           />
         </AlbumArtWrapper>

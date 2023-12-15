@@ -83,10 +83,11 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
 
   useEffect(() => {
     // 닫히는 정도를 애니메이션된 값 motionProg 를 사용
-    // 메인 시트의 progress 가 0 이 되면 메인 시트가 닫혀야 함.
+    // 메인 시트의 progress 가 0 이 되면  N -> 0 으로 값이 tween 형식으로 줄어들게 함
     if (progress <= 0) {
       animate(motionProg, 0, ref.current.animationOptions as { type: "tween" });
     } else {
+      // 그 외의 경우 prgress 값 만큼으로 특정 시간만큼 점진적으로 변경
       animate(
         motionProg,
         progress,

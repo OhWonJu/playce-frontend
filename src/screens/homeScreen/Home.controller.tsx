@@ -33,35 +33,46 @@ const HomeController = () => {
   const [recoAlbums, setRecoAlbums] = useState<AlbumFreeView[]>(null);
 
   // QUERY ========================================================== //
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: myAlbumData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["myAlbum"],
     queryFn: async () => await _GET(`api/users/${id}/a/albums`),
     enabled: id !== null,
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setMyAlbumsData(data.data);
-    },
   });
+
+  useEffect(() => {
+    if (!myAlbumData) return;
+    setMyAlbumsData(myAlbumData?.data);
+  }, [myAlbumData]);
 
   const { data: queueData, isLoading: queueLoading } = useQuery({
     queryKey: ["myQueue"],
     queryFn: async () => await _GET("api/users/queue"),
     enabled: id !== null,
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setQueueFreeView(data.data);
-      setQueue(data.data.tracks);
-    },
   });
 
-  const { isLoading: recoLoading } = useQuery({
+  useEffect(() => {
+    if (!queueData) return;
+
+    setQueueFreeView(queueData?.data);
+    setQueue(queueData?.data.tracks);
+  }, [queueData]);
+
+  const { data: recommedAlbumsData, isLoading: recoLoading } = useQuery({
     queryKey: ["recoAlbums"],
     queryFn: async () => await _GET("api/albums/getAll"),
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setRecoAlbums(data.data);
-    },
   });
+
+  useEffect(() => {
+    if (!recommedAlbumsData) return;
+    setRecoAlbums(recommedAlbumsData?.data);
+  }, [recommedAlbumsData]);
   // ========================================================== QUERY //
 
   const togglePlayerClickhandler = () => {

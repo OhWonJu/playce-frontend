@@ -142,8 +142,9 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
           <Image
             src={data.albumArtURL}
             alt="product image"
-            layout="fill"
+            fill={true}
             sizes="100%"
+            style={{ objectFit: "cover" }}
             draggable={false}
           />
         </ArtWrapper>
@@ -165,7 +166,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
           style={{ opacity: btnOpacity }}
           onClick={handleDeleteBtn}
         >
-          <a>delete</a>
+          <p>delete</p>
         </TrackDeleteButton>
       ) : null}
     </TrackWrapper>

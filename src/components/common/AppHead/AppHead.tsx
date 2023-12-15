@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { FC } from "react";
 
 import { SYMBOL_TEXT } from "@lib/client/constants/uiStandard";

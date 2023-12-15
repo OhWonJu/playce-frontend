@@ -24,20 +24,20 @@ const EllipsisText: React.FC<Props> = ({
   const rootClassName = cn("", {}, className);
 
   return (
-    <EllipsisA
+    <EllipsisP
       className={rootClassName}
       lineClamp={lineClamp}
       lineHeight={lineHeight}
       {...rest}
     >
       {context}
-    </EllipsisA>
+    </EllipsisP>
   );
 };
 
 export default EllipsisText;
 
-const EllipsisA = styled.a<any>`
+const EllipsisP = styled.p<any>`
   position: relative;
   display: -webkit-box;
   -webkit-line-clamp: ${props => props.lineClamp};

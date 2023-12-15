@@ -99,6 +99,8 @@ function App({ Component, pageProps, ...rest }: AppProps) {
 
   // if (isLoading) return null;
 
+  if (isLoading) return null;
+
   return (
     <>
       <AppHead />

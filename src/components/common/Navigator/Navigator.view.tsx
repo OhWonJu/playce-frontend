@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { throttle } from "lodash";
 
 import useTheme from "@lib/client/hooks/useTheme";
-import { Link, useUI } from "@components/ui";
+import { useUI } from "@components/ui";
+import Link from "next/link";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import {
   Explore,
@@ -48,19 +48,6 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
   }, [progress]);
 
   if (viewMode === "INIT") return null;
-
-  const PROFILE = () => (
-    <div className="relative w-7 h-7 rounded-full overflow-hidden">
-      <Image
-        priority={true}
-        src={"/onneul.jpeg"}
-        alt="profile image"
-        layout="fill"
-        sizes="100%"
-        draggable={false}
-      />
-    </div>
-  );
 
   return (
     <>
@@ -157,5 +144,19 @@ const NavigatorView: React.FC<NavigatorViewProps> = ({
     </>
   );
 };
+
+const PROFILE = () => (
+  <div className="relative w-7 h-7 rounded-full overflow-hidden">
+    <Image
+      // priority={true}
+      src={"/onneul.jpeg"}
+      alt="profile"
+      fill={true}
+      sizes="100%"
+      style={{ objectFit: "cover" }}
+      draggable={false}
+    />
+  </div>
+);
 
 export default NavigatorView;

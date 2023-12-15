@@ -1,18 +1,18 @@
 import React from "react";
 
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
-import { AlbumCard, Container, Link, QueueCard } from "@components/ui";
+import { AlbumCard, Container, QueueCard } from "@components/ui";
 
-import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "@lib/client/constants/uiStandard";
+import {
+  ALBUM_CARD_HEIGHT,
+  PLAYER_HEADER_HEIGHT,
+} from "@lib/client/constants/uiStandard";
 
 import { SectionHeaderText } from "src/styles/GlobalStyle";
 
-import { Play } from "@components/icons";
-import useTheme from "@lib/client/hooks/useTheme";
 import RippleButton from "@components/ui/RippleButton/RippleButton";
 import { useMe } from "@lib/client/hooks/useMe";
 import { AlbumFreeView, QueueFreeView } from "@lib/client/types";
-import { convertTime } from "@lib/client/convertTime";
 
 interface HomeViewProps {
   viewMode: VIEW_MODES;
@@ -33,7 +33,6 @@ const HomeView: React.FC<HomeViewProps> = ({
   queueClickHandler,
   togglePlayerClickhandler,
 }) => {
-  const theme = useTheme();
   const { userName } = useMe();
 
   if (viewMode === "INIT") {

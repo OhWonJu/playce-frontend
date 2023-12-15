@@ -19,7 +19,7 @@ const CurrentSection: React.FC<CurrentSectionProps> = ({ autoKeyword }) => {
           className="text-xs font-semibold"
           style={{ color: theme.gray_primary }}
         >
-          <a>전체 삭제</a>
+          <p>전체 삭제</p>
         </button>
       </Row>
       <div className="flex-grow flex w-full pt-3 overflow-y-scroll scrollbar-hide">

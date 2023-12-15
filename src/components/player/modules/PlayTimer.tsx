@@ -13,8 +13,8 @@ const PlayTimer = () => {
     <>
       {totalTime && (
         <>
-          <a>{convertTime(playTime, "string")}</a>
-          <a>{totalTime === 0 ? "0:00" : convertTime(totalTime, "string")}</a>
+          <p>{convertTime(playTime, "string")}</p>
+          <p>{totalTime === 0 ? "0:00" : convertTime(totalTime, "string")}</p>
         </>
       )}
     </>

@@ -39,8 +39,9 @@ const AlbumView: React.FC<AlbumViewProps> = ({
             priority={true}
             src={album?.albumArtURL}
             alt="album art"
-            layout="fill"
+            fill={true}
             sizes="100%"
+            style={{ objectFit: "cover" }}
             draggable={false}
           />
           <div className="relative w-full h-full hidden group-hover:block group-hover:bg-gradient-to-b from-black">
