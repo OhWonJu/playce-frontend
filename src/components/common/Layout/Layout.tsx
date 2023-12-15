@@ -9,9 +9,9 @@ import { LoadingDots, useUI } from "@components/ui";
 import { LoginView } from "@components/auth";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
-import { PlayerBottomSheet } from "@components/playerBottomeSheet";
+import { PlayerBottomSheet } from "@components/playerBottomSheet";
 import { SearchDropDown } from "../SearchDropDown";
-import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
+import { MOBILE_LIMIT, TABLET_LIMIT } from "@lib/client/constants/uiStandard";
 import { StyledToastContainer } from "../Toastify";
 
 const Loading = () => (

@@ -7,7 +7,7 @@ import {
   DESKTOP_PLAYER_WIDTH,
   NAV_HEIGHT,
   PLAYER_HEADER_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 import { useUI } from "../context";
 
 interface ContainerProps {

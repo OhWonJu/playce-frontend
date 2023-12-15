@@ -39,7 +39,7 @@ import {
 import { getClosest, inDescendingOrder, validateSnapTo } from "./utils";
 import { usePreventScroll } from "./use-prevent-scroll";
 import styles from "./styles";
-import { PLAYER_MOBILE } from "constants/constants";
+import { PLAYER_MOBILE } from "@lib/client/constants/uiStandard";
 
 const Sheet = React.forwardRef<any, SheetProps>(
   (
@@ -264,6 +264,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
 
     React.useImperativeHandle(ref, () => ({
       y,
+      animationOptions,
       snapTo: (snapIndex: number) => {
         const sheetEl = sheetRef.current as HTMLDivElement | null;
 

@@ -15,7 +15,7 @@ import {
 } from "@components/icons";
 import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
 
-import { NAVIGATION, NAV_HEIGHT } from "constants/constants";
+import { NAVIGATION, NAV_HEIGHT } from "@lib/client/constants/uiStandard";
 import { PlayIndicator } from "./modules";
 
 interface NavigatorViewProps {

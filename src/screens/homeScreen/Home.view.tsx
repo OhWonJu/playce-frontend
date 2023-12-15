@@ -3,7 +3,7 @@ import React from "react";
 import { VIEW_MODES } from "@lib/client/store/types/viewModeType";
 import { AlbumCard, Container, Link, QueueCard } from "@components/ui";
 
-import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
+import { ALBUM_CARD_HEIGHT, PLAYER_HEADER_HEIGHT } from "@lib/client/constants/uiStandard";
 
 import { SectionHeaderText } from "src/styles/GlobalStyle";
 

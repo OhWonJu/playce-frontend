@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import { animate, useMotionValue, useTransform } from "framer-motion";
+import {
+  animate,
+  Transition,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
@@ -12,7 +17,7 @@ import {
   PLAYER_HEADER_HEIGHT,
   PLAYER_MOBILE,
   WAVE_FORM_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 
 import {
   AlbumArt,
@@ -52,24 +57,41 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({ audioURL }) => {
   const ref = useRef<SheetRef>();
   // const snapTo = (i: number) => ref.current?.snapTo(i);
 
-  const { progress } = MainSheetProgressStore();
+  const { progress, setProgress } = MainSheetProgressStore();
   const { progress: subProgress, setProgress: setSubProgress } =
     SubSheetProgressStore();
+
   const motionProg = useMotionValue(0);
 
+  // init SubProgress When Components mounted, unmounted
+  // desktop <-> mobile 모드 전환시 subProgress 가 100으로 남아있는 경우
+  // player sheet 에 대한 드레그를 할 수 없는 상태가 발생함
   useEffect(() => {
-    if (progress <= 0) {
-      animate(motionProg, 0, {
-        type: "tween",
-        ...DEFAULT_TWEEN_CONFIG,
-      } as { type: "tween" });
+    setSubProgress(0);
 
-      if (subProgress > 0) setSubProgress(0);
+    return () => {
+      setSubProgress(0);
+    };
+  }, []);
+
+  // should i need this ??? //
+  // 브라우저 높이가 바뀔 때 플레이어가 열려 있는 경우 UI 가 깨지는 것을 플레이어를 닫음으로써 해결하는 케이스
+  // useEffect(() => {
+  //   if (progress > 0) setProgress(0);
+  //   if (subProgress > 0) setSubProgress(0);
+  // }, [height]);
+
+  useEffect(() => {
+    // 닫히는 정도를 애니메이션된 값 motionProg 를 사용
+    // 메인 시트의 progress 가 0 이 되면 메인 시트가 닫혀야 함.
+    if (progress <= 0) {
+      animate(motionProg, 0, ref.current.animationOptions as { type: "tween" });
     } else {
-      animate(motionProg, progress, {
-        type: "tween",
-        ...DEFAULT_TWEEN_CONFIG,
-      } as { type: "tween" });
+      animate(
+        motionProg,
+        progress,
+        ref.current.animationOptions as { type: "tween" },
+      );
     }
   }, [progress]);
 

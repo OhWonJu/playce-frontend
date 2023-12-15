@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SEARCH_KEYWORD_TYPE } from "constants/search";
+import { SEARCH_KEYWORD_TYPE } from "@lib/client/constants/search";
 import { Col, Row } from "src/styles/GlobalStyle";
 import { EllipsisText } from "@components/ui";
 import { Cross, Search } from "@components/icons";

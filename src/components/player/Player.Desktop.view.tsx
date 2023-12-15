@@ -8,7 +8,7 @@ import {
   DESKTOP_PLAYER_WIDTH,
   NAV_HEIGHT,
   WAVE_FORM_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 
 import {
   AlbumArt,

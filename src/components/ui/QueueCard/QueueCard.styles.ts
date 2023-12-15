@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 
-import { TRACK_CARD_HEIGHT } from "constants/constants";
+import { TRACK_CARD_HEIGHT } from "@lib/client/constants/uiStandard";
 
 export const TrackWrapper = styled(motion.div)`
   position: relative;

@@ -15,7 +15,7 @@ const viewModeSlice = createSlice({
   name: "viewMode",
   initialState,
   reducers: {
-    viewModeReducer(state, action: PayloadAction<VIEW_MODE_ACTION>) {
+    viewModeReducer(_, action: PayloadAction<VIEW_MODE_ACTION>) {
       switch (action.payload.type) {
         case "SET_VIEW_MODE": {
           return {

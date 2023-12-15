@@ -1,7 +1,7 @@
 import {
   NAV_HEIGHT,
   PLAYER_BOTTOM_SHEET_HEADER_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 import styled from "styled-components";
 import tw from "twin.macro";
 

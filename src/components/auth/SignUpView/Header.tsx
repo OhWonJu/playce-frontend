@@ -1,5 +1,5 @@
 import React from "react";
-import { SYMBOL_TEXT } from "constants/constants";
+import { SYMBOL_TEXT } from "@lib/client/constants/uiStandard";
 import styled from "styled-components";
 import tw from "twin.macro";
 

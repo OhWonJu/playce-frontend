@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from "react";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 
 import { _GET } from "@lib/server/rootAPI";
 import useTheme from "@lib/client/hooks/useTheme";
-import { AlbumDetail, AlbumFreeView, T_Album } from "@lib/client/types";
+import {  AlbumFreeView } from "@lib/client/types";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { EllipsisText, Link, useUI } from "@components/ui";
 import { Play } from "@components/icons";
