@@ -222,7 +222,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                   </section>
                   {/* WAVE FORM  */}
                   <section
-                    className="__WAVE_FORM_CONTAINER__ relative mb-1 w-full"
+                    className="__WAVE_FORM_CONTAINER__ relative mb-1 w-full overflow-hidden"
                     style={{ height: WAVE_FORM_HEIGHT }}
                   >
                     <div className="absolute w-full h-full bottom-[15.5px]">
