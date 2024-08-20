@@ -3,7 +3,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-import { BORDER_BASE_WIDTH, NAV_HEIGHT } from "constants/constants";
+import { BORDER_BASE_WIDTH, NAV_HEIGHT } from "@lib/client/constants/uiStandard";
 
 interface DropDownProps {
   children?: any;

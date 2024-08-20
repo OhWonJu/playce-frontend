@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { animate, useMotionValue, motion, useTransform } from "framer-motion";
 
-import { NAV_HEIGHT } from "constants/constants";
-
+import { NAV_HEIGHT } from "@lib/client/constants/uiStandard";
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
-import { DEFAULT_SPRING_CONFIG } from "@components/ui/BottomSheet/constants";
+import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
+import { Tab, TabSection } from "@components/ui/Tab";
 
 import {
   PBSContentWrapper,
@@ -16,9 +16,10 @@ import {
   PBSHeaderWrapper,
 } from "./PlayerBottomSheet.styles";
 import { Content, Lyrics, TrackList } from "./modules";
-import { Tab, TabSection } from "@components/ui/Tab";
 
-const tabs = ["Tracks", "Lyrics", "Content"];
+const HEADER_BAR_HEIGHT = 20;
+
+const TAB_NAMES = ["Tracks", "Lyrics", "Content"];
 
 const PlayerBottomSheetView = () => {
   const [focusedTab, setFocusedTab] = useState(-1);
@@ -34,19 +35,37 @@ const PlayerBottomSheetView = () => {
   const motionProg = useMotionValue(0);
   const mainMotionProg = useMotionValue(0);
 
+  // useEffect(() => {
+  //   if (mainProgress <= 0) {
+  //     // 메인시트가 close 되는 경우
+  //     animate(mainMotionProg, 0, {
+  //       type: "tween",
+  //       ...DEFAULT_TWEEN_CONFIG,
+  //     });
+  //   } else {
+  //     // 메인 플레이어가 열리는 경우
+  //     animate(mainMotionProg, mainProgress, {
+  //       type: "spring",
+  //       ...DEFAULT_SPRING_CONFIG,
+  //     });
+  //   }
+  // }, [mainProgress]);
+
   useEffect(() => {
     if (mainProgress <= 0) {
       // 메인시트가 close 되는 경우
-      animate(mainMotionProg, 0, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+      animate(
+        mainMotionProg,
+        0,
+        ref.current.animationOptions as { type: "tween" },
+      );
     } else {
-      // 메인 플레이어가 열리는 경우
-      animate(mainMotionProg, mainProgress, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+      // 메인 시트가 open 되는 경우
+      animate(
+        mainMotionProg,
+        mainProgress,
+        ref.current.animationOptions as { type: "tween" },
+      );
     }
   }, [mainProgress]);
 
@@ -54,30 +73,34 @@ const PlayerBottomSheetView = () => {
     if (progress <= 0) {
       // 바텀시트가 close 되는 경우
       animate(motionProg, 0, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+        type: "tween",
+        ...DEFAULT_TWEEN_CONFIG,
+      } as { type: "tween" });
     } else {
-      // 바텀시트가 열리는 경우
+      // 바텀시트가 open 되는 경우
       animate(motionProg, progress, {
-        type: "spring",
-        ...DEFAULT_SPRING_CONFIG,
-      });
+        type: "tween",
+        ...DEFAULT_TWEEN_CONFIG,
+      } as { type: "tween" });
       // 탭을 기본탭으로 이동시킨다.
       if (focusedTab === -1) setFocusedTab(0);
     }
-    // 플레이어가 full screen이 되면 -> 플레이어 바텀 시트의 탭 초기화
+    // 메인시트가 fully open 이 되면 -> 서브 시트의 탭 초기화
     if (mainProgress > 99) setFocusedTab(-1);
   }, [progress]);
 
-
-  // 버벅거리는 이유이자 원흉
-  // 플레이어 팝업 여부에 따라 바텀탭이 나오거나 들어가는 로직 떄문에 쓰는 로직임
-  // mainProgress, subProgress 로 대체할 수 있는 방법은..?
   const y =
     progress <= 0
-      ? useTransform(mainMotionProg, [85, 100], [NAV_HEIGHT + 20, 0])
-      : useTransform(motionProg, [50, 100], [0, NAV_HEIGHT + 20]);
+      ? useTransform(
+          mainMotionProg,
+          [85, 100],
+          [NAV_HEIGHT + HEADER_BAR_HEIGHT, 0],
+        )
+      : useTransform(
+          motionProg,
+          [50, 100],
+          [0, NAV_HEIGHT + HEADER_BAR_HEIGHT], // [ OPEN , CLOSE ]
+        );
 
   const trigger = useTransform(motionProg, [0, 100], [0, 1]); // 0: to OPEN | 1: to CLOSE
 
@@ -97,14 +120,14 @@ const PlayerBottomSheetView = () => {
         ref={ref}
         id="player-bottom-sheet"
         rootId="root-layout"
-        mountPoint={document.getElementById("root-layoout")}
+        mountPoint={document.getElementById("root-layout")}
         isMain={false}
         isOpen={true}
         modalMode={false}
         onClose={() => null}
-        fixedHeight={NAV_HEIGHT + 20}
+        fixedHeight={NAV_HEIGHT + HEADER_BAR_HEIGHT}
         // initialSnap={1}
-        snapPoints={[1, NAV_HEIGHT + 20]} // sheet content + sheet header's heigth
+        snapPoints={[1, NAV_HEIGHT + HEADER_BAR_HEIGHT]} // sheet content + sheet header's heigth
       >
         <motion.div
           id="player-bottom-sheet"
@@ -121,11 +144,15 @@ const PlayerBottomSheetView = () => {
           >
             <Sheet.Header
               isMain={false}
-              style={{ width: "100%", height: NAV_HEIGHT + 20 }}
+              style={{
+                width: "100%",
+                height: NAV_HEIGHT + HEADER_BAR_HEIGHT,
+                minHeight: NAV_HEIGHT + HEADER_BAR_HEIGHT,
+              }}
             >
               <PBSHandleWrapper
                 className="relative grid place-items-center"
-                style={{ width: "100%", height: 20 }}
+                style={{ width: "100%", height: HEADER_BAR_HEIGHT }}
                 onClick={() => snapTo(0)}
               >
                 <PBSHandle />
@@ -134,7 +161,7 @@ const PlayerBottomSheetView = () => {
                 <Tab
                   focusedTab={focusedTab}
                   tabClickHandler={tabClickHandler}
-                  tabContents={tabs}
+                  tabContents={TAB_NAMES}
                 />
               </PBSHeaderWrapper>
             </Sheet.Header>

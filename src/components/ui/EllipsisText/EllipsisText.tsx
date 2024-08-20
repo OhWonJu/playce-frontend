@@ -1,10 +1,7 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import cn from "clsx";
 
-import { BORDER_BASE_WIDTH } from "constants/constants";
-import useResizeObserver from "@lib/client/hooks/useResizeObserver";
 import styled from "styled-components";
-import tw from "twin.macro";
 
 interface Props {
   context: string;
@@ -24,20 +21,20 @@ const EllipsisText: React.FC<Props> = ({
   const rootClassName = cn("", {}, className);
 
   return (
-    <EllipsisA
+    <EllipsisP
       className={rootClassName}
       lineClamp={lineClamp}
       lineHeight={lineHeight}
       {...rest}
     >
       {context}
-    </EllipsisA>
+    </EllipsisP>
   );
 };
 
 export default EllipsisText;
 
-const EllipsisA = styled.a<any>`
+const EllipsisP = styled.p<any>`
   position: relative;
   display: -webkit-box;
   -webkit-line-clamp: ${props => props.lineClamp};

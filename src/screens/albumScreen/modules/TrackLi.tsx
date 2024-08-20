@@ -2,7 +2,7 @@ import React from "react";
 
 import { convertTime } from "@lib/client/convertTime";
 import { Track } from "@lib/client/types";
-import { Col, Row } from "src/styles/GlobalStyle";
+import { Col } from "src/styles/GlobalStyle";
 import { QueuePlayIconBox, TrackLISubA } from "../Album.styles";
 import { DotMenu, Play, QueueList } from "@components/icons";
 import { RippleButton } from "@components/ui";

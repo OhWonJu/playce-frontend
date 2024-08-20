@@ -3,12 +3,13 @@ import * as React from 'react';
 import { IS_SSR } from './constants';
 import { SheetEvents } from './types';
 import { applyRootStyles, cleanupRootStyles } from './utils';
+import { BoundingBox } from 'framer-motion';
 
 export const useIsomorphicLayoutEffect = IS_SSR
   ? React.useEffect
   : React.useLayoutEffect;
 
-export const useModalEffect = (isOpen: boolean, rootId?: string) => {
+export function useModalEffect(isOpen: boolean, rootId?: string) {
   const prevOpen = usePrevious(isOpen);
 
   // Automatically apply the iOS modal effect to the body when sheet opens/closes
@@ -26,12 +27,12 @@ export const useModalEffect = (isOpen: boolean, rootId?: string) => {
       if (rootId && isOpen) cleanupRootStyles(rootId);
     };
   }, [isOpen]); // eslint-disable-line
-};
+}
 
-export const useEventCallbacks = (
+export function useEventCallbacks(
   isOpen: boolean,
   callbacks: React.MutableRefObject<SheetEvents>
-) => {
+) {
   const prevOpen = usePrevious(isOpen);
   const didOpen = React.useRef(false);
 
@@ -57,7 +58,7 @@ export const useEventCallbacks = (
   }, [isOpen, prevOpen]); // eslint-disable-line
 
   return { handleAnimationComplete };
-};
+}
 
 export function useWindowHeight() {
   const [windowHeight, setWindowHeight] = React.useState(0);
@@ -95,4 +96,15 @@ export function useEvent<T extends (...args: any[]) => any>(handler: T) {
     const fn = handlerRef.current;
     return fn?.(...args);
   }, []) as T;
+}
+
+// This is a hacky way to fix a bug in framer-motion where the drag
+// constraints are not updated when window is resized.
+// https://github.com/framer/motion/issues/1659
+const constraints: BoundingBox = { bottom: 0, top: 0, left: 0, right: 0 };
+
+export function useDragConstraints() {
+  const constraintsRef = React.useRef<any>(null);
+  const onMeasureDragConstraints = React.useCallback(() => constraints, []);
+  return { constraintsRef, onMeasureDragConstraints };
 }

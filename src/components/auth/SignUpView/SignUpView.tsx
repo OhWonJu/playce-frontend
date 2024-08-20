@@ -10,7 +10,7 @@ import { Button, Input, InputLabel } from "@components/ui";
 import {
   BORDER_TINE_WIDTH,
   MOBILEABLE_CONTAINER_HORIZONTAL_SPACE,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 import PolicyListView from "./PolicyListView";
 import useTheme from "@lib/client/hooks/useTheme";
 import Header from "./Header";
@@ -44,7 +44,7 @@ const SignUpView: FC<Props> = () => {
   const onValid = (data: SignUpFormProps) => {
     console.log("valid Action", data);
   };
-  const onInvaild = (errors: FieldErrors) => {
+  const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
   };
   // --------------------------------------------- //
@@ -77,7 +77,7 @@ const SignUpView: FC<Props> = () => {
           <InnerWrapper className={MOBILEABLE_CONTAINER_HORIZONTAL_SPACE}>
             {/* SIGN UP FORM */}
             <form
-              onSubmit={handleSubmit(onValid, onInvaild)}
+              onSubmit={handleSubmit(onValid, onInvalid)}
               className="member-form flex flex-col mt-4 mb-8 space-y-8"
             >
               {/* USER NAME */}
@@ -191,7 +191,7 @@ const SignUpView: FC<Props> = () => {
               <Button
                 variant="flat"
                 type="submit"
-                onClick={handleSubmit(onValid, onInvaild)}
+                onClick={handleSubmit(onValid, onInvalid)}
               >
                 <span className="font-semibold">본인인증하고 가입하기</span>
               </Button>

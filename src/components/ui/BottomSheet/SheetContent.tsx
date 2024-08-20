@@ -2,29 +2,34 @@ import * as React from "react";
 import { motion } from "framer-motion";
 
 import { SheetDraggableProps } from "./types";
-import { useSheetContext } from "./context";
+import { useSheetScrollerContext, useSheetContext } from "./context";
+import { useDragConstraints } from "./hooks";
+import { mergeRefs } from "./utils";
 import styles from "./styles";
 
 const SheetContent = React.forwardRef<any, SheetDraggableProps>(
   ({ children, isMain, style, disableDrag, className = "", ...rest }, ref) => {
-    const positionRef = React.useRef<HTMLDivElement>(null);
-    const { dragProps } = useSheetContext(isMain);
-    const _dragProps = disableDrag ? undefined : dragProps;
+    const sheetContext = useSheetContext(isMain);
+    const sheetScrollerContext = useSheetScrollerContext();
+    const { constraintsRef, onMeasureDragConstraints } = useDragConstraints();
+
+    const dragProps =
+      disableDrag || sheetScrollerContext.disableDrag
+        ? undefined
+        : sheetContext.dragProps;
 
     return (
-      <>
-        <div ref={positionRef} />
-        <motion.div
-          {...rest}
-          ref={ref}
-          className={`react-modal-sheet-content ${className}`}
-          style={{ ...styles.content, ...style }}
-          {..._dragProps}
-          // dragConstraints={positionRef}
-        >
-          {children}
-        </motion.div>
-      </>
+      <motion.div
+        {...rest}
+        ref={mergeRefs([ref, constraintsRef])}
+        className={`react-modal-sheet-content ${className}`}
+        style={{ ...styles.content, ...style }}
+        {...dragProps}
+        dragConstraints={constraintsRef}
+        onMeasureDragConstraints={onMeasureDragConstraints}
+      >
+        {children}
+      </motion.div>
     );
   },
 );

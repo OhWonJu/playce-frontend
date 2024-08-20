@@ -11,7 +11,7 @@ import InputModeStore from "@lib/client/store/simpleStore/inputModeSotre";
 const PlayerController = () => {
   const { viewMode } = useUI();
   const { setProgress } = MainSheetProgressStore();
-  const { play, currentTrack, setPlay } = usePlayerControl();
+  const { play, setPlay } = usePlayerControl();
   const { inputMode } = InputModeStore();
 
   // Warning: Cannot update a component (`A`) while rendering a different component (`B`). 에러 발생점
@@ -46,13 +46,7 @@ const PlayerController = () => {
   }, [inputMode, play]);
 
   return (
-    <>
-      {viewMode !== "DESKTOP" ? (
-        <PlayerMobileView audioURL={currentTrack.trackURL} />
-      ) : (
-        <PlayerDesktopView audioURL={currentTrack.trackURL} />
-      )}
-    </>
+    <>{viewMode !== "DESKTOP" ? <PlayerMobileView /> : <PlayerDesktopView />}</>
   );
 };
 

@@ -16,7 +16,7 @@ const TrackList = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full space-y-1">
+    <section className="flex flex-col w-full h-full space-y-1">
       {playList.map((track: Track, index: number) => (
         <TrackCard
           key={index + track.trackTitle + playListType}
@@ -26,7 +26,7 @@ const TrackList = () => {
           clickHandler={() => clickHanlder(track)}
         />
       ))}
-    </div>
+    </section>
   );
 };
 

@@ -2,7 +2,7 @@ import {
   BORDER_TINE_WIDTH,
   CONTAINER_PADDING_HORIZONTAIL,
   NAV_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 import styled, { css, keyframes } from "styled-components";
 import tw from "twin.macro";
 
@@ -34,7 +34,7 @@ export const Span = styled.span<any>`
 // Sections ============================================== //
 export const Ul = styled.ul`
   border-bottom-width: ${BORDER_TINE_WIDTH}px;
-  border-color: ${props => props.theme.gray_light + 50};
+  border-color: ${props => props.theme.gray_light};
   margin-bottom: 1rem;
 `;
 // ============================================== Sections //

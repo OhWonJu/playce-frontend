@@ -1,4 +1,4 @@
-import { NAV_HEIGHT, PLAYER_HEADER_HEIGHT } from "constants/constants";
+import { NAV_HEIGHT, PLAYER_HEADER_HEIGHT } from "@lib/client/constants/uiStandard";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import tw from "twin.macro";

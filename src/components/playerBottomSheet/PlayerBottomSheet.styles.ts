@@ -1,7 +1,7 @@
 import {
   NAV_HEIGHT,
   PLAYER_BOTTOM_SHEET_HEADER_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -24,13 +24,14 @@ export const PBSHandle = styled.div`
 export const PBSHeaderWrapper = styled.nav`
   width: 100%;
   height: ${NAV_HEIGHT}px;
-
-  ${tw`fixed  px-4`};
+  box-sizing: border-box;
+  
+  ${tw`fixed px-4`};
 `;
 
 export const PBSContentWrapper = styled.section`
   background-color: ${props => props.theme.background_color};
+  max-height: calc(100% - ${NAV_HEIGHT}px);
 
-  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`}
-  /* ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[60]`} */
+  ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`}/* ${tw`flex flex-col w-full h-[87%] pt-4 pb-4 px-4 overflow-y-scroll scrollbar-hide z-[100]`} */
 `;

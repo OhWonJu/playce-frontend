@@ -37,7 +37,7 @@ const WelcomeView = () => {
             type="button"
             onClick={() => router.push("/join")}
           >
-            <a>Sign Up</a>
+          <p>Sign Up</p>
           </Button>
         </div>
       </div>

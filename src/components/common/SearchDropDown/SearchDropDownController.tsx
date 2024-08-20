@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useWindowSize } from "react-use";
 import { FieldErrors, useForm } from "react-hook-form";
 
-import { SCREEN_SIZE_MD } from "constants/constants";
+import { SCREEN_SIZE_MD } from "@lib/client/constants/uiStandard";
 
 import { artist, curr, album, track } from "./SearchDropDownModel";
 import SearchDropDownView from "./SearchDropDownView";

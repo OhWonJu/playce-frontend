@@ -9,9 +9,9 @@ import { LoadingDots, useUI } from "@components/ui";
 import { LoginView } from "@components/auth";
 import { Player } from "@components/player";
 import { Navigator } from "../Navigator";
-import { PlayerBottomSheet } from "@components/playerBottomeSheet";
+import { PlayerBottomSheet } from "@components/playerBottomSheet";
 import { SearchDropDown } from "../SearchDropDown";
-import { MOBILE_LIMIT, TABLET_LIMIT } from "constants/constants";
+import { MOBILE_LIMIT, TABLET_LIMIT } from "@lib/client/constants/uiStandard";
 import { StyledToastContainer } from "../Toastify";
 
 const Loading = () => (
@@ -172,7 +172,7 @@ interface Props {
 }
 
 // Nav bar Render되지 않는 예외 경로
-const NAV_INABLE_PATH = ["/", "/join"];
+const NAV_INABLE_PATH = ["/", "/join", "/404"];
 const LOGO_VISIVLE = [];
 
 const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {

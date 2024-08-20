@@ -1,9 +1,9 @@
+import React from "react";
+
 import { Play } from "@components/icons";
 import { convertTime } from "@lib/client/convertTime";
-import useTheme from "@lib/client/hooks/useTheme";
 import { QueueFreeView } from "@lib/client/types";
-import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import useTheme from "@lib/client/hooks/useTheme";
 
 interface QueueCardProps {
   data: QueueFreeView;
@@ -24,7 +24,7 @@ const QueueCard: React.FC<QueueCardProps> = ({ data, queueClickHandler }) => {
           sizes="100%"
           draggable={false}
         /> */}
-        <div className="absolute left-0 top-0 w-full h-full bg-white bg-opacity-50 backdrop-blur-xl"/>
+        <div className="absolute left-0 top-0 w-full h-full bg-white bg-opacity-50 backdrop-blur-xl" />
         <div
           className="absolute rounded-full hidden group-hover:block bg-black bg-opacity-50 hover:bg-opacity-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2"
           onClick={queueClickHandler}

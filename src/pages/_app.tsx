@@ -2,19 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { Provider } from "react-redux";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import wrapper from "@lib/client/store/store";
 import AppHead from "@components/common/AppHead";
 import Layout from "@components/common/Layout";
 import { ManagedUIContext } from "@components/ui/context";
 
-import { GlobalStyle } from "src/styles/GlobalStyle";
 import "../styles/tailwind.css";
+import { GlobalStyle } from "src/styles/GlobalStyle";
 import { useLocalStorage } from "@lib/client/hooks/useLocalStorage";
 import { useAuth } from "@lib/client/hooks/useAuth";
 import { API } from "@lib/server/rootAPI";
@@ -57,7 +53,7 @@ function App({ Component, pageProps, ...rest }: AppProps) {
   // const onFinish = () => setTimeout(() => {}, 1000);
 
   const preload = async () => {
-    if (token != null) {
+    if (token !== null) {
       API.defaults.headers.common["Authorization"] = "Bearer " + token;
       const data = (await refetch()).data?.data ?? null;
 
@@ -76,8 +72,9 @@ function App({ Component, pageProps, ...rest }: AppProps) {
         });
         // 토큰 값을 redux에도 저장해서. 매번 Storage에서 get하지 않도록.
         setAuth({ isLogIn: true, token: token });
-        if (router.asPath === "/")
+        if (router.asPath === "/") {
           router.push("/home", undefined, { shallow: true });
+        }
       }
     }
   };
@@ -85,7 +82,7 @@ function App({ Component, pageProps, ...rest }: AppProps) {
   useEffect(() => {
     const prepare = async () => {
       try {
-        preload();
+        await preload();
       } catch (e) {
         console.warn(e);
       } finally {
@@ -101,6 +98,8 @@ function App({ Component, pageProps, ...rest }: AppProps) {
   // }, [router]);
 
   // if (isLoading) return null;
+
+  if (isLoading) return null;
 
   return (
     <>

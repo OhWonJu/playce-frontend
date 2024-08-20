@@ -7,7 +7,6 @@ import { useEventCallbacks } from "./hooks";
 import { MAX_HEIGHT } from "./constants";
 import { mergeRefs } from "./utils";
 import styles from "./styles";
-
 import useTheme from "@lib/client/hooks/useTheme";
 
 const SheetContainer = React.forwardRef<any, SheetContainerProps>(
@@ -17,7 +16,6 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
     const {
       y,
       isOpen,
-      progress,
       callbacks,
       snapPoints,
       fixedHeight,
@@ -29,9 +27,8 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
       reduceMotion,
     } = useSheetContext(isMain);
 
-    // console.log(progress.on("change", (lastet: number) => console.log(lastet)));
-
     const { handleAnimationComplete } = useEventCallbacks(isOpen, callbacks);
+    // const initialY = snapPoints ? snapPoints[0] - snapPoints[initialSnap] : 0;
     // 컨테이너 초기 높이?
     const initialY = fixedHeight
       ? fixedHeight
@@ -45,12 +42,6 @@ const SheetContainer = React.forwardRef<any, SheetContainerProps>(
       maxSnapHeight !== null
         ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
         : MAX_HEIGHT;
-
-    // maxSnapHeight !== null
-    //   ? `min(${maxSnapHeight}px, ${MAX_HEIGHT})`
-    //   : rootHeight
-    //   ? rootHeight
-    //   : MAX_HEIGHT;
 
     return (
       <motion.div

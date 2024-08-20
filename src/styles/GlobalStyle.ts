@@ -46,10 +46,10 @@ export const Row = styled.div`
   flex-direction: row;
 `;
 
-export const SymbolText = styled.a`
+export const SymbolText = styled.span`
   ${tw`font-extrabold text-6xl`}
 `;
 
-export const SectionHeaderText = styled.a`
+export const SectionHeaderText = styled.span`
   ${tw`text-4xl font-bold`}
 `;

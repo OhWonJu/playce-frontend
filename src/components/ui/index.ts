@@ -9,7 +9,6 @@ export { default as EllipsisSpan } from "./EllipsisSpan";
 export { default as EllipsisText } from "./EllipsisText";
 export { default as Input } from "./Input";
 export { default as InputLabel } from "./InputLabel";
-export { default as Link } from "./Link";
 export { default as LoadingDots } from "./LoadingDots";
 // export { default as Logo } from './Logo'
 // export { default as Marquee } from './Marquee'

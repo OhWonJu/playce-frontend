@@ -62,8 +62,9 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ artURL, isPlay, pinOpacity }) => {
             <Image
               src={artURL}
               alt="product image"
-              layout="fill"
+              fill={true}
               sizes="100%"
+              style={{ objectFit: "cover" }}
               draggable={false}
               placeholder="blur"
               blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="

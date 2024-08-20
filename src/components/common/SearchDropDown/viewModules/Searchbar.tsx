@@ -12,7 +12,7 @@ import tw from "twin.macro";
 import { Cross, Search } from "@components/icons";
 import { Input, useUI } from "@components/ui";
 import useTheme from "@lib/client/hooks/useTheme";
-import { NAV_HEIGHT, SEARCH_BAR } from "constants/constants";
+import { NAV_HEIGHT, SEARCH_BAR } from "@lib/client/constants/uiStandard";
 import { SearchProps } from "../SearchDropDownController";
 
 interface SearchbarProps {

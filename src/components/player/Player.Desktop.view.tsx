@@ -8,7 +8,7 @@ import {
   DESKTOP_PLAYER_WIDTH,
   NAV_HEIGHT,
   WAVE_FORM_HEIGHT,
-} from "constants/constants";
+} from "@lib/client/constants/uiStandard";
 
 import {
   AlbumArt,
@@ -28,13 +28,9 @@ const DynamicWaveform = dynamic(() => import("./modules/Waveform"), {
   ssr: false,
 });
 
-interface PlayerDesktopViewProps {
-  audioURL: string;
-}
+interface PlayerDesktopViewProps {}
 
-const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({
-  audioURL,
-}) => {
+const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({}) => {
   const titleRef: MutableRefObject<HTMLDivElement> = useRef();
 
   const { play, currentTrack, playList, playListType, setCurrentTrack } =
@@ -103,7 +99,11 @@ const PlayerDesktopView: React.FC<PlayerDesktopViewProps> = ({
             style={{ height: WAVE_FORM_HEIGHT }}
           >
             <div className="absolute w-full h-full bottom-[15.5px]">
-              <DynamicWaveform url={audioURL} />
+              <DynamicWaveform
+                url={currentTrack.trackURL}
+                peaks={currentTrack.peaks}
+                trackTime={currentTrack.trackTime}
+              />
             </div>
           </section>
           {/* PLAY TIME INDICATOER */}

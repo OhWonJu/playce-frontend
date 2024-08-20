@@ -4,10 +4,12 @@ import * as ReactDOM from "react-dom";
 import {
   animate,
   AnimatePresence,
-  Transition,
+  motion,
   PanInfo,
+  Transition,
   useMotionValue,
   useReducedMotion,
+  useTransform,
 } from "framer-motion";
 
 import {
@@ -18,20 +20,26 @@ import {
 } from "./hooks";
 
 import {
-  DEFAULT_SPRING_CONFIG,
+  REDUCED_MOTION_TWEEN_CONFIG,
+  DEFAULT_TWEEN_CONFIG,
   DRAG_CLOSE_THRESHOLD,
   DRAG_VELOCITY_THRESHOLD,
   IS_SSR,
 } from "./constants";
 
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
+import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 import { SheetContextType, SheetProps } from "./types";
-import { SheetContext, SubSheetContext } from "./context";
+import {
+  SheetScrollerContextProvider,
+  SheetContext,
+  SubSheetContext,
+} from "./context";
 import { getClosest, inDescendingOrder, validateSnapTo } from "./utils";
 import { usePreventScroll } from "./use-prevent-scroll";
 import styles from "./styles";
-import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
+import { PLAYER_MOBILE } from "@lib/client/constants/uiStandard";
 
 const Sheet = React.forwardRef<any, SheetProps>(
   (
@@ -43,10 +51,10 @@ const Sheet = React.forwardRef<any, SheetProps>(
       onCloseEnd,
       onSnap,
       children,
+      disableScrollLocking = false,
       isMain,
       isOpen,
       modalMode = true,
-      useSnapPoint = true,
       snapPoints,
       rootId,
       mountPoint,
@@ -54,9 +62,9 @@ const Sheet = React.forwardRef<any, SheetProps>(
       detent = "full-height",
       fixedHeight,
       initialSnap = 0,
-      springConfig = DEFAULT_SPRING_CONFIG,
       disableDrag = false,
       prefersReducedMotion = false,
+      tweenConfig = DEFAULT_TWEEN_CONFIG,
       ...rest
     },
     ref,
@@ -70,9 +78,8 @@ const Sheet = React.forwardRef<any, SheetProps>(
     const shouldReduceMotion = useReducedMotion();
     const reduceMotion = Boolean(prefersReducedMotion || shouldReduceMotion);
     const animationOptions: Transition = {
-      type: "spring",
-      ...springConfig,
-      // ...(reduceMotion ? REDUCED_MOTION_TWEEN_CONFIG : springConfig),
+      type: "tween",
+      ...(reduceMotion ? REDUCED_MOTION_TWEEN_CONFIG : tweenConfig),
     };
 
     // NOTE: the inital value for `y` doesn't matter since it is overwritten by
@@ -81,6 +88,14 @@ const Sheet = React.forwardRef<any, SheetProps>(
     const y = useMotionValue(0);
 
     const progress = useMotionValue(0);
+
+    const zIndex = useTransform(y, value =>
+      value >= windowHeight ? -1 : PLAYER_MOBILE,
+    );
+
+    const visibility = useTransform(y, value =>
+      value >= windowHeight ? "hidden" : "visible",
+    );
 
     // Keep the callback fns up-to-date so that they can be accessed inside
     // the effect without including them to the dependencies array
@@ -100,6 +115,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
       };
     });
 
+    // convert fixedHeight
     if (fixedHeight && windowHeight) {
       // fixedHeight = windowHeight - fixedHeight - 34;
       fixedHeight = windowHeight - fixedHeight;
@@ -180,7 +196,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
 
         let snapTo = 0;
 
-        if (snapPoints && useSnapPoint) {
+        if (snapPoints) {
           const snapToValues = snapPoints
             .map(p => sheetHeight - p)
             .filter(p => p >= 0); // negative values can occur with `content-height` detent
@@ -209,7 +225,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
         // Update the spring value so that the sheet is animated to the snap point
         animate(y, snapTo, animationOptions);
 
-        if (snapPoints && onSnap && useSnapPoint) {
+        if (snapPoints && onSnap) {
           const snapValue = Math.abs(Math.round(snapPoints[0] - snapTo));
           const snapIndex = snapPoints.indexOf(getClosest(snapPoints, snapValue)); // prettier-ignore
           onSnap(snapIndex);
@@ -225,12 +241,14 @@ const Sheet = React.forwardRef<any, SheetProps>(
       indicatorRotation.set(0);
     });
 
+    // updata progress
     React.useEffect(() => {
       progress.on("change", (lastest: number) => {
-        // main sheet
-        if (isMain) setProgress(lastest);
-        // sub sheet
-        else {
+        if (isMain) {
+          // main sheet
+          setProgress(lastest);
+        } else {
+          // sub sheet
           setSubProgress(lastest);
           setProgress(100 - lastest);
         }
@@ -240,13 +258,13 @@ const Sheet = React.forwardRef<any, SheetProps>(
     // Trigger onSnap callback when sheet is opened or closed
     React.useEffect(() => {
       if (!snapPoints || !onSnap) return;
-      // if (fixedHeight) return;
       const snapIndex = isOpen ? initialSnap : snapPoints.length - 1;
       onSnap(snapIndex);
     }, [isOpen]); // eslint-disable-line
 
     React.useImperativeHandle(ref, () => ({
       y,
+      animationOptions,
       snapTo: (snapIndex: number) => {
         const sheetEl = sheetRef.current as HTMLDivElement | null;
 
@@ -276,17 +294,16 @@ const Sheet = React.forwardRef<any, SheetProps>(
       },
     }));
 
-    if (modalMode) useModalEffect(isOpen, rootId);
+    if (modalMode) useModalEffect(isOpen, rootId); // added
 
     // Framer Motion should handle body scroll locking but it's not working
     // properly on iOS. Scroll locking from React Aria seems to work much better.
-    usePreventScroll({ isDisabled: !isOpen });
+    usePreventScroll({ isDisabled: disableScrollLocking === true || !isOpen });
 
     const dragProps = React.useMemo(() => {
       const dragProps: SheetContextType["dragProps"] = {
         drag: "y",
         dragElastic: 0,
-        dragConstraints: { top: 0, bottom: 0 },
         dragMomentum: false,
         dragPropagation: false,
         onDrag,
@@ -311,6 +328,7 @@ const Sheet = React.forwardRef<any, SheetProps>(
       windowHeight,
       animationOptions,
       reduceMotion,
+      disableDrag,
     };
 
     const SheetProvicer = isMain
@@ -319,18 +337,22 @@ const Sheet = React.forwardRef<any, SheetProps>(
 
     const sheet = (
       <SheetProvicer value={context}>
-        <div {...rest} ref={ref} style={{ ...styles.wrapper, ...style }}>
+        <motion.div
+          {...rest}
+          ref={ref}
+          style={{ ...styles.wrapper, zIndex, visibility, ...style }}
+        >
           <AnimatePresence>
             {/* NOTE: AnimatePresence requires us to set keys to children */}
-            {isOpen
-              ? React.Children.map(children, (child: any, i) =>
-                  React.cloneElement(child, {
-                    key: `sheet-child-${i}`,
-                  }),
-                )
-              : null}
+            {isOpen ? (
+              <SheetScrollerContextProvider isMain={isMain}>
+                {React.Children.map(children, (child: any, i) =>
+                  React.cloneElement(child, { key: `sheet-child-${i}` }),
+                )}
+              </SheetScrollerContextProvider>
+            ) : null}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </SheetProvicer>
     );
 

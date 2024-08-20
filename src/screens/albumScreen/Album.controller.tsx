@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import AlbumView from "./Album.view";
 import { artist } from "mock/mock";
@@ -34,13 +34,15 @@ const AlbumController = () => {
     queryFn: async () => await _GET(`api/albums/${albumId}`),
     enabled: !!albumId,
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      const { album, own } = data.data;
-      setAlbum(album);
-      setOwn(own);
-      // console.log("detail");
-    },
   });
+
+  useEffect(() => {
+    if (!data) return;
+
+    const { album, own } = data?.data;
+    setAlbum(album);
+    setOwn(own);
+  }, [data]);
 
   const albumClickHandler = (album: AlbumDetail) => {
     if (!displayPlayer) {

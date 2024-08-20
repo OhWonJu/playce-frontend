@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import { useUI } from "@components/ui";
-
-import HomeView from "./Home.view";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { AlbumFreeView, QueueFreeView, T_Album } from "@lib/client/types";
 import { useQueue } from "@lib/client/hooks/useQueue";
-import { useQuery } from "@tanstack/react-query";
 import { _GET } from "@lib/server/rootAPI";
 import { useMe } from "@lib/client/hooks/useMe";
+import { useUI } from "@components/ui";
+
+import { getMyAlbumData } from "./Home.model";
+import HomeView from "./Home.view";
 
 const HomeController = () => {
   const { viewMode, closePlayer, displayPlayer, openPlayer } = useUI();
@@ -33,35 +34,48 @@ const HomeController = () => {
   const [recoAlbums, setRecoAlbums] = useState<AlbumFreeView[]>(null);
 
   // QUERY ========================================================== //
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["myAlbum"],
-    queryFn: async () => await _GET(`api/users/${id}/a/albums`),
-    enabled: id !== null,
-    refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setMyAlbumsData(data.data);
-    },
-  });
+  const { myAlbumData, isMyAlbumLoading, error } = getMyAlbumData({ id });
 
-  const { data: queueData, isLoading: queueLoading } = useQuery({
+  // const {
+  //   data: myAlbumData,
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["myAlbum"],
+  //   queryFn: async () => await _GET(`api/users/${id}/a/albums`),
+  //   enabled: !!id,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  useEffect(() => {
+    if (!myAlbumData) return;
+    setMyAlbumsData(myAlbumData?.data);
+  }, [myAlbumData]);
+
+  const { data: queueData, isLoading: isQueueLoading } = useQuery({
     queryKey: ["myQueue"],
     queryFn: async () => await _GET("api/users/queue"),
-    enabled: id !== null,
+    enabled: !!id,
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setQueueFreeView(data.data);
-      setQueue(data.data.tracks);
-    },
   });
 
-  const { isLoading: recoLoading } = useQuery({
+  useEffect(() => {
+    if (!queueData) return;
+
+    setQueueFreeView(queueData?.data);
+    setQueue(queueData?.data.tracks);
+  }, [queueData]);
+
+  const { data: recommedAlbumsData, isLoading: isRecoLoading } = useQuery({
     queryKey: ["recoAlbums"],
     queryFn: async () => await _GET("api/albums/getAll"),
     refetchOnWindowFocus: false,
-    onSuccess: data => {
-      setRecoAlbums(data.data);
-    },
   });
+
+  useEffect(() => {
+    if (!recommedAlbumsData) return;
+    setRecoAlbums(recommedAlbumsData?.data);
+  }, [recommedAlbumsData]);
   // ========================================================== QUERY //
 
   const togglePlayerClickhandler = () => {
@@ -93,7 +107,7 @@ const HomeController = () => {
     setTimeout(() => setPlay(true), 800);
   };
 
-  if (isLoading || recoLoading || queueLoading) return null;
+  if (isMyAlbumLoading || isRecoLoading || isQueueLoading) return null;
 
   return (
     <HomeView

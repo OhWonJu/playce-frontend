@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { MODAL_ACTION, PLAYER_ACTION } from "@lib/client/store/types";
+import type { PLAYER_ACTION } from "@lib/client/store/types";
 
 export type PlayerStateType = {
   displayPlayer: boolean;
