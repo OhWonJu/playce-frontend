@@ -166,7 +166,7 @@ const TrackComponent: React.FC<TrackComponentProps> = ({
           style={{ opacity: btnOpacity }}
           onClick={handleDeleteBtn}
         >
-          <p>delete</p>
+          <p className="text-white font-bold">Delete</p>
         </TrackDeleteButton>
       ) : null}
     </TrackWrapper>
