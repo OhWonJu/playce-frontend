@@ -53,7 +53,7 @@ function App({ Component, pageProps, ...rest }: AppProps) {
   // const onFinish = () => setTimeout(() => {}, 1000);
 
   const preload = async () => {
-    if (token != null) {
+    if (token !== null) {
       API.defaults.headers.common["Authorization"] = "Bearer " + token;
       const data = (await refetch()).data?.data ?? null;
 

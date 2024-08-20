@@ -1,5 +1,6 @@
-import { useUI } from "@components/ui";
 import React from "react";
+
+import { useUI } from "@components/ui";
 
 export default function Policy() {
   const { windowView, displayWindow } = useUI();

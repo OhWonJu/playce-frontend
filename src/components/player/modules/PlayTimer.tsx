@@ -8,15 +8,14 @@ const PlayTimer = () => {
   const { totalTime } = usePlayerControl();
   const { playTime } = usePlayTimeControl();
 
-
   return (
     <>
-      {totalTime && (
-        <>
-          <p>{convertTime(playTime, "string")}</p>
+      <>
+        <p>{convertTime(playTime, "string")}</p>
+        {totalTime && (
           <p>{totalTime === 0 ? "0:00" : convertTime(totalTime, "string")}</p>
-        </>
-      )}
+        )}
+      </>
     </>
   );
 };

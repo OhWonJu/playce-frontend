@@ -37,6 +37,7 @@ export interface Track {
   albumName: string;
   albumArtURL: string;
   albumId: string;
+  peaks: number[];
 }
 
 export interface AlbumDetail {

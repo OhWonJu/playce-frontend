@@ -50,14 +50,14 @@ const SearchKeyword: React.FC<SearchKeyWordProps> = ({
               className="text-base font-bold"
             />
             {keywordType !== "KEYWORD" && (
-              <a
+              <span
                 className="_KEYWORD_TYPE__ text-xs font-bold"
                 style={{
                   color: theme.gray_primary,
                 }}
               >
                 {SEARCH_KEYWORD_TYPE[keywordType]}
-              </a>
+              </span>
             )}
           </Row>
           {tags && (
@@ -69,8 +69,8 @@ const SearchKeyword: React.FC<SearchKeyWordProps> = ({
             >
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
-                  <a key={index}>{tag}</a>
-                  {index !== tags.length - 1 && <p>/</p>}
+                  <span key={index}>{tag}</span>
+                  {index !== tags.length - 1 && <span>/</span>}
                 </React.Fragment>
               ))}
             </div>

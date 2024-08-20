@@ -9,12 +9,12 @@ import Link from "next/link";
 import { useUI } from "@components/ui";
 import ModalLayout from "@components/common/ModalLayout";
 
-type tabType = "MEMBER" | "NON-MEMBER";
+type TabType = "MEMBER" | "NON-MEMBER";
 
 interface TabState {
   _onClick: Function;
-  tab: tabType;
-  state: tabType;
+  tab: TabType;
+  state: TabType;
   context: string;
 }
 

@@ -1,12 +1,21 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createRef, useCallback, useEffect, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
+import Hls from "hls.js";
 
 import useTheme from "@lib/client/hooks/useTheme";
 import { usePlayerControl } from "@lib/client/hooks/usePlayerControl";
 import { usePlayTimeControl } from "@lib/client/hooks/usePlayTimeControl";
 import { useUI } from "@components/ui";
 
-const Waveform: React.FC<{ url: string }> = ({ url }) => {
+interface WaveformProps {
+  url: string;
+  peaks: number[];
+  trackTime: number;
+}
+
+// TODO
+// url, peak, totalDuration 넘겨주기
+const Waveform = ({ url, peaks, trackTime }: WaveformProps) => {
   const theme = useTheme();
 
   const { displayPlayer } = useUI();
@@ -26,6 +35,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
 
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef(null);
+  const video = useRef<HTMLVideoElement>(null);
   const prevOriginTrackIdRef = useRef(originTrackId);
 
   // CREATE WAVE FORM ============================== //
@@ -39,36 +49,37 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
         barWidth: 2.5,
         barRadius: 2,
         cursorWidth: 0,
-        fetchParams: {
-          cache: "default",
-          mode: "no-cors",
-          method: "GET",
-          credentials: "same-origin",
-          redirect: "follow",
-          referrer: "client",
-        },
-        // 기타 wavesurfer.js 설정 옵션 추가
+        media: video.current,
+        backend: "MediaElement",
+        peaks: [currentTrack.peaks],
       });
 
-      wavesurfer.current.load(url);
+      const hls = new Hls();
+      hls.loadSource(currentTrack.trackURL);
+      hls.attachMedia(video.current);
 
-      wavesurfer.current.on("ready", () => {
-        setTotalTime(wavesurfer.current.getDuration());
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        setTotalTime(currentTrack.trackTime);
 
-        if (play) wavesurfer.current.play();
+        if (play) {
+          video.current.play();
+          wavesurfer.current.play();
+        }
+
+        wavesurfer.current.on("timeupdate", (currentTime: number) =>
+          setPlayTime(currentTime),
+        );
       });
-
-      wavesurfer.current.on("timeupdate", (currentTime: number) =>
-        setPlayTime(currentTime),
-      );
 
       return () => {
-        // WaveSurfer 인스턴스 파기
-        wavesurfer.current.unAll();
-        wavesurfer.current.destroy();
+        if (wavesurfer.current) {
+          // WaveSurfer 인스턴스 파기
+          wavesurfer.current.unAll();
+          wavesurfer.current.destroy();
+        }
       };
     }
-  }, [url, displayPlayer]);
+  }, [currentTrack, waveformRef.current, displayPlayer]);
   // ============================== CREATE WAVE FORM //
 
   // 음원 재생 완료 처리 ==================================== //
@@ -109,7 +120,7 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
         wavesurfer.current.un("finish", handleFinish);
       }
     };
-  }, [handleFinish]);
+  }, [wavesurfer.current, handleFinish]);
   // ==================================== 음원 재생 완료 처리 //
 
   // 트랙 변경 처리 ========================================= //
@@ -135,8 +146,10 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
   }, [currentTrack, originTrackId, forwardTrigger]);
 
   useEffect(() => {
-    handleForwardTrigger();
-  }, [handleForwardTrigger]);
+    if (wavesurfer.current) {
+      handleForwardTrigger();
+    }
+  }, [wavesurfer.current, handleForwardTrigger]);
   // ========================================= 트랙 변경 처리 //
 
   // 재생/정지 처리 ======================================================== //
@@ -151,10 +164,15 @@ const Waveform: React.FC<{ url: string }> = ({ url }) => {
     if (wavesurfer.current && wavesurfer.current.getDuration() > 0) {
       handlePlay();
     }
-  }, [play]);
+  }, [wavesurfer.current, play]);
   // ======================================================== 재생/정지 처리 //
 
-  return <div id="waveform" ref={waveformRef}></div>;
+  return (
+    <>
+      <div id="waveform" ref={waveformRef} />
+      <video ref={video} className="hidden" />
+    </>
+  );
 };
 
 export default Waveform;

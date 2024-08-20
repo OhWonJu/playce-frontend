@@ -1,12 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useRouter } from "next/router";
 
 import NavigatorView from "./Navigator.view";
 
-import { Link } from "@components/ui";
-import { useQuery } from "@tanstack/react-query";
 import { _ME } from "@lib/server/api/user/me";
-import { useMe } from "@lib/client/hooks/useMe";
 
 interface Link {
   href: string;

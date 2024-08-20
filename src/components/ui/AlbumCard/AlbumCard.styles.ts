@@ -1,4 +1,7 @@
-import { ALBUM_CARD_HEIGHT, ALBUM_CARD_WIDTH } from "@lib/client/constants/uiStandard";
+import {
+  ALBUM_CARD_HEIGHT,
+  ALBUM_CARD_WIDTH,
+} from "@lib/client/constants/uiStandard";
 import styled from "styled-components";
 import tw from "twin.macro";
 

@@ -1,10 +1,9 @@
 import React, { useCallback, useRef, useState } from "react";
 import cn from "clsx";
-
-import { BORDER_BASE_WIDTH } from "@lib/client/constants/uiStandard";
-import useResizeObserver from "@lib/client/hooks/useResizeObserver";
 import styled from "styled-components";
 import tw from "twin.macro";
+
+import useResizeObserver from "@lib/client/hooks/useResizeObserver";
 
 interface Props {
   context: string;

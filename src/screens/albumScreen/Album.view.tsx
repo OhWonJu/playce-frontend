@@ -2,9 +2,8 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 
 import { Container, EllipsisText, RippleButton } from "@components/ui";
-import { AlbumDetail, T_Album } from "@lib/client/types";
-import { DotMenu, Heart, Play } from "@components/icons";
-import { convertTime } from "@lib/client/convertTime";
+import { AlbumDetail } from "@lib/client/types";
+import { DotMenu, Play } from "@components/icons";
 
 import {
   AlbumArt,
@@ -21,11 +20,7 @@ interface AlbumViewProps {
   albumClickHandler: (album: any) => void;
 }
 
-const AlbumView: React.FC<AlbumViewProps> = ({
-  album,
-  isOwn,
-  albumClickHandler,
-}) => {
+const AlbumView = ({ album, isOwn, albumClickHandler }: AlbumViewProps) => {
   const totalTimes = useMemo(
     () => album?.tracks?.reduce((acc, cur) => acc + cur.trackTime, 0),
     [album],

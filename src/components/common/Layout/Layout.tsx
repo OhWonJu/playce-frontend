@@ -172,7 +172,7 @@ interface Props {
 }
 
 // Nav bar Render되지 않는 예외 경로
-const NAV_INABLE_PATH = ["/", "/join"];
+const NAV_INABLE_PATH = ["/", "/join", "/404"];
 const LOGO_VISIVLE = [];
 
 const Layout: React.FC<Props> = ({ id, children, pageProps, path }) => {

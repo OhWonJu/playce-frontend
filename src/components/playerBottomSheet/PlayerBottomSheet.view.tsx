@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { animate, useMotionValue, motion, useTransform } from "framer-motion";
 
 import { NAV_HEIGHT } from "@lib/client/constants/uiStandard";
-
 import MainSheetProgressStore from "@lib/client/store/simpleStore/mainSheetProgress";
 import SubSheetProgressStore from "@lib/client/store/simpleStore/subSheetProgress";
 
 import Sheet, { SheetRef } from "@components/ui/BottomSheet";
 import { DEFAULT_TWEEN_CONFIG } from "@components/ui/BottomSheet/constants";
+import { Tab, TabSection } from "@components/ui/Tab";
 
 import {
   PBSContentWrapper,
@@ -16,7 +16,6 @@ import {
   PBSHeaderWrapper,
 } from "./PlayerBottomSheet.styles";
 import { Content, Lyrics, TrackList } from "./modules";
-import { Tab, TabSection } from "@components/ui/Tab";
 
 const HEADER_BAR_HEIGHT = 20;
 
