@@ -4490,6 +4490,7 @@ __metadata:
     tabbable: "npm:^6.0.0"
     tailwind-scrollbar-hide: "npm:^1.1.7"
     tailwindcss: "npm:^3.1.8"
+    tailwindcss-animate: "npm:^1.0.7"
     ts-node: "npm:^10.9.1"
     twin.macro: "npm:^2.8.2"
     typescript: "npm:4.8.2"
@@ -6019,6 +6020,15 @@ __metadata:
   version: 1.1.7
   resolution: "tailwind-scrollbar-hide@npm:1.1.7"
   checksum: 10c0/1027ca724c51a43da9a9a9f730f707652bcaded6f94d82fd445e349ee19bd34d8c1312e3e075193ec89c0524d824e716a06d646ca757913f4df0f4f5faec8fe4
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "tailwindcss-animate@npm:1.0.7"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 10c0/ec7dbd1631076b97d66a1fbaaa06e0725fccfa63119221e8d87a997b02dcede98ad88bb1ef6665b968f5d260fcefb10592e0299ca70208d365b37761edf5e19a
   languageName: node
   linkType: hard
 

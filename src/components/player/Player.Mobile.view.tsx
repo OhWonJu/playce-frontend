@@ -207,6 +207,9 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                     paddingTop: gap,
                     paddingBottom: gap,
                   }}
+                  className={`opacity-100 ${
+                    headerOpacity.get() < 1 && "opacity-0"
+                  } transition-opacity duration-150`}
                 >
                   {/* TRACK INFO */}
                   <section className="__TRACK_INFO__ flex flex-col items-center w-full mb-2">
@@ -219,7 +222,7 @@ const PlayerMobileView: React.FC<PlayerMobileViewProps> = ({}) => {
                   </section>
                   {/* WAVE FORM  */}
                   <section
-                    className="__WAVE_FORM_CONTAINER__ relative mb-1 w-full overflow-hidden"
+                    className="__WAVE_FORM_CONTAINER__ relative mb-1 w-full"
                     style={{ height: WAVE_FORM_HEIGHT }}
                   >
                     <div className="absolute w-full h-full bottom-[15.5px]">
